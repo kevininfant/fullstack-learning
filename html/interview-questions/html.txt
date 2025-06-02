@@ -1,0 +1,160 @@
+introductory HTML questions and answers
+------------------------------------------
+
+1. What is HTML?
+Answer: HTML (HyperText Markup Language) is the standard language used to create and design web pages.
+ It structures the content of a webpage using elements like headings, paragraphs, links, images, etc.
+
+ 2. What does HTML stand for?
+Answer: HTML stands for HyperText Markup Language.
+
+
+
+📜 History of HTML
+🔹 What is HTML?
+HTML stands for HyperText Markup Language. It is the standard markup language used to create and structure web pages on the internet.
+
+📆 Timeline of HTML Versions
+✅ 1. HTML 1.0 (1991)
+Created by Tim Berners-Lee at CERN.
+
+First version of HTML.
+
+Very basic — supported simple text formatting, links, and images.
+
+✅ 2. HTML 2.0 (1995)
+Published by IETF (Internet Engineering Task Force).
+
+Standardized basic HTML elements.
+
+Introduced forms, input elements.
+
+✅ 3. HTML 3.2 (1997)
+Introduced by W3C (World Wide Web Consortium).
+
+Added support for:
+
+Tables
+
+Applets
+
+Scripts (JavaScript)
+
+Text alignment and styles
+
+✅ 4. HTML 4.01 (1999)
+Improved structure and formatting.
+
+Added support for:
+
+CSS (Cascading Style Sheets)
+
+Frames and scripting
+
+Three versions: Strict, Transitional, Frameset
+
+✅ 5. XHTML (2000)
+Reformulated version of HTML using XML rules.
+
+More strict and structured.
+
+Less popular due to complexity and browser incompatibility.
+
+✅ 6. HTML5 (2014 Official Release)
+Major update by W3C and WHATWG.
+
+Focused on:
+
+Semantics (<article>, <section>, etc.)
+
+Multimedia (<video>, <audio>)
+
+APIs (Canvas, Geolocation, Web Storage)
+
+Mobile-first & responsive design
+
+Still evolving and used widely today.
+
+🧠 Who Invented HTML?
+Sir Tim Berners-Lee, a British scientist.
+
+Created the first HTML specification and the World Wide Web in 1989-1991.
+
+🎯 Why HTML Is Important Today
+It is the foundation of all websites.
+
+Every web page you visit is structured with HTML.
+
+Works with CSS (design) and JavaScript (interactivity).
+
+
+
+css
+---------
+
+📜 History of CSS
+✅ CSS1 – 1996
+Introduced by Håkon Wium Lie and Bert Bos.
+
+Standardized by W3C.
+
+Provided basic styling: fonts, colors, margins, borders, etc.
+
+Supported only simple layout control.
+
+✅ CSS2 – 1998
+Added more sophisticated features:
+
+Positioning (absolute, relative)
+
+Media types (screen, print)
+
+Z-index
+
+Table layout styling
+
+Had better support for accessibility and print.
+
+⚠️ CSS2.1 (2004 - Finalized in 2011)
+Refined version of CSS2, removed poorly supported features.
+
+Became a stable base for browsers.
+
+✅ CSS3 – 2011–Present
+Introduced modular structure (Box Model, Flexbox, Grid, etc.).
+
+Key Features:
+
+Media queries for responsive design
+
+Transitions, animations
+
+Shadows, gradients
+
+Web fonts
+
+Evolved continuously with new modules being added independently.
+
+✅ CSS4 – Not officially a single spec
+No formal CSS4 version.
+
+Instead, W3C continues to develop CSS as independent modules (e.g., CSS Grid Level 2, CSS Selectors Level 4).
+
+📆 CSS Timeline Overview
+Year	Version	Key Features
+1996	CSS1	Basic styling (colors, fonts)
+1998	CSS2	Positioning, media types, z-index
+2011	CSS2.1	Bug fixes and browser compatibility
+2011+	CSS3	Modular, responsive design, animations
+
+🌐 Who Created CSS?
+Håkon Wium Lie proposed CSS in 1994.
+
+Became W3C standard in 1996.
+
+🧠 Why Is CSS Important?
+Makes websites attractive, consistent, and user-friendly.
+
+Enables responsive and accessible web design.
+
+Used in all frontend development — alongside HTML & JavaScript.

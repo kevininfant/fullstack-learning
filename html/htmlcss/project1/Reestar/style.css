@@ -1,0 +1,57 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.header{
+    background-color: black;
+    color: white;
+    padding: 5px;
+    text-align: center;
+}
+ul,li{
+    display: inline-block;
+    margin-top: 5px;
+}
+li{color: gray;
+cursor: pointer;
+
+}
+li:hover{
+    color :white
+}
+.box{
+    border-color: black;
+    border-width: 1px;
+    border-style: solid;
+    display: inline-block;
+    width: 220px;
+    margin: 10px;
+}
+
+.box:hover{
+    background-color: black;
+    color:white;
+}
+.receipe{
+    text-align: center;
+}
+.contact{
+    color: white;
+    background-color: black;
+text-align: center;
+padding: 20px;
+}
+.form{
+display: inline-block;
+
+}
+
+button{
+    background-color: yellow;
+width: 500px;
+height: 30px;
+margin-top: 10px;
+}
+
+
+

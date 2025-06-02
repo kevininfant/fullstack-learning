@@ -1,0 +1,24 @@
+body{
+    height: auto;
+    background-color: aquamarine;
+}
+span{
+    color: violet;
+}
+.selectorh11{
+    color: darkcyan;
+}
+.selectorh12{
+    color: rgb(16, 0, 139);
+}
+
+#selectorh11{
+    color: darkcyan;
+}
+#selectorh12{
+    color: rgb(16, 0, 139);
+}
+/* *{
+    background-color: gray;
+} */
+
