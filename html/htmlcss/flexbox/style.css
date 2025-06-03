@@ -1,0 +1,20 @@
+body {
+  background-color: black;
+}
+.titlebar {
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.container div {
+  width: 200px;
+  color: white;
+  margin: 20px;
+  width: 20%;
+}

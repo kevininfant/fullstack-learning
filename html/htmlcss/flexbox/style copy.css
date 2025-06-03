@@ -1,0 +1,15 @@
+h1 {
+  background-color: black;
+  margin: 5px;
+  padding: 30px;
+  display: flex;
+  color: white;
+}
+.main {
+  display: flex;
+  background-color: yellowgreen;
+  width: 300px;
+  padding: 10px;
+  flex-wrap: wrap;
+  justify-content:space-evenly;
+}
