@@ -1,0 +1,418 @@
+1. Variables and Data Types
+
+void main() {
+  int a = 10;
+  double b = 20.5;
+  String name = "Dart";
+  print(a + b); // 30.5
+  print("Hello, $name!");
+}
+
+
+2. Conditionals
+
+void main() {
+  int number = 7;
+  if (number % 2 == 0) {
+    print("Even");
+  } else {
+    print("Odd");
+  }
+}
+
+
+1.1 Find the largest of 3 numbers.
+
+void main() {
+  int a = 305432;
+  int b = 4062312;
+  int c = 50214;
+  int largest = 0;
+
+  if (a >= b && a >= c) {
+    largest = a;
+  } else if (b >= a && b >= c) {
+    largest = b;
+  } else if (c >= a && c >= b) {
+    largest = c;
+  }
+  print("The largest number is: $largest");
+}
+
+
+Check whether a character is a vowel or consonant.
+
+void main() {
+ String  char =  "e";
+  
+  char = char.toLowerCase();
+  
+  if(char.length == 1 && RegExp(r'^[a-z]$').hasMatch(char)){
+    if(char=='a' || char== 'e' || char=='i' || char=='o' || char=='u'){
+      print("$char : this is vowel");
+    }else{
+     print('$char is a consonant.');
+    }
+  } else {
+    print('Please enter a single alphabet character.');
+  }
+}
+
+
+suppose ist this array 
+
+void main() {
+ String  word =  "suoIdea";
+  
+  word = word.toLowerCase();
+  
+ 
+  for (int i = 0; i < word.length; i++) {
+    String char = word[i];
+  if(char.length == 1 && RegExp(r'^[a-z]$').hasMatch(char)){
+    if(char=='a' || char== 'e' || char=='i' || char=='o' || char=='u'){
+      print("$char : this is vowel");
+    }else{
+     print('$char is a consonant.');
+    }
+  } else {
+    print('Please enter a single alphabet character.');
+  }
+}
+}
+
+
+
+3. Loops
+
+void main() {
+  for (int i = 1; i <= 5; i++) {
+    print("Number: $i");
+  }
+}
+
+
+4.Print multiplication table.
+
+void main() {
+ int Number = 10;
+  for(int i=0; i < Number; i++){
+    if(i!=0){
+   print("$Number * $i =  ${Number * i}"); 
+    }else{
+      continue;
+    }
+  }
+}
+
+
+5.Print Fibonacci series.
+
+  void main() {
+    int terms = 11;
+    int a = 0, b = 1;
+
+    print("Fibonacci Series (first $terms terms):");
+    for (int i = 0; i < terms; i++) {
+      print(a);
+      int next = a + b;
+      a = b;
+      b = next;
+    }
+  }
+
+
+6.Print Fibonacci series.
+
+void main() {
+  int number = 6789;
+  String reversed = number.toString().split('').reversed.join();
+  print("Reversed number: $reversed");
+}
+
+
+
+7.Functions
+
+int add(int a, int b) {
+  return a + b;
+}
+
+void main() {
+  print(add(5, 3)); // 8
+}
+
+
+
+8.Prime Number
+
+bool isPrime(int number) {
+  if (number <= 1) return false; // 0 and 1 are not prime
+  if (number == 2) return true;  // 2 is prime
+
+  for (int i = 2; i <= number ~/ 2; i++) {
+    if (number % i == 0) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+void main(){
+  print(isPrime(2));
+}
+
+
+9.Reverse a string
+
+void main(){
+  String Name = "Hello World!";
+  
+  String ReName = Name.toString().split('').reversed.join();
+  
+   print("ReName : $ReName"); 
+}
+
+10.Count vowels and consonants
+
+
+void main() {
+  String Name = "miaouedsgtsew";
+  int vowelountcount = 0;
+  int consonantcount = 0;
+  for (int i = 0; i < Name.length; i++) {
+    String char = Name[i];
+    if (char.length == 1 && RegExp(r'^[a-z]$').hasMatch(char)) {
+      if (char == 'a' ||
+          char == 'e' ||
+          char == 'i' ||
+          char == 'o' ||
+          char == 'u') {
+        vowelountcount++;
+      } else {
+         consonantcount++;
+      }
+    }
+  }
+   print("$vowelountcount :  is a total of vowel");
+    print('$consonantcount is a total of consonant.');
+}
+
+
+11.Palindrome
+
+void main() {
+  String input = "madam";
+  String reversed = input.split('').reversed.join('');
+
+  if (input == reversed) {
+    print("$input is a palindrome.");
+  } else {
+    print("$input is not a palindrome.");
+  }
+}
+
+
+
+12.Frequency of words in a sentence using a map
+
+void main() {
+  String sentence = "hello world hello dart world";
+
+  // Split sentence into words
+  List<String> words = sentence.split(" ");
+
+  // Create a map to hold word frequencies
+  Map<String, int> wordCount = {};
+
+  for (String word in words) {
+    if (wordCount.containsKey(word)) {
+      wordCount[word] = wordCount[word]! + 1;
+    } else {
+      wordCount[word] = 1;
+    }
+  }
+
+  // Print word frequencies
+  wordCount.forEach((word, count) {
+    print('$word: $count');
+  });
+}
+
+
+
+
+13.Remove duplicates from a list using a set
+
+void main() {
+  List<int> numbers = [1, 2, 3, 2, 4, 1, 5, 3];
+
+  // Convert list to set to remove duplicates
+  Set<int> uniqueNumbersSet = numbers.toSet();
+
+  // Convert set back to list (optional)
+  List<int> uniqueNumbers = uniqueNumbersSet.toList();
+
+  print("Original list: $numbers");
+  print("List after removing duplicates: $uniqueNumbers");
+}
+
+
+14.Class and Object in Dart
+
+// Define a class
+class Person {
+  String name;
+  int age;
+
+  // Constructor
+  Person(this.name, this.age);
+
+  // Method
+  void greet() {
+    print("Hello, my name is $name and I am $age years old.");
+  }
+}
+
+void main() {
+  // Create an object of the Person class
+  Person person1 = Person("Alice", 25);
+
+  // Call the method
+  person1.greet();
+}
+
+
+15.Inheritance
+
+// Parent class
+class Animal {
+  void eat() {
+    print("This animal eats food.");
+  }
+}
+
+// Child class
+class Dog extends Animal {
+  void bark() {
+    print("The dog barks.");
+  }
+}
+
+void main() {
+  Dog dog = Dog();
+
+  dog.eat();  // inherited from Animal
+  dog.bark(); // defined in Dog
+}
+
+
+16.Polymorphism:
+
+
+// Base class
+class Animal {
+  void makeSound() {
+    print("Some generic animal sound");
+  }
+}
+
+// Derived class 1
+class Dog extends Animal {
+  @override
+  void makeSound() {
+    print("Dog barks");
+  }
+}
+
+// Derived class 2
+class Cat extends Animal {
+  @override
+  void makeSound() {
+    print("Cat meows");
+  }
+}
+
+void main() {
+  Animal myDog = Dog();  // Polymorphism: Animal reference, Dog object
+  Animal myCat = Cat();  // Polymorphism: Animal reference, Cat object
+
+  myDog.makeSound();  // Output: Dog barks
+  myCat.makeSound();  // Output: Cat meows
+}
+
+
+
+
+
+17.Factorial
+
+int factorial(int n){
+    if (n<=1) return 1;
+    return n * factorial(n -1)
+
+}
+void main(){
+     int number = 5;
+  print("Factorial of $number is ${factorial(number)}");
+}
+
+
+18.Binary Search
+
+int binarySearch(List<int> arr, int target, int low, int high) {
+  if (low > high) return -1; // Element not found
+
+  int mid = (low + high) ~/ 2;
+
+  if (arr[mid] == target) return mid;
+  else if (target < arr[mid]) {
+    return binarySearch(arr, target, low, mid - 1);
+  } else {
+    return binarySearch(arr, target, mid + 1, high);
+  }
+}
+
+void main() {
+  List<int> nums = [1, 3, 5, 7, 9, 11];
+  int target = 7;
+  int result = binarySearch(nums, target, 0, nums.length - 1);
+
+  if (result != -1) {
+    print("Element found at index: $result");
+  } else {
+    print("Element not found");
+  }
+}
+
+
+
+19.Sorting Algorithms
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
