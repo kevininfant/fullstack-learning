@@ -1,0 +1,141 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.navbar {
+  display: flex;
+  background-color: #ffffff;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 60px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 60px;
+
+  list-style-type: none;
+}
+.menu-items {
+  font-size: medium;
+  font-weight: 700;
+}
+
+/* banner-card */
+
+.banner-card {
+  position: relative;
+  height: 700px;
+  width: 100%;
+  overflow: hidden;
+}
+.banner-image {
+  width: 100%;
+}
+.card-content {
+  position: absolute;
+  z-index: 2;
+  bottom: 100px;
+  right: 100px;
+  width: 450px;
+  height: 60%;
+  padding: 20px;
+  background-color: #fff3e3;
+  color: black;
+  display: flex;
+  row-gap: 20px;
+  flex-direction: column;
+  justify-content: center;
+}
+.card-content-title2 {
+  color: #b88e2f;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 45px;
+}
+.bnr-btn {
+  margin-top: 10px;
+  background-color: #b88e2f;
+  color: #ffffff;
+  border: none;
+  width: 170px;
+  height: 50px;
+}
+
+/* second .banner-card */
+
+.banner-card2 {
+  display: grid;
+  justify-content: center;
+  padding: 20px;
+}
+.banner-card2-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.banner-card2-head h1,
+.banner-card2-head p {
+  margin: 0; /* remove default spacing */
+  padding: 0;
+}
+.banner-card2-image {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-items: center;
+  align-items: start;
+  padding: 20px; /* optional: spacing around grid */
+}
+.banner-card2-image1 {
+  height: 400px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 20px;
+}
+
+.image-gallary-cmp {
+  padding: 40px;
+}
+.image-gallary-cmp h1 {
+  display: grid;
+  justify-content: center;
+  padding-bottom: 20px;
+}
+.image-gallary {
+  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  column-gap: 10px;
+}
+.image-gallary .gallary-card {
+  display: flex;
+  flex-direction: column;
+
+  background-color: #f4f5f7;
+}
+.image-gallary .gallary-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+.image-gallary .price {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.image-gallary .gallary-content .realprice {
+font-weight: 600;
+}
+.image-gallary .gallary-content .oldprice {
+ text-decoration: line-through;
+}
