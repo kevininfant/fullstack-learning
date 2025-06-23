@@ -35,7 +35,7 @@ function fizzBuzz(n) {
         }
     }
 }
-fizzBuzz(0); 
+fizzBuzz(20); 
 
 
 // find the longest words in the text
