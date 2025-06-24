@@ -4,6 +4,7 @@ function reverseString(value) {
 }
 
 const ans = reverseString("Hi Kevin How Are You ?");
+
 console.log("🚀 ~ ans:", ans);
 
 
@@ -35,7 +36,7 @@ function fizzBuzz(n) {
         }
     }
 }
-fizzBuzz(0); 
+fizzBuzz(20); 
 
 
 // find the longest words in the text
