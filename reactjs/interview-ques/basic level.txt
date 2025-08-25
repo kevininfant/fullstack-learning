@@ -1,0 +1,167 @@
+1. What is the difference between state and props?
+Props: Data passed from a parent to a child component. They are read-only and immutable.
+meaning a child component cannot change the props it receives.
+
+State: Data managed within a component. It is mutable and causes a component to re-render when it changes.
+
+example:
+
+// Parent component
+function ParentComponent() {
+  const userName = "Alice";
+  return <ChildComponent name={userName} />;
+}
+
+// Child component
+import React, { useState } from 'react';
+
+function ChildComponent(props) {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>Hello, {props.name}!</p>
+      <p>Button clicked {count} times.</p>
+      <button onClick={() => setCount(count + 1)}>
+        Click me
+      </button>
+    </div>
+  );
+}
+
+--------------------------------------------------------------------------
+
+2. What is JSX?
+Answer:
+JSX (JavaScript XML) is a syntax extension that lets you write HTML-like code within your JavaScript files. 
+It is not plain JavaScript and must be converted to regular JavaScript by a tool like Babel.
+
+example:
+
+const element = <h1>Hello, world!</h1>;
+// You can embed JavaScript expressions with curly braces
+const name = "John";
+const greeting = <p>Hello, {name}!</p>;
+
+----------------------
+
+3. Explain the Virtual DOM.
+
+Answer: The Virtual DOM is a lightweight copy of the real DOM. When a component's state changes,
+ React updates the VDOM first, then compares it to the previous version to find the minimal number of changes needed.
+ It then applies only those changes to the real DOM, which is much faster than re-rendering everything.
+
+ -----------------------------------
+
+ 4.What are React Hooks?
+
+ Answer: React hooks are special functions thats let you "hook into" React features like 
+ state and lifeCycle methods inside functional components. 
+ 
+ Before Hooks,Developers had to use class components to manage state and lifecycle logic.hooks make a 
+ functional components more powerfull and easier to use .
+
+ its is intraduse to react 16.8.
+
+ ------------------------------------------
+
+ 5.why were hooks introduced ?
+
+ Answer:
+
+ 1.To avoid the complexity of  class components.
+
+ 2. to make stateful logic reusable across components.
+
+ 3. to simplify the code readability and testing.
+
+ ---------------------------------------
+
+ 6.how many hooks in react and which is most usaables?
+ 
+ ist have a 17 hooks in a react
+
+ useState
+
+useEffect
+
+useContext
+
+useRef
+
+useReducer
+
+useCallback
+
+useMemo
+
+useLayoutEffect
+
+useImperativeHandle
+
+useDebugValue
+
+useTransition
+
+useDeferredValue
+
+useId
+
+useInsertionEffect
+
+useSyncExternalStore
+
+useActionState
+
+useOptimistic
+
+
+ ----------------------------------------
+
+ 6.what is useSates?
+
+ useState is a React Hook that allows you to add state to functional components. 
+ It provides a state variable and a function to update it, and when the update function is called,
+  React re-renders the component with the new value. 
+  It's the most common way to manage dynamic data in a functional component.
+
+Example:
+
+const [count, setCount] = useState(0);
+
+// ...
+<button onClick={() => setCount(count + 1)}>
+  Clicked {count} times
+</button>
+
+--------------------------------------------
+
+7.what is useeffect?
+
+useEffect is a React Hook that allows you to perform "side effects" in your functional components. 
+Side effects are any actions that affect something outside of the component itself, such as fetching data from an API,
+ manually changing the DOM, or setting up subscriptions.
+
+Example: Fetching Data
+
+import React, { useState, useEffect } from 'react';
+
+function DataFetcher() {
+  const [data, setData] = useState(null);
+
+  // This effect runs once when the component mounts
+  useEffect(() => {
+    fetch('https://api.example.com/data')
+      .then(response => response.json())
+      .then(result => setData(result));
+  }, []); // The empty dependency array ensures this effect runs only once
+
+  return <div>{data ? <p>Data loaded!</p> : <p>Loading...</p>}</div>;
+}
+
+-------------------------------------------------
+
+
+
+
+
