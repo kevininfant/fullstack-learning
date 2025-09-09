@@ -1,4 +1,33 @@
-1. What is the difference between state and props?
+1.What is React?
+
+React is an open-source JavaScript library developed by Facebook (Meta) for building fast and interactive user interfaces,
+It uses a virtual DOM for fast rendering and is mainly used to build single-page applications.
+
+----------------------------------------------------------------------------------------------------
+
+2.How is it different from frameworks like Angular or Vue and next js?
+
+React → Library, only focuses on UI. Needs external tools (Redux, Router).
+
+Angular → Complete framework (routing, forms, HTTP built-in). Strict structure.
+
+Vue → Lightweight, flexible, simpler learning curve.
+
+Next.js → Framework built on React → adds Server-Side Rendering (SSR), Static Site Generation (SSG), API routes, and SEO optimization.
+
+-------------------------------------------------------------------------------------------------------
+
+3.Functional vs Class Components?
+
+“Functional components are simple JavaScript functions that use Hooks to manage state and lifecycle,
+ while class components are ES6 classes with built-in lifecycle methods and this.state. 
+ Functional components are preferred in modern React since they are easier to read, test, and optimize,
+ while class components are considered legacy but still supported.”
+
+ --------------------------------------------------------------------------------------------------------
+
+
+4. What is the difference between state and props?
 Props: Data passed from a parent to a child component. They are read-only and immutable.
 meaning a child component cannot change the props it receives.
 
@@ -31,10 +60,11 @@ function ChildComponent(props) {
 
 --------------------------------------------------------------------------
 
-2. What is JSX?
+5. What is JSX?
 Answer:
 JSX (JavaScript XML) is a syntax extension that lets you write HTML-like code within your JavaScript files. 
 It is not plain JavaScript and must be converted to regular JavaScript by a tool like Babel.
+It’s more readable and compiles to React.createElement().
 
 example:
 
@@ -45,7 +75,7 @@ const greeting = <p>Hello, {name}!</p>;
 
 ----------------------
 
-3. Explain the Virtual DOM.
+6. Explain the Virtual DOM.
 
 Answer: The Virtual DOM is a lightweight copy of the real DOM. When a component's state changes,
  React updates the VDOM first, then compares it to the previous version to find the minimal number of changes needed.
@@ -53,7 +83,75 @@ Answer: The Virtual DOM is a lightweight copy of the real DOM. When a component'
 
  -----------------------------------
 
- 4.What are React Hooks?
+
+ 7.What are Keys in React?
+
+Keys in React are unique identifiers assigned to elements in a list.
+ They help React optimize rendering by efficiently determining which items changed, were added, or removed during reconciliation. 
+The best practice is to use a stable and unique value like an id, rather than array index, to ensure predictable behavior.
+
+const users = ["Kevin", "John", "Sophia"];
+
+{users.map((user, index) => <li key={index}>{user}</li>)}
+
+----------------------------------------------------------------------------------
+
+
+8.Controlled vs Uncontrolled components?
+
+"In real projects, controlled components are preferred because they give better control, validation, and predictable behavior.
+ But uncontrolled components are simpler when you just need the value once, like in a form submission.
+
+ Example:
+
+ Example (Controlled Input):
+
+ import { useState } from "react";
+
+function ControlledInput() {
+  const [name, setName] = useState("");
+
+  return (
+    <div>
+      <input 
+        type="text" 
+        value={name}   // React controls the value
+        onChange={(e) => setName(e.target.value)} 
+      />
+      <p>Your name: {name}</p>
+    </div>
+  );
+}
+
+
+Example (Uncontrolled Input):
+
+import { useRef } from "react";
+
+function UncontrolledInput() {
+  const inputRef = useRef();
+
+  const handleSubmit = () => {
+    alert("Your name: " + inputRef.current.value);
+  };
+
+  return (
+    <div>
+      <input type="text" ref={inputRef} />  {/* DOM stores the value */}
+      <button onClick={handleSubmit}>Submit</button>
+    </div>
+  );
+}
+
+
+
+-------------------------------------------------------------------------------------
+
+
+
+
+
+ 9.What are React Hooks?
 
  Answer: React hooks are special functions thats let you "hook into" React features like 
  state and lifeCycle methods inside functional components. 
@@ -65,7 +163,10 @@ Answer: The Virtual DOM is a lightweight copy of the real DOM. When a component'
 
  ------------------------------------------
 
- 5.why were hooks introduced ?
+
+
+
+ 10.why were hooks introduced ?
 
  Answer:
 
@@ -77,7 +178,7 @@ Answer: The Virtual DOM is a lightweight copy of the real DOM. When a component'
 
  ---------------------------------------
 
- 6.how many hooks in react and which is most usaables?
+ 11.how many hooks in react and which is most usaables?
  
  ist have a 17 hooks in a react
 
@@ -118,7 +219,7 @@ useOptimistic
 
  ----------------------------------------
 
- 6.what is useSates?
+ 11.what is useSates?
 
  useState is a React Hook that allows you to add state to functional components. 
  It provides a state variable and a function to update it, and when the update function is called,
@@ -136,7 +237,7 @@ const [count, setCount] = useState(0);
 
 --------------------------------------------
 
-7.what is useeffect?
+12.what is useeffect?
 
 useEffect is a React Hook that allows you to perform "side effects" in your functional components. 
 Side effects are any actions that affect something outside of the component itself, such as fetching data from an API,
