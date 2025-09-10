@@ -12,7 +12,7 @@ React → Library, only focuses on UI. Needs external tools (Redux, Router).
 Angular → Complete framework (routing, forms, HTTP built-in). Strict structure.
 
 Vue → Lightweight, flexible, simpler learning curve.
-
++-
 Next.js → Framework built on React → adds Server-Side Rendering (SSR), Static Site Generation (SSG), API routes, and SEO optimization.
 
 -------------------------------------------------------------------------------------------------------
@@ -180,9 +180,13 @@ function UncontrolledInput() {
 
  11.how many hooks in react and which is most usaables?
  
- ist have a 17 hooks in a react
+React has two categories of hooks:
 
- useState
+1. Basic (Core) Hooks
+
+These are built into React itself and used most often:
+
+useState
 
 useEffect
 
@@ -196,26 +200,47 @@ useCallback
 
 useMemo
 
-useLayoutEffect
-
 useImperativeHandle
+
+useLayoutEffect
 
 useDebugValue
 
-useTransition
-
-useDeferredValue
-
 useId
 
-useInsertionEffect
+useTransition (introduced in React 18 for concurrent features)
 
-useSyncExternalStore
+useDeferredValue (React 18)
 
-useActionState
+useSyncExternalStore (React 18)
 
-useOptimistic
+useInsertionEffect (React 18)
 
+👉 So, React has around 15+ official hooks (depending on React version).
+
+2. Custom Hooks
+
+You can create your own hooks (functions that start with use) to reuse logic.
+
+Example: useFetch, useLocalStorage, etc.
+
+🔹 Most Usable Hooks (the “Top 5” you’ll use daily)
+
+useState → for managing component state
+
+useEffect → for side effects (fetching data, subscriptions, timers)
+
+useContext → for global state/context (like auth, theme)
+
+useRef → for accessing/managing DOM elements or persisting values without re-render
+
+useMemo & useCallback → for performance optimization (memoizing values and functions)
+
+✅ In practice:
+
+Beginners mostly use useState + useEffect (almost every component).
+
+Intermediate/Advanced projects often use useContext, useReducer, useMemo, useCallback.
 
  ----------------------------------------
 
