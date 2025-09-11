@@ -1,0 +1,52 @@
+1.What is CSS?
+Cascading Style Sheets is used to style HTML elements.
+
+p {
+  color: blue;
+  font-size: 16px;
+}
+
+
+
+2.Difference between inline, internal, and external CSS
+Type	How Applied	Example
+Inline	Directly in tag	<p style="color:red;">Text</p>
+Internal	Inside <style> tag	<style>p {color:red;}</style>
+External	Separate CSS file	<link rel="stylesheet" href="style.css">
+
+
+
+3.What is the difference between id and class in CSS?
+
+id → Unique, #idName {}
+
+class → Reusable, .className {}
+
+
+
+4.What is the difference between relative, absolute, fixed, and sticky positioning?
+Position	Behavior
+relative	Position relative to original place
+absolute	Position relative to nearest positioned ancestor
+fixed	Stays in same position on screen
+sticky	Sticks when scrolling after a threshold
+
+
+
+
+5.CSS Box Model
+
+Definition:
+The box model describes how every HTML element is represented as a rectangular box in the browser.
+It consists of 4 layers:
+
+Content – The actual content (text, image, etc.)
+
+Padding – Space inside the element between content and border
+
+Border – The edge around the padding
+
+Margin – Space outside the element between border and other elements
+
+
+

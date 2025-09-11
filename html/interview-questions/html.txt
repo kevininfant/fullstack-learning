@@ -158,3 +158,127 @@ Makes websites attractive, consistent, and user-friendly.
 Enables responsive and accessible web design.
 
 Used in all frontend development — alongside HTML & JavaScript.
+
+
+
+HTML
+---------------
+
+1.What is HTML?
+
+HyperText Markup Language used to create and structure web pages.
+
+<h1>Hello Infosys!</h1>
+<p>Welcome to HTML interview prep.</p>
+
+
+
+2.. Difference between HTML and HTML5
+
+HTML5 is latest version, supports audio, video, canvas, semantic tags.
+
+
+3.What are semantic tags in HTML?
+
+1.Tags that give meaning to content.
+
+2.Examples: <header>, <footer>, <article>, <section>, <nav>
+
+
+
+3.Difference between <div> and <span>
+
+<div> → Block element, full width
+
+<span> → Inline element, only content width
+
+
+
+4.What are self-closing tags?
+
+Tags that don’t need a closing tag.
+
+Examples: <br>, <hr>, <img>, <input>
+
+
+
+
+5.Difference between <strong> and <b>
+
+<b> → Bold text (styling)
+
+<strong> → Important text (semantic + bold)
+
+
+
+
+
+6.Difference between <i> and <em>
+
+<i> → Italic text (styling)
+
+<em> → Emphasized text (semantic + italic)
+
+
+
+
+7.Difference between <ul>, <ol>, <dl>
+
+<ul> → Unordered list
+
+<ol> → Ordered list
+
+<dl> → Description list
+
+
+
+8.Difference between <a> and <link>
+
+<a> → Hyperlink, navigates to page
+
+<link> → Link external resources (CSS, favicon)
+
+<link rel="stylesheet" href="style.css">
+<a href="https://infosys.com">Go to Infosys</a>
+
+
+
+
+9.What are meta tags?
+
+Provide information about web page.
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Infosys HTML interview prep">
+
+
+
+
+
+11.Difference between id and class
+
+id → unique, used once per page
+
+class → reusable, can use on multiple elements
+
+
+
+
+12.What is the difference between <script> in head and body?
+
+Head: Script executes before page renders → may block page
+
+Body (end): Page loads first, script executes after content
+
+
+13.What are data attributes in HTML?
+
+Custom attributes to store extra info: data-*
+
+<div data-id="101" data-role="admin">Kevin</div>
+
+
+
+
+
