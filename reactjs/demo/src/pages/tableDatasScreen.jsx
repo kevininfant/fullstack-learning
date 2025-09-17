@@ -14,7 +14,7 @@ function TableData() {
       const data = await response.json();
 
       if (search.trim()) {
-        const filtered = data.filter((item) =>
+        const flitered = data.filter((item) =>
           item.title.toLowerCase().includes(search.toLowerCase())
         );
         setTableData(filtered);
@@ -47,7 +47,7 @@ function TableData() {
 
     debounceRef.current = setTimeout(() => {
       fetchData(pages, value);
-    }, 5000); 
+    }, 2000); 
   };
 
   return (
