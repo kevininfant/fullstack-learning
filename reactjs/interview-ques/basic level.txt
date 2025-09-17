@@ -1,0 +1,1156 @@
+1.What is React?
+
+React is an open-source JavaScript library developed by Facebook (Meta) for building fast and interactive user interfaces,
+It uses a virtual DOM for fast rendering and is mainly used to build single-page applications.
+
+----------------------------------------------------------------------------------------------------
+
+2.How is it different from frameworks like Angular or Vue and next js?
+
+React → Library, only focuses on UI. Needs external tools (Redux, Router).
+
+Angular → Complete framework (routing, forms, HTTP built-in). Strict structure.
+
+Vue → Lightweight, flexible, simpler learning curve.
++-
+Next.js → Framework built on React → adds Server-Side Rendering (SSR), Static Site Generation (SSG), API routes, and SEO optimization.
+
+-------------------------------------------------------------------------------------------------------
+
+3.Functional vs Class Components?
+
+“Functional components are simple JavaScript functions that use Hooks to manage state and lifecycle,
+ while class components are ES6 classes with built-in lifecycle methods and this.state. 
+ Functional components are preferred in modern React since they are easier to read, test, and optimize,
+ while class components are considered legacy but still supported.”
+
+ --------------------------------------------------------------------------------------------------------
+
+
+4. What is the difference between state and props?
+Props: Data passed from a parent to a child component. They are read-only and immutable.
+meaning a child component cannot change the props it receives.
+
+State: Data managed within a component. It is mutable and causes a component to re-render when it changes.
+
+example:
+
+// Parent component
+function ParentComponent() {
+  const userName = "Alice";
+  return <ChildComponent name={userName} />;
+}
+
+// Child component
+import React, { useState } from 'react';
+
+function ChildComponent(props) {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>Hello, {props.name}!</p>
+      <p>Button clicked {count} times.</p>
+      <button onClick={() => setCount(count + 1)}>
+        Click me
+      </button>
+    </div>
+  );
+}
+
+--------------------------------------------------------------------------
+
+5. What is JSX?
+Answer:
+JSX (JavaScript XML) is a syntax extension that lets you write HTML-like code within your JavaScript files. 
+It is not plain JavaScript and must be converted to regular JavaScript by a tool like Babel.
+It’s more readable and compiles to React.createElement().
+
+example:
+
+const element = <h1>Hello, world!</h1>;
+// You can embed JavaScript expressions with curly braces
+const name = "John";
+const greeting = <p>Hello, {name}!</p>;
+
+----------------------
+
+6. Explain the Virtual DOM.
+
+Answer: The Virtual DOM is a lightweight copy of the real DOM.When state or props change,
+ React updates the Virtual DOM first, compares it with the previous version,
+ and then updates only the necessary parts of the Real DOM. This makes UI updates faster and more efficient.
+
+ -----------------------------------
+
+
+ 7.What are Keys in React?
+
+Keys in React are unique identifiers assigned to elements in a list.
+ They help React optimize rendering by efficiently determining which items changed, were added, or removed during reconciliation. 
+The best practice is to use a stable and unique value like an id, rather than array index, to ensure predictable behavior.
+
+const users = ["Kevin", "John", "Sophia"];
+
+{users.map((user, index) => <li key={index}>{user}</li>)}
+
+----------------------------------------------------------------------------------
+
+
+8.Controlled vs Uncontrolled components?
+
+"In real projects, controlled components are preferred because they give better control, validation, and predictable behavior.
+ But uncontrolled components are simpler when you just need the value once, like in a form submission.
+
+ Example:
+
+ Example (Controlled Input):
+
+ import { useState } from "react";
+
+function ControlledInput() {
+  const [name, setName] = useState("");
+
+  return (
+    <div>
+      <input 
+        type="text" 
+        value={name}   // React controls the value
+        onChange={(e) => setName(e.target.value)} 
+      />
+      <p>Your name: {name}</p>
+    </div>
+  );
+}
+
+
+Example (Uncontrolled Input):
+
+import { useRef } from "react";
+
+function UncontrolledInput() {
+  const inputRef = useRef();
+
+  const handleSubmit = () => {
+    alert("Your name: " + inputRef.current.value);
+  };
+
+  return (
+    <div>
+      <input type="text" ref={inputRef} />  {/* DOM stores the value */}
+      <button onClick={handleSubmit}>Submit</button>
+    </div>
+  );
+}
+
+
+
+-------------------------------------------------------------------------------------
+
+
+
+
+
+ 9.What are React Hooks?
+
+ Answer: React hooks are special functions thats let you "hook into" React features like 
+ state and lifeCycle methods inside functional components. 
+ 
+ Before Hooks,Developers had to use class components to manage state and lifecycle logic.hooks make a 
+ functional components more powerfull and easier to use .
+
+ its is intraduse to react 16.8.
+
+ ------------------------------------------
+
+
+
+
+ 10.why were hooks introduced ?
+
+ Answer:
+
+ 1.To avoid the complexity of  class components.
+
+ 2. to make stateful logic reusable across components.
+
+ 3. to simplify the code readability and testing.
+
+ ---------------------------------------
+
+ 11.how many hooks in react and which is most usaables?
+ 
+React has two categories of hooks:
+
+1. Basic (Core) Hooks
+
+These are built into React itself and used most often:
+
+useState
+
+useEffect
+
+useContext
+
+useRef
+
+useReducer
+
+useCallback
+
+useMemo
+
+useImperativeHandle
+
+useLayoutEffect
+
+useDebugValue
+
+useId
+
+useTransition (introduced in React 18 for concurrent features)
+
+useDeferredValue (React 18)
+
+useSyncExternalStore (React 18)
+
+useInsertionEffect (React 18)
+
+👉 So, React has around 15+ official hooks (depending on React version).
+
+2. Custom Hooks
+
+You can create your own hooks (functions that start with use) to reuse logic.
+
+Example: useFetch, useLocalStorage, etc.
+
+🔹 Most Usable Hooks (the “Top 5” you’ll use daily)
+
+useState → for managing component state
+
+useEffect → for side effects (fetching data, subscriptions, timers)
+
+useContext → for global state/context (like auth, theme)
+
+useRef → for accessing/managing DOM elements or persisting values without re-render
+
+useMemo & useCallback → for performance optimization (memoizing values and functions)
+
+✅ In practice:
+
+Beginners mostly use useState + useEffect (almost every component).
+
+Intermediate/Advanced projects often use useContext, useReducer, useMemo, useCallback.
+
+ ----------------------------------------
+
+ 11.what is useSates?
+
+useState is a React Hook that allows functional components to have state.
+It returns an array with two values:
+1.The current state.
+
+2.A function to update that state.
+
+Whenever the state is updated, React re-renders the component to reflect the changes.
+
+Example:
+import React, { useState } from "react";
+
+function Counter() {
+  const [count, setCount] = useState(0); // state variable
+
+  return (
+    <div>
+      <h3>Count: {count}</h3>
+      <button onClick={() => setCount(count + 1)}>Increase</button>
+    </div>
+  );
+}
+
+--------------------------------------------
+
+12.what is useeffect?
+
+useEffect is a React Hook used to perform side effects in functional components.
+A side effect is any action that affects something outside the component, such as:
+
+Fetching data from an API
+
+Updating the DOM manually
+
+Setting up subscriptions or timers
+
+Logging values
+
+
+Example: Fetching Data
+
+import React, { useState, useEffect } from 'react';
+
+function DataFetcher() {
+  const [data, setData] = useState(null);
+
+  // This effect runs once when the component mounts
+  useEffect(() => {
+    fetch('https://api.example.com/data')
+      .then(response => response.json())
+      .then(result => setData(result));
+  }, []); // The empty dependency array ensures this effect runs only once
+
+  return <div>{data ? <p>Data loaded!</p> : <p>Loading...</p>}</div>;
+}
+
+-------------------------------------------------
+13. what is useContext ?
+
+useContext is a React Hook that allows you to access data from a context directly, without having to pass props manually through every level of the component tree (a problem called prop drilling).
+
+It is commonly used for global state management like authentication, themes, or user settings.
+
+Syntax:
+const value = useContext(MyContext);
+
+
+MyContext → the context you created with React.createContext()
+
+value → the data provided by the nearest Context.Provider
+
+Example: Theme Context
+import React, { createContext, useContext } from "react";
+
+// 1. Create a context
+const ThemeContext = createContext("light");
+
+function ThemedButton() {
+  // 2. Use useContext to consume value
+  const theme = useContext(ThemeContext);
+  return <button>{`Theme is ${theme}`}</button>;
+}
+
+function App() {
+  return (
+    // 3. Provide context value
+    <ThemeContext.Provider value="dark">
+      <ThemedButton />
+    </ThemeContext.Provider>
+  );
+}
+
+export default App;
+
+
+---------------------------------------------------
+
+14.what is useRef ?
+
+useRef is a React Hook that gives you a way to persist values across renders without causing a re-render.
+It is mainly used for two things:
+
+Accessing/manipulating DOM elements directly
+
+Storing mutable values (like timers, counters, previous values) that don’t trigger re-renders when changed.
+
+Syntax:
+const ref = useRef(initialValue);
+
+
+ref.current → stores the mutable value or DOM element reference.
+
+The value in ref.current persists across renders, but updating it does not trigger a re-render.
+
+import React, { useRef } from "react";
+
+function InputFocus() {
+  const inputRef = useRef(null);
+
+  const focusInput = () => {
+    inputRef.current.focus(); // directly focus DOM element
+  };
+
+  return (
+    <div>
+      <input ref={inputRef} type="text" placeholder="Type here..." />
+      <button onClick={focusInput}>Focus Input</button>
+    </div>
+  );
+}
+
+export default InputFocus;
+
+
+---------------------------------------------------------------------------
+
+15.what is useMemo ?
+
+useMemo is a React Hook that memoizes (caches) the result of an expensive calculation so that it only recomputes when its dependencies change.
+
+It helps in performance optimization by preventing unnecessary recalculations on every render.
+
+import React, { useState, useMemo } from "react";
+
+function ExpensiveCalculation() {
+  const [count, setCount] = useState(0);
+  const [input, setInput] = useState("");
+
+  // Expensive function (e.g., looping a million times)
+  const slowCalculation = (num) => {
+    console.log("Calculating...");
+    for (let i = 0; i < 1000000000; i++) {}
+    return num * 2;
+  };
+
+  // useMemo caches the result until 'count' changes
+  const doubled = useMemo(() => slowCalculation(count), [count]);
+
+  return (
+    <div>
+      <h3>Doubled Value: {doubled}</h3>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+      <input
+        type="text"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder="Type something"
+      />
+    </div>
+  );
+}
+
+export default ExpensiveCalculation;
+ 
+
+
+
+------------------------------------------------------------------
+ 16.what is use useReducer ?
+
+ useReducer is a React Hook used for state management in functional components.
+It’s an alternative to useState, and is particularly useful when:
+
+1.The state is complex (multiple sub-values).
+
+2.The next state depends on the previous state.
+
+3.You want a more structured way to manage state updates (like Redux).
+
+
+import React, { useReducer } from "react";
+
+// Reducer function
+function reducer(state, action) {
+  switch (action.type) {
+    case "increment":
+      return { count: state.count + 1 };
+    case "decrement":
+      return { count: state.count - 1 };
+    case "reset":
+      return { count: 0 };
+    default:
+      return state;
+  }
+}
+
+function Counter() {
+  const [state, dispatch] = useReducer(reducer, { count: 0 });
+
+  return (
+    <div>
+      <h3>Count: {state.count}</h3>
+      <button onClick={() => dispatch({ type: "increment" })}>+</button>
+      <button onClick={() => dispatch({ type: "decrement" })}>-</button>
+      <button onClick={() => dispatch({ type: "reset" })}>Reset</button>
+    </div>
+  );
+}
+
+export default Counter;
+
+
+
+----------------------------------------------------------------------------------------------
+
+17.what is useCallback ?
+
+useCallback is a React Hook that memoizes a function, so it only re-creates that function when its dependencies change.
+
+It helps in performance optimization, especially when passing functions as props to child components — preventing unnecessary re-renders.
+
+
+import React, { useState, useCallback } from "react";
+
+function Child({ onClick }) {
+  console.log("Child rendered");
+  return <button onClick={onClick}>Click Me</button>;
+}
+
+function Parent() {
+  const [count, setCount] = useState(0);
+
+  // Without useCallback → new function created every render
+  // const handleClick = () => console.log("Clicked!");
+
+  // With useCallback → function is memoized
+  const handleClick = useCallback(() => {
+    console.log("Clicked!");
+  }, []);
+
+  return (
+    <div>
+      <h3>Count: {count}</h3>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+      <Child onClick={handleClick} />
+    </div>
+  );
+}
+
+export default Parent;
+
+
+------------------------------------------------------------------------
+
+
+18. what is useLayoutEffect ?
+
+useLayoutEffect is similar to useEffect, but it runs synchronously after the DOM updates, and before the browser paints the screen.
+
+This means:
+
+1.useEffect → runs asynchronously after painting (user may see changes happen later).
+
+2.useLayoutEffect → runs synchronously before painting (user sees updates instantly).
+
+It is useful when you need to measure DOM elements or synchronously apply changes before the user sees the UI.
+
+import React, { useState, useRef, useLayoutEffect } from "react";
+
+function Box() {
+  const [width, setWidth] = useState(0);
+  const boxRef = useRef(null);
+
+  useLayoutEffect(() => {
+    // Runs before the browser paints
+    setWidth(boxRef.current.offsetWidth);
+  }, []);
+
+  return (
+    <div>
+      <div ref={boxRef} style={{ width: "200px", height: "100px", background: "skyblue" }}>
+        Box
+      </div>
+      <p>Box width: {width}px</p>
+    </div>
+  );
+}
+
+export default Box;
+
+
+------------------------------------------------------------------------------------------------------
+
+19. What is the Diffing Algorithm in React?
+
+The Diffing Algorithm is how React finds the differences between the old Virtual DOM and the new Virtual DOM.
+
+1.If element types differ → React replaces the old node.
+
+2.If types are the same → React updates only the changed props.
+
+3.For lists → React uses keys to identify which items changed, moved, or stayed the same.
+
+This approach reduces unnecessary re-renders.
+
+
+--------------------------------------------------------------------------------------------------------------
+20.What is Reconciliation in React?
+
+Reconciliation is the overall process of updating the Real DOM.
+
+1.React renders a new Virtual DOM.
+
+2.It uses the Diffing Algorithm to find differences from the old Virtual DOM.
+
+3.Then React applies only those minimal changes to the Real DOM.
+
+In short: Reconciliation = Virtual DOM + Diffing + Real DOM updates.
+
+------------------------------------------------------------------------------------------------------------------
+
+21.React uses the Virtual DOM to avoid direct heavy operations on the Real DOM. 
+It compares old and new Virtual DOM trees using the Diffing Algorithm,
+ and through Reconciliation, it efficiently updates only the changed parts of the Real DOM
+
+ ----------------------------------------------------------------------------------------------------------------
+
+ 22.What is Redux?
+
+ Redux is a state management library for JavaScript applications, commonly used with React.
+
+1.It provides a single source of truth (store) for application state.
+
+2.State updates are predictable because they happen through actions and reducers.
+
+
+----------------------------------------------------------------------------------------------
+
+23.What are the main components of Redux?
+
+1.Store → Holds the state of the application.
+
+2.Action → A plain object describing “what happened” (must have a type).
+
+3.Reducer → A pure function that decides how state changes based on the action.
+
+4.Dispatch → A method used to send actions to the store.
+
+5.Selector → A function to extract data from the store.
+
+
+---------------------------------------------------------------------------------------------------------
+
+24.How does data flow in Redux?
+
+The data flow in Redux is unidirectional:
+
+1.User triggers an action.
+
+2.Action is dispatched to the store.
+
+3.Store runs the reducer to calculate the new state.
+
+4.Components re-render based on the updated state.
+
+
+--------------------------------------------------------------------------------------------------
+
+25.Difference between useMemo and useCallback?
+
+1.useMemo → Caches the result of a computation.
+
+2.useCallback → Caches the function itself.
+
+Both prevent unnecessary recalculations/re-renders.
+
+
+-----------------------------------------------------------------------------------------------------
+
+26.What is the difference between controlled and uncontrolled components?
+
+1.Controlled → Form data is handled by React state (value, onChange).
+
+2.Uncontrolled → Form data is handled by the DOM using refs.
+
+
+-------------------------------------------------------------------------------------------------------
+
+27.How do you optimize performance in React?
+
+React performance can be optimized by avoiding unnecessary re-renders using React.memo, useMemo, and useCallback,
+implementing code-splitting with React.lazy, using virtualization for large lists, 
+and applying throttling/debouncing for frequent events
+
+----------------------------------------------------------------------------------------------------------
+
+28. How do you call an API in React?
+
+Using fetch or axios inside useEffect hook, and updating state with the result.
+
+
+---------------------------------------------------------------------------------------
+
+29.What is React Router?
+
+React Router is a library for navigation in React apps. It lets us define routes (<Route>) and handle navigation without refreshing the page.
+
+------------------------------------------------------------------------------------------------
+30.What is the difference between Functional and Class Components in React?
+
+Class components use class syntax with this.state and lifecycle methods,
+ while functional components are simpler functions that use hooks (useState, useEffect) for state and side effects.
+ Today, functional components are preferred in React because they are cleaner and fully support hooks.
+
+
+ ------------------------------------------------------------------------------------------------
+
+
+ 31.What is Debounce?
+
+Definition:
+
+Debounce is a technique to limit how often a function is executed.
+
+In React, it’s often used for search inputs, so the function runs only after the user stops typing for a certain time.
+
+Use case:
+
+Search bars
+
+API calls while typing
+
+Resize or scroll events
+
+
+import React, { useState, useEffect } from "react";
+
+function DebouncedSearch() {
+  const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
+
+  useEffect(() => {
+    // Set a timer
+    const timer = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 500); // 500ms delay
+
+    // Clear previous timer if query changes
+    return () => clearTimeout(timer);
+  }, [query]);
+
+  return (
+    <div>
+      <h2>Debounced Search</h2>
+      <input
+        type="text"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Type here..."
+      />
+      <p>Search Query: {debouncedQuery}</p>
+    </div>
+  );
+}
+
+export default DebouncedSearch;
+
+
+
+-------------------------------------------------------------------------------------
+
+
+
+
+
+
+ practical
+ --------------------
+ --------------------
+
+1. Create a simple Counter App in React.
+
+import React, { useState } from "react";
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <h2>Count: {count}</h2>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+      <button onClick={() => setCount(count - 1)}>Decrement</button>
+      <button onClick={() => setCount(0)}>Reset</button>
+    </div>
+  );
+}
+
+export default Counter;
+
+
+2.Fetch and display data from an API.
+
+import React, { useState, useEffect } from "react";
+
+function Users() {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then(res => res.json())
+      .then(data => setUsers(data));
+  }, []);
+
+  return (
+    <div>
+      <h2>User List</h2>
+      <ul>
+        {users.map(user => (
+          <li key={user.id}>{user.name} - {user.email}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default Users;
+
+------------------------------------------------------------------------
+3.Todo List (Add, Display, Delete)
+
+import React, { useState } from "react";
+
+function TodoApp() {
+  const [task, setTask] = useState("");
+  const [todos, setTodos] = useState([]);
+
+  const addTask = () => {
+    if (task.trim() === "") return;
+    setTodos([...todos, task]);
+    setTask("");
+  };
+
+  const deleteTask = (index) => {
+    setTodos(todos.filter((_, i) => i !== index));
+  };
+
+  return (
+    <div>
+      <h2>Todo List</h2>
+      <input
+        type="text"
+        value={task}
+        onChange={(e) => setTask(e.target.value)}
+        placeholder="Enter task"
+      />
+      <button onClick={addTask}>Add</button>
+
+      <ul>
+        {todos.map((t, index) => (
+          <li key={index}>
+            {t} <button onClick={() => deleteTask(index)}>❌</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default TodoApp;
+
+
+
+---------------------------------------------------------------------------
+
+4.Optimize a list rendering using React.memo .
+
+import React, { useState, memo } from "react";
+
+const Item = memo(({ name }) => {
+  console.log("Rendering:", name);
+  return <li>{name}</li>;
+});
+
+function ListApp() {
+  const [items] = useState(["Apple", "Banana", "Orange"]);
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <button onClick={() => setCount(count + 1)}>Click {count}</button>
+      <ul>
+        {items.map((item, i) => (
+          <Item key={i} name={item} />
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default ListApp;
+
+
+--------------------------------------------------------------------------------
+
+5.Controlled vs Uncontrolled Input Example.
+
+1.Controlled Input:
+
+function ControlledInput() {
+  const [value, setValue] = useState("");
+
+  return (
+    <input
+      type="text"
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+    />
+  );
+}
+
+---------------
+
+2.Uncontrolled Input (using useRef):
+
+import { useRef } from "react";
+
+function UncontrolledInput() {
+  const inputRef = useRef();
+
+  const handleClick = () => {
+    alert(inputRef.current.value);
+  };
+
+  return (
+    <div>
+      <input type="text" ref={inputRef} />
+      <button onClick={handleClick}>Show Value</button>
+    </div>
+  );
+}
+
+--------------------------------------------------------------------------------------
+
+6.Search Filter (Live filtering from list)
+
+import React, { useState } from "react";
+
+function SearchFilter() {
+  const data = ["Apple", "Banana", "Orange", "Grapes", "Mango"];
+  const [query, setQuery] = useState("");
+
+  const filtered = data.filter((item) =>
+    item.toLowerCase().includes(query.toLowerCase())
+  );
+
+  return (
+    <div>
+      <h2>Search Fruits</h2>
+      <input
+        type="text"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Search..."
+      />
+      <ul>
+        {filtered.map((f, index) => (
+          <li key={index}>{f}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default SearchFilter;
+
+
+---------------------------------------------------------------------------------------
+
+7.Form Validation
+
+import React, { useState } from "react";
+
+function LoginForm() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!email.includes("@") || password.length < 6) {
+      setError("Invalid email or password must be 6+ chars");
+    } else {
+      setError("");
+      alert("Login Successful!");
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <h2>Login</h2>
+      <input
+        type="email"
+        placeholder="Enter email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="Enter password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <button type="submit">Login</button>
+      {error && <p style={{ color: "red" }}>{error}</p>}
+    </form>
+  );
+}
+
+export default LoginForm;
+
+
+-------------------------------------------------------------------------------------
+
+8.Debounced Search (Performance)
+
+import React, { useState, useEffect } from "react";
+
+function DebouncedSearch() {
+  const [query, setQuery] = useState("");
+  const [debounced, setDebounced] = useState("");
+
+  useEffect(() => {
+    const timer = setTimeout(() => setDebounced(query), 500);
+    return () => clearTimeout(timer);
+  }, [query]);
+
+  return (
+    <div>
+      <h2>Debounced Search</h2>
+      <input
+        type="text"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Type something..."
+      />
+      <p>Search Query: {debounced}</p>
+    </div>
+  );
+}
+
+export default DebouncedSearch;
+
+
+
+--------------------------------------------------------------------------------------
+
+
+
+JavaScript
+---------------------
+
+1.Difference between map(), forEach(), and filter()?
+
+1.map() → Returns a new array with transformed elements.
+
+2.forEach() → Loops through elements, does not return a new array.
+
+3.filter() → Returns a new array with elements that satisfy a condition.
+
+let arr = [1, 2, 3, 4];
+console.log(arr.map(x => x * 2));   // [2, 4, 6, 8]
+arr.forEach(x => console.log(x));   // prints 1,2,3,4
+console.log(arr.filter(x => x > 2)); // [3,4]
+
+------------------------------------------------------------------------------------
+
+
+2.What is the difference between find() and filter()?
+
+1.find() → Returns first matching element.
+
+2.filter() → Returns all matching elements (array).
+
+-----------------------------------------------------------------------------
+
+3.How to remove duplicates from an array?
+
+let arr = [1, 2, 2, 3, 4, 4];
+let unique = [...new Set(arr)];
+console.log(unique); // [1, 2, 3, 4]
+
+
+-----------------------------------------------------------
+
+4.How to flatten a nested array?
+
+let arr = [1, [2, [3, 4]], 5];
+console.log(arr.flat(2)); // [1, 2, 3, 4, 5]
+
+
+-----------------------------------------------------
+
+5.Difference between slice() and splice()?
+
+1.slice(start, end) → Returns a new array, does not modify original.
+
+2.splice(start, count) → Modifies original array by removing/adding elements.
+
+let arr = [1, 2, 3, 4];
+console.log(arr.slice(1, 3)); // [2, 3]
+console.log(arr.splice(1, 2)); // [2, 3] → arr becomes [1, 4]
+
+
+---------------------------------------------------------------------
+
+6.How to reverse a string using arrays?
+
+let str = "Infosys";
+console.log(str.split("").reverse().join("")); // "sysofni"
+
+
+-----------------------------------------------------------------------
+
+7.Difference between some() and every()?
+
+1.some() → Returns true if at least one element satisfies condition.
+
+2.every() → Returns true if all elements satisfy condition.
+
+let arr = [10, 20, 30];
+console.log(arr.some(x => x > 25));  // true
+console.log(arr.every(x => x > 5));  // true
+
+
+-----------------------------------------------------------------------
+
+8.How to merge two arrays?
+
+let arr1 = [1, 2];
+let arr2 = [3, 4];
+console.log([...arr1, ...arr2]); // [1, 2, 3, 4]
+
+----------------------------------------------------------------
+
+9.What is reduce()?
+
+reduce() is a JavaScript array method that reduces an array to a single value by executing a callback function on each element.
+
+The callback takes 2 main parameters:
+
+accumulator → keeps track of the ongoing result
+
+currentValue → the current element being processed.
+
+
+-----------------------------------------------------------------------------
+
+10.What are the data types in JavaScript?
+
+1.Primitive: string, number, boolean, null, undefined, symbol, bigint
+
+2.Non-primitive / Reference: Object, Array, Function
+
+
+-------------------------------------------------------------
+
+11.What is hoisting in JavaScript?
+
+Variables and functions are moved to the top of their scope during compilation.
+
+1.var → hoisted and initialized with undefined
+
+2.let & const → hoisted but not initialized (TDZ – Temporal Dead Zone)
+
+
+-------------------------------------------------------------------
+
+12.What is the difference between call(), apply(), and bind()?
+
+1.call() → Calls function immediately, arguments passed individually
+
+2.apply() → Calls function immediately, arguments passed as array
+
+3.bind() → Returns a new function, does not call immediately
+
+function greet(name) { console.log("Hi " + name); }
+greet.call(null, "Kevin");
+greet.apply(null, ["Kevin"]);
+let greetKevin = greet.bind(null, "Kevin");
+greetKevin();
+
+
+--------------------------------------------------------------------
+
+
+
+
+
+
