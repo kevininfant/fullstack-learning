@@ -1,0 +1,242 @@
+1. What are the different data types in JavaScript?
+Primitive types: String, Number, Boolean, Undefined, Null, Symbol, BigInt
+
+Non-primitive types: Object, Array, Function
+
+-----------------------------------
+
+2.Difference between var, let, and const?
+
+var → Function-scoped, hoisted, can be redeclared & updated.
+
+let → Block-scoped, cannot be redeclared in same scope, can be updated.
+
+const → Block-scoped, cannot be redeclared or updated.
+
+--------------------------------------------------
+
+3.What is hoisting in JavaScript?
+
+Hoisting is JavaScript’s behavior of moving variable and function declarations to the top of their scope before execution.
+
+var is hoisted but initialized with undefined.
+
+let and const are hoisted but kept in Temporal Dead Zone (TDZ).
+
+Functions are fully hoisted.
+
+
+----------------------------------------------------------------------------
+
+4.Difference between == and ===?
+
+== → loose equality, compares values after type conversion.
+
+=== → strict equality, compares both value and type.
+
+
+--------------------------------------------
+5. What is the difference between null and undefined?
+
+undefined: variable declared but not assigned a value.
+
+null: explicitly set as empty by the programmer.
+
+
+----------------------------------------------------------------------------
+6.What is a closure in JavaScript?
+
+A closure is a function that “remembers” its lexical scope even when executed outside of it.
+👉 It allows access to variables from an outer function after the outer function has returned.
+
+
+-------------------------------------------
+7.. What is the difference between synchronous and asynchronous JavaScript?
+
+Synchronous: Executes line by line (blocking).
+
+Asynchronous: Allows non-blocking operations (using callbacks, promises, async/await).
+
+
+------------------------------------------------------------
+8.What is the Event Loop in JavaScript?
+
+The Event Loop is a mechanism that allows JavaScript to perform non-blocking operations by handling the call stack, callback queue, and microtask queue.
+👉 Execution order: synchronous → microtasks (Promises) → macrotasks (setTimeout, setInterval).
+
+
+------------------------------------------------------------------------
+
+9.What is the difference between function declaration and function expression?
+
+Function Declaration:
+
+function add(a, b) { return a + b; }
+
+
+👉 Hoisted, can be called before definition.
+
+Function Expression:
+
+const add = function(a, b) { return a + b; }
+
+
+👉 Not hoisted, can only be called after definition.
+
+
+
+--------------------------------------------------------------------------
+
+10. What are arrow functions and how are they different?
+
+Arrow functions (()=>{}) are a shorter way to write functions.
+Differences:
+
+Do not have their own this (inherit from parent).
+
+Cannot be used as constructors.
+
+No arguments object.
+
+
+----------------------------------------------------------------------------------------------------------------------------
+11.What are promises in JavaScript?
+
+A Promise represents the result of an asynchronous operation.
+States:
+
+Pending
+
+Fulfilled
+
+Rejected
+
+
+----------------------------------------
+12.What is async/await?
+
+async/await is syntactic sugar over Promises.
+
+async → makes a function return a Promise.
+
+await → pauses execution until the Promise resolves.
+
+-----------------------------------------   
+13.What are ES6 features in JavaScript?
+
+let, const
+
+Arrow functions
+
+Template literals
+
+Destructuring
+
+Default parameters
+
+Spread/rest operators
+
+Classes
+
+Promises
+
+Modules (import/export)
+
+----------------------------------------------
+24.What is the difference between localStorage, sessionStorage, and cookies?
+
+localStorage → Stores data permanently (until cleared), ~5MB limit.
+
+sessionStorage → Stores data until tab/browser is closed.
+
+cookies → Stores small data (~4KB), can be sent with HTTP requests.
+
+-----------------------------------------------------------
+15.What is the difference between synchronous and asynchronous callbacks?
+
+Synchronous callback → executed immediately (e.g., forEach).
+
+Asynchronous callback → executed later (e.g., setTimeout, Promises).
+
+--------------------------------------------------------------
+16.Explain the difference between ES5 function constructors and ES6 classes.
+
+ES6 classes are syntactic sugar over constructor functions.
+
+Classes support inheritance via extends and super.
+
+Functions allow prototype-based inheritance manually.
+
+-----------------------------------------------
+17.How do you implement Debouncing and Throttling in JavaScript? Give examples.
+
+✅ Debouncing
+
+👉 Debouncing ensures a function is executed only after a certain delay of no activity.
+Use case: Search input box, button clicks.
+
+Example
+// Debounce function
+function debounce(fn, delay) {
+  let timer;
+  return function(...args) {
+    clearTimeout(timer); // reset timer
+    timer = setTimeout(() => fn.apply(this, args), delay);
+  };
+}
+
+// Test case: search input
+function fetchData(query) {
+  console.log("Fetching data for:", query);
+}
+
+const debouncedFetch = debounce(fetchData, 1000);
+
+// Simulating user typing
+debouncedFetch("I");
+debouncedFetch("In");
+debouncedFetch("Inf");
+debouncedFetch("Info");
+
+Output
+
+👉 Only last call executes after 1 second:
+
+Fetching data for: Info
+
+✅ Throttling
+
+👉 Throttling ensures a function is executed at most once in a given interval.
+Use case: Scroll event, window resize, drag events.
+
+Example
+// Throttle function
+function throttle(fn, limit) {
+  let lastCall = 0;
+  return function(...args) {
+    const now = Date.now();
+    if (now - lastCall >= limit) {
+      lastCall = now;
+      fn.apply(this, args);
+    }
+  };
+}
+
+// Test case: scroll
+function logScroll() {
+  console.log("Scroll event fired at:", Date.now());
+}
+
+const throttledScroll = throttle(logScroll, 2000);
+
+// Simulating multiple scroll calls
+throttledScroll(); // Executes immediately
+setTimeout(throttledScroll, 500);  // Ignored
+setTimeout(throttledScroll, 2500); // Executes (after 2s)
+
+Output
+
+👉 Executes only once every 2 seconds, no matter how often triggered.
+
+
+-------------------------------------
