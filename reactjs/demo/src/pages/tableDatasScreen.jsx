@@ -17,7 +17,7 @@ function TableData() {
         const flitered = data.filter((item) =>
           item.title.toLowerCase().includes(search.toLowerCase())
         );
-        setTableData(filtered);
+        setTableData(flitered);
       } else {
         setTableData(data);
       }

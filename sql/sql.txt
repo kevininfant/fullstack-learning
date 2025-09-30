@@ -53,4 +53,97 @@ However, numeric fields should not be enclosed in quotes:
 ex:SELECT * FROM Customers
 WHERE CustomerID=1;
 
-9.
+10.What is a Stored Procedure?
+
+A Stored Procedure is a pre-written SQL program that is stored in the database and can be executed whenever needed.
+
+It can include SQL queries, loops, conditions, variables, and parameters.
+
+Think of it as a function in programming, but for the database.
+
+Example:
+
+DELIMITER //
+
+CREATE PROCEDURE GetUserById(IN userId INT)
+BEGIN
+    SELECT * FROM users WHERE id = userId;
+END //
+
+DELIMITER ;
+
+
+Call the procedure:
+
+CALL GetUserById(3);
+
+
+11.Why Use Stored Procedures?
+
+Reusability
+
+Write once, use multiple times.
+
+Performance
+
+Executed on the database server → reduces network traffic.
+
+Security
+
+Can restrict direct access to tables; users can execute procedures instead.
+
+Maintainability
+
+Easier to update logic in one place instead of multiple queries in application code.
+
+Reduce Complexity
+
+Complex operations (like multiple joins, calculations, loops) can be encapsulated.
+
+
+12.What is a Transaction?
+
+A Transaction is a set of SQL statements that are executed as a single unit of work.
+
+Either all statements succeed (commit) or all fail (rollback).
+
+Ensures data consistency and integrity.
+
+Example:
+
+START TRANSACTION;
+
+UPDATE accounts SET balance = balance - 100 WHERE id = 1;
+UPDATE accounts SET balance = balance + 100 WHERE id = 2;
+
+COMMIT;  -- Saves changes
+-- or ROLLBACK; -- Undo changes if any error occurs
+
+
+
+13.Why Use Transactions?
+
+Data Integrity: Prevents partial updates in critical operations like money transfer.
+
+Error Handling: Can rollback if something goes wrong.
+
+Concurrency Control: Ensures multiple users don’t corrupt data.
+
+
+14.2️⃣ Properties of Transactions (ACID)
+
+Atomicity → All operations succeed or none do.
+
+Consistency → Database moves from one valid state to another.
+
+Isolation → Transactions don’t interfere with each other.
+
+Durability → Once committed, changes are permanent.
+
+
+15.Primary Key vs Foreign Key
+
+Primary Key → unique identifier for a table row
+
+Foreign Key → links a column in one table to primary key in another table
+

@@ -1,0 +1,144 @@
+1.What is Node.js? Why use it?
+👉 Node.js is a runtime environment built on Chrome’s V8 engine. It allows running JavaScript on the server. It’s fast,
+ event-driven, non-blocking → good for real-time apps (chat, streaming, APIs).
+----------------------------------------------------------------------------------------------------
+
+ 2.Difference between synchronous and asynchronous programming in Node.js?
+👉 Sync → tasks execute one by one, blocking.
+👉 Async → tasks run in parallel (non-blocking I/O), callback executes once done.
+
+------------------------------------------------------------------------------------------------------
+3. What are Callbacks, Promises, and async/await?
+
+Callback → function passed into another function (can cause "callback hell").
+
+Promise → cleaner way, represents future value (.then/.catch).
+
+async/await → syntactic sugar over promises, makes async code look synchronous.
+
+-----------------------------------------------------------------------------------------------------------------
+4. What is Middleware in Express.js?
+👉 Middleware are functions that run before reaching the final route handler. Example: logging, authentication, error handling.
+
+------------------------------------------------------------------------------------------------------------------
+
+5. What is Buffer in Node.js?
+👉 Temporary memory to store binary data while reading/writing streams.
+
+----------------------------------------------------------------------------------------
+
+
+6. Difference between app.use() vs app.get()?
+👉 app.use() → applies middleware for all routes.
+👉 app.get() → handles only GET requests for a specific route.
+
+
+=---------------------------------------------------------------------------------------
+
+7. Error Handling in Express?
+
+js
+Copy code
+app.use((err, req, res, next) => {
+  res.status(500).json({ error: err.message });
+});
+
+-----------------------------------------------------------------------------------
+
+8.What is a Stored Procedure in MySQL? Why use it?
+👉 A stored procedure is a precompiled SQL block stored in DB.
+✅ Reusable, reduces code duplication, improves performance.
+
+---------------------------------------------------------------------------------
+
+9.What is JWT? How is it used in Node.js?
+👉 JSON Web Token → stateless authentication. Token is signed and sent to client, verified on each request.
+
+---------------------------------------------------------------------------------
+10.Session-based vs Token-based Auth?
+
+Session-based: stored on server, needs DB/cache.
+
+Token-based: JWT stored on client, scalable and stateless.
+
+-----------------------------------------------------------------------------------------
+
+
+11.How to improve Node.js performance?
+👉 Use async/non-blocking, caching, clustering, gzip compression, database indexing, avoid memory leaks.
+
+-----------------------------------------------------------------------------------------------------------
+
+12.What is Sequelize?
+👉 Sequelize is an ORM (Object Relational Mapper) for Node.js.
+It maps JavaScript objects → SQL tables.
+Supports MySQL, PostgreSQL, SQLite, MSSQL.
+
+-------------------------------------------------------------------------------------------------------------
+
+13.Why use Sequelize instead of raw SQL?
+✅ Cleaner syntax (JS instead of SQL)
+✅ Prevents SQL injection
+✅ Easy migrations, associations
+✅ Cross-database support
+
+--------------------------------------------------------------------------
+
+14.What are associations in Sequelize?
+👉 Relationships between models.
+
+One-to-One
+
+User.hasOne(Profile);
+Profile.belongsTo(User);
+
+
+One-to-Many
+
+User.hasMany(Post);
+Post.belongsTo(User);
+
+
+Many-to-Many
+
+Student.belongsToMany(Course, { through: "StudentCourses" });
+Course.belongsToMany(Student, { through: "StudentCourses" });
+
+
+--------------------------------------------------------------------------
+
+15.How do you connect Node.js to MySQL using Sequelize?
+
+const { Sequelize } = require('sequelize');
+const sequelize = new Sequelize('testdb', 'root', 'password', {
+  host: 'localhost',
+  dialect: 'mysql'
+});
+
+
+--------------------------------------------------------
+16.define() vs init()?
+
+define() → quick model definition (commonly used).
+
+init() → advanced (used with class Model extends Sequelize.Model).
+
+
+----------------------------------------------------------
+
+
+17.Difference: findOne, findByPk, findAll?
+
+findOne → returns first matching row.
+
+findByPk → fetch by primary key.
+
+findAll → returns all matches (array).
+
+
+------------------------------------------------------------------------
+
+
+
+node js  code 
+
