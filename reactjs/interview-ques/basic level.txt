@@ -86,10 +86,9 @@ Answer: The Virtual DOM is a lightweight copy of the real DOM.When state or prop
 
  7.What are Keys in React?
 
-Keys in React are unique identifiers assigned to elements in a list.
- They help React optimize rendering by efficiently determining which items changed, were added, or removed during reconciliation. 
-The best practice is to use a stable and unique value like an id, rather than array index, to ensure predictable behavior.
-
+Keys in react are unique identifiers for list items.
+They help React know which items changed, added, or removed when re-rendering.
+Without proper keys, React may re-use DOM elements incorrectly → leading to bugs or unexpected behavior.
 const users = ["Kevin", "John", "Sophia"];
 
 {users.map((user, index) => <li key={index}>{user}</li>)}
@@ -99,8 +98,9 @@ const users = ["Kevin", "John", "Sophia"];
 
 8.Controlled vs Uncontrolled components?
 
-"In real projects, controlled components are preferred because they give better control, validation, and predictable behavior.
- But uncontrolled components are simpler when you just need the value once, like in a form submission.
+Controlled components are inputs managed by React state, giving full control, validation, and predictable behavior.
+Uncontrolled components store values directly in the DOM and are simpler when you just need the value once, like on form submission.
+In real projects, controlled components are preferred.
 
  Example:
 
@@ -153,14 +153,10 @@ function UncontrolledInput() {
 
  9.What are React Hooks?
 
- Answer: React hooks are special functions thats let you "hook into" React features like 
- state and lifeCycle methods inside functional components. 
+React Hooks are special functions that let you use state and lifecycle features in functional components.
+They were introduced in React 16.8, so developers don’t need class components anymore.
+They also help reuse logic easily between components.
  
- Before Hooks,Developers had to use class components to manage state and lifecycle logic.hooks make a 
- functional components more powerfull and easier to use .
-
- its is intraduse to react 16.8.
-
  ------------------------------------------
 
 
@@ -180,67 +176,28 @@ function UncontrolledInput() {
 
  11.how many hooks in react and which is most usaables?
  
-React has two categories of hooks:
+1.Built-in (Core) Hooks – about 15+ official hooks depending on the React version (e.g., useState, useEffect, useContext, 
+useRef, useReducer, useMemo, useCallback, useLayoutEffect, and newer ones like useTransition, useDeferredValue in React 18).
 
-1. Basic (Core) Hooks
+Custom Hooks – user-defined hooks (functions starting with use) to reuse logic, e.g., useFetch, useLocalStorage.
 
-These are built into React itself and used most often:
+🔹 Most used hooks in real projects:
 
-useState
+useState → to manage component state
 
-useEffect
+useEffect → to handle side effects (API calls, timers, subscriptions)
 
-useContext
+useContext → for global state (like theme, auth)
 
-useRef
+useRef → to work with DOM elements or store mutable values
 
-useReducer
-
-useCallback
-
-useMemo
-
-useImperativeHandle
-
-useLayoutEffect
-
-useDebugValue
-
-useId
-
-useTransition (introduced in React 18 for concurrent features)
-
-useDeferredValue (React 18)
-
-useSyncExternalStore (React 18)
-
-useInsertionEffect (React 18)
-
-👉 So, React has around 15+ official hooks (depending on React version).
-
-2. Custom Hooks
-
-You can create your own hooks (functions that start with use) to reuse logic.
-
-Example: useFetch, useLocalStorage, etc.
-
-🔹 Most Usable Hooks (the “Top 5” you’ll use daily)
-
-useState → for managing component state
-
-useEffect → for side effects (fetching data, subscriptions, timers)
-
-useContext → for global state/context (like auth, theme)
-
-useRef → for accessing/managing DOM elements or persisting values without re-render
-
-useMemo & useCallback → for performance optimization (memoizing values and functions)
+useMemo / useCallback → for performance optimization
 
 ✅ In practice:
 
-Beginners mostly use useState + useEffect (almost every component).
+Almost every component uses useState and useEffect.
 
-Intermediate/Advanced projects often use useContext, useReducer, useMemo, useCallback.
+For scaling apps, useContext and useReducer are very common.
 
  ----------------------------------------
 
@@ -304,7 +261,8 @@ function DataFetcher() {
 -------------------------------------------------
 13. what is useContext ?
 
-useContext is a React Hook that allows you to access data from a context directly, without having to pass props manually through every level of the component tree (a problem called prop drilling).
+useContext is a React Hook that allows you to access data from a context directly,
+ without having to pass props manually through every level of the component tree (a problem called prop drilling).
 
 It is commonly used for global state management like authentication, themes, or user settings.
 
