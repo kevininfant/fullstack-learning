@@ -37,7 +37,7 @@ sticky	Sticks when scrolling after a threshold
 5.CSS Box Model
 
 Definition:
-The box model describes how every HTML element is represented as a rectangular box in the browser.
+The css box model is the every HTML element is represented as a rectangular box in the browser.
 It consists of 4 layers:
 
 Content – The actual content (text, image, etc.)
@@ -50,3 +50,49 @@ Margin – Space outside the element between border and other elements
 
 
 
+6.Types of CSS (inline, internal, external)? Which is recommended?
+
+Inline: Written inside the tag using style="". (Low reusability)
+
+Internal: Written inside <style> in HTML. (Applies to one page only)
+
+External: Written in a .css file and linked. (Best practice, reusable, improves maintainability)
+👉 External CSS is recommended.
+
+
+7. Difference between relative, absolute, fixed, and sticky positioning?
+
+static → default, no positioning.
+
+relative → relative to its normal position.
+
+absolute → relative to the nearest positioned ancestor.
+
+fixed → relative to viewport, stays even on scroll.
+
+sticky → acts like relative until a scroll threshold, then sticks like fixed.
+
+
+8.z-index? When it doesn’t work?
+
+z-index controls the stacking order of elements.
+
+Works only when position is not static.
+
+
+9.display: none vs visibility: hidden?
+
+display: none → removes element from DOM flow. (No space)
+
+visibility: hidden → hides but keeps space occupied.
+
+
+10.Flexbox vs CSS Grid
+
+Flexbox is a one-dimensional layout system, useful when we need to align items either in a row or in a column, like navigation bars or button groups.
+Grid, on the other hand, is a two-dimensional system, which allows us to control both rows and columns at the same time, making it better for page layouts, dashboards, or galleries.
+
+In real projects, I usually combine both — I use Grid to structure the page and Flexbox inside smaller components for alignment.
+
+
+11. 

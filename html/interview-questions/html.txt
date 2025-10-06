@@ -280,5 +280,165 @@ Custom attributes to store extra info: data-*
 
 
 
+14.Difference between <canvas> and <svg> in HTML5?
+
+Canvas → Pixel-based, good for dynamic graphics, games.
+
+SVG → Vector-based, scalable, good for icons, charts.
+
+
+15.How do you handle SEO in HTML?
+
+Use semantic tags.
+
+Proper meta tags (<meta name="description">).
+
+Use heading hierarchy (<h1>, <h2>).
+
+Use meaningful alt text in images.
+
+Proper <title> tag.
+
+
+
+16.What are web storage APIs in HTML5? When will you use them?
+
+localStorage → Data Stored permanently in browser.
+
+sessionStorage → Data lost after tab close.
+
+Use case: Storing user preferences, theme, cart items.
+
+
+17.What is the difference between inline SVG and an image <img src="icon.svg">?
+
+Inline SVG can be styled with CSS and manipulated with JS.
+
+<img> just displays the file, no styling control.
+
+
+18.How would you improve performance of an HTML page?
+
+Use minified CSS/JS.
+
+Use CDN for static assets.
+
+Use image optimization (WebP).
+
+Use lazy loading (loading="lazy" on <img>).
+
+Use <link rel="preload"> for critical resources.
+
+
+
+19.What’s the difference between <iframe> and <embed>?
+
+<iframe> → Embeds another HTML document inside.
+
+<embed> → Embeds external resources (like PDF, Flash, multimedia).
+
+
+20.How do you ensure cross-browser compatibility in HTML?
+
+Use <!DOCTYPE html> (HTML5 standard).
+
+Test in multiple browsers.
+
+Use polyfills/shims for unsupported features.
+
+Avoid deprecated tags.
+
+
+21.What are Progressive Web Apps (PWA) and how does HTML help?
+
+PWA = Web apps that behave like native apps (offline, push notifications).
+
+HTML supports Service Workers + Manifest (<link rel="manifest" href="manifest.json">).
+
+
+
+22.Explain the difference between cookies, localStorage, and sessionStorage with examples.
+
+Cookies: Small data, sent with each request, expires manually.
+
+localStorage: Stored permanently in browser.
+
+sessionStorage: Stored until tab/browser is closed.
+
+localStorage.setItem("theme", "dark");
+sessionStorage.setItem("user", "Kevin");
+
+
+23.What is the difference between GET and POST in forms?
+
+GET → Data in URL, less secure, used for search.
+
+POST → Data in body, secure, used for sensitive info (login).
+
+
+24.If your website loads slowly, what HTML improvements will you do?
+
+Use defer/async for JS.
+
+Use preload for fonts & CSS.
+
+Use lazy loading for images.
+
+Minify HTML, use gzip.
+
+
+25.What are the differences between HTML Entities and Unicode?
+
+Entities: Named codes (&lt;, &gt;, &copy;).
+
+Unicode: Direct character (©, ✓).
+
+
+26.What’s the difference between inline, block, and inline-block elements?
+
+Block: Takes full width, starts new line (<div>, <p>).
+
+Inline: Doesn’t break line, only as wide as content (<span>, <a>).
+
+Inline-block: Behaves inline but can set height/width.
+
+
+27.What is the difference between rendering HTML on client-side vs server-side?
+
+Server-side rendering (SSR) → HTML built on server, faster first load, SEO friendly.
+
+Client-side rendering (CSR) → HTML shell + JS builds DOM, slower first load, better interactivity (React, Angular).
+
+
+28.What is the difference between DOM, Virtual DOM, and Shadow DOM?
+
+DOM: Browser’s object model of HTML.
+
+Virtual DOM: In React, a JS copy of DOM for fast diffing.
+
+Shadow DOM: Encapsulation in Web Components (styles won’t leak).
+
+
+29.What is the difference between alt, title, and aria-label?
+
+alt → alternative text for images (required for SEO + screen readers).
+
+title → tooltip text on hover.
+
+aria-label → accessibility description (not visible).
+
+
+30.What is the difference between relative units (em, rem, %) and absolute units (px, pt)?
+
+em → relative to parent font size.
+
+rem → relative to root (html) font size.
+
+% → relative to parent.
+
+px → fixed pixels.
+
+
+
 
 

@@ -46,8 +46,16 @@ null: explicitly set as empty by the programmer.
 ----------------------------------------------------------------------------
 6.What is a closure in JavaScript?
 
-A closure is a function that “remembers” its lexical scope even when executed outside of it.
-👉 It allows access to variables from an outer function after the outer function has returned.
+Closure means:
+👉 A function can still use variables from the outer function, even after the outer function has finished running.
+
+Example (basic English):
+
+Outer function creates a variable.
+
+Inner function uses that variable.
+
+Even when outer function is done, inner function still remembers it.
 
 
 -------------------------------------------
@@ -240,3 +248,10 @@ Output
 
 
 -------------------------------------
+
+
+debounce : the functions run only ,after the users stoping doing somthing for a short time
+
+throttle the function run regulery but not too aften even thge user keep ding action 
+
+
