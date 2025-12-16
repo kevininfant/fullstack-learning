@@ -69,27 +69,41 @@ Asynchronous: Allows non-blocking operations (using callbacks, promises, async/a
 ------------------------------------------------------------
 8.What is the Event Loop in JavaScript?
 
-The Event Loop is a mechanism that allows JavaScript to perform non-blocking operations by handling the call stack, callback queue, and microtask queue.
-👉 Execution order: synchronous → microtasks (Promises) → macrotasks (setTimeout, setInterval).
+“JavaScript is single-threaded, but it uses the Event Loop to handle asynchronous tasks efficiently.
+ The Event Loop checks the call stack and processes microtasks 
+like Promises before macrotasks like setTimeout, ensuring non-blocking execution.”
 
 
 ------------------------------------------------------------------------
 
 9.What is the difference between function declaration and function expression?
 
-Function Declaration:
+A Function Declaration is hoisted and can be called before it’s defined,
+while a Function Expression is not hoisted and can only be called after it’s assigned.
 
-function add(a, b) { return a + b; }
+🧠 Function Declaration
+// ✅ Works before declaration due to hoisting
+console.log(add(2, 3)); // 5
+
+function add(a, b) {
+  return a + b;
+}
 
 
-👉 Hoisted, can be called before definition.
+✅ Hoisted — The entire function is hoisted to the top of its scope.
+So, you can call it before its definition.
 
-Function Expression:
+⚙️ Function Expression
+// ❌ ReferenceError
+console.log(add(2, 3));
 
-const add = function(a, b) { return a + b; }
+const add = function(a, b) {
+  return a + b;
+};
 
 
-👉 Not hoisted, can only be called after definition.
+❌ Not hoisted — Only the variable add is hoisted, not its value (the function).
+So calling it before definition causes an error.
 
 
 
@@ -105,6 +119,19 @@ Do not have their own this (inherit from parent).
 Cannot be used as constructors.
 
 No arguments object.
+
+
+
+// Normal function
+function add(a, b) {
+  return a + b;
+}
+
+// Arrow function
+const addArrow = (a, b) => a + b;
+
+console.log(addArrow(2, 3)); // 5
+
 
 
 ----------------------------------------------------------------------------------------------------------------------------
@@ -168,20 +195,16 @@ Asynchronous callback → executed later (e.g., setTimeout, Promises).
 
 --------------------------------------------------------------
 16.Explain the difference between ES5 function constructors and ES6 classes.
-
-ES6 classes are syntactic sugar over constructor functions.
-
-Classes support inheritance via extends and super.
-
-Functions allow prototype-based inheritance manually.
+ES6 classes are a cleaner, more readable syntax over ES5 function constructors.
+Classes support inheritance using extends and super, whereas function constructors 
+rely on manual prototype-based inheritance.
 
 -----------------------------------------------
 17.How do you implement Debouncing and Throttling in JavaScript? Give examples.
 
-✅ Debouncing
-
-👉 Debouncing ensures a function is executed only after a certain delay of no activity.
-Use case: Search input box, button clicks.
+Debouncing means making sure a function runs only after a certain delay — and only if the user stops performing 
+the action during that time.
+It helps to reduce unnecessary function calls, like when typing in a search box or clicking a button repeatedly.
 
 Example
 // Debounce function
@@ -255,3 +278,33 @@ debounce : the functions run only ,after the users stoping doing somthing for a 
 throttle the function run regulery but not too aften even thge user keep ding action 
 
 
+
+what is  Temporal Dead Zone (TDZ) ?
+
+The Temporal Dead Zone (TDZ) is the period between when a variable is hoisted and when it is initialized in JavaScript.
+During this time, if you try to access the variable, you’ll get a ReferenceError.
+TDZ only applies to variables declared with let and const, not var.
+
+
+✅ Math.floor() in JavaScript
+
+Definition:
+
+Math.floor() is a JavaScript method that rounds a number down to the nearest integer.
+
+console.log(Math.floor(4.9));  // 4
+console.log(Math.floor(7.1));  // 7
+console.log(Math.floor(-2.8)); // -3
+
+
+
+✅ Math.ceil() in JavaScript
+
+Definition:
+
+Math.ceil() rounds a number up to the nearest integer.
+
+🧩 Example:
+console.log(Math.ceil(4.1));  // 5
+console.log(Math.ceil(7.9));  // 8
+console.log(Math.ceil(-2.1)); // -2

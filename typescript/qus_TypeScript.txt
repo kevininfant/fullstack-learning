@@ -1,0 +1,34 @@
+1. What is TypeScript?
+
+TypeScript is a superset of JavaScript that adds static typing. It compiles down to plain JavaScript.
+
+It helps you:
+
+Find errors before running the code
+
+Write clean, reliable, and scalable programs
+
+
+2. What are the advantages of TypeScript?
+
+✅ Early error detection (before runtime)
+✅ Better code completion & IntelliSense
+✅ Easier refactoring
+✅ Supports modern JavaScript features (ES6+)
+✅ Improves large-scale project maintainability
+
+3.Why should I use TypeScript?
+
+  1.Type Safety – TypeScript catches errors (like passing a string instead of a number) before running the code.
+
+  2.Better Readability – Types make the code easier to understand without guessing or checking documentation.
+
+  3.Improved Developer Experience – Provides autocomplete, suggestions, and early error detection for faster, safer development.
+
+----------------------------------------------------------
+4.TypeScript Compiler
+
+TypeScript is transpiled into JavaScript using a compiler.
+
+---------------------------------------------------------------------------
+

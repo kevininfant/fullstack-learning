@@ -5,6 +5,7 @@ import { FruitsProvider } from "./pages/hooks/useContext";
 import FruitList from "./pages/fruitlist";
 import AddFruit from "./pages/addfruit";
 import UsersExample from './pages/hooks/useCallback&UseMemo';
+import Counter from './pages/counter';
 
 function App() {
   return (
@@ -14,8 +15,9 @@ function App() {
       {/* <AddFruit /> */}
       {/* <FruitList/> */}
       {/* <UseRefExample/> */}
-      <UsersExample />
+      {/* <UsersExample /> */}
       {/* </FruitsProvider> */}
+      <Counter />
     </div>
   );
 }

@@ -7,7 +7,7 @@ const ans = reverseString("Hi Kevin How Are You ?");
 
 console.log("🚀 ~ ans:", ans);
 
-// 2
+// 2;
 function reverseString(str) {
   let reversed = "";
   for (let i = str.length - 1; i >= 0; i--) {
@@ -32,6 +32,21 @@ function isPalindrome(str) {
 }
 console.log(isPalindrome("A man, a plan, a canal, Panama")); // Output: true
 
+
+
+function isPalindrome(str) {
+  // convert to lowercase and remove spaces
+  const cleaned = str.toLowerCase().split(" ").join("");
+
+  let reversed = "";
+  for (let i = cleaned.length - 1; i >= 0; i--) {
+    reversed += cleaned[i];
+  }
+
+  return cleaned === reversed;
+}
+
+console.log(isPalindrome("A man a plan a canal Panama"));
 
 //3. FizzBuzz
 // Write a function fizzBuzz(n) that prints numbers from 1 to n. For multiples of 3, print "Fizz" instead of the number, for multiples of 5 print "Buzz", and for numbers which are multiples of both 3 and 5, print "FizzBuzz".

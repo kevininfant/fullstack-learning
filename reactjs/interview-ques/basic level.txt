@@ -1112,3 +1112,63 @@ greetKevin();
 
 
 
+React 19 Key Points & Examples
+
+Actions API (Simplifies async actions)
+
+Handles form submissions, mutations, and pending states automatically.
+Example:
+
+async function addTodoAction(formData) {
+  await fetch('/api/todo', { method: 'POST', body: formData });
+}
+
+
+Server Components & Server Actions
+
+Render components on the server to improve performance and SEO.
+Example:
+
+// Server component
+export default function UsersList() {
+  const users = await fetchUsersFromDB();
+  return <ul>{users.map(u => <li key={u.id}>{u.name}</li>)}</ul>;
+}
+
+
+use() Hook
+
+Lets you await promises inside components.
+Example:
+
+const user = use(fetchUserById(1));
+return <div>{user.name}</div>;
+
+
+React Compiler & Optimizations
+
+Automatically optimizes re-renders, less need for useMemo or React.memo.
+
+Improved Hydration & Context API
+
+Reduces mismatch errors and faster context updates.
+
+Partial Pre-rendering
+
+Pre-render parts of the app for faster initial load.
+Example:
+
+<Suspense fallback={<Loading />}>
+  <ServerComponent />
+</Suspense>
+
+
+Better Async Script & Resource Management
+
+Preload fonts, scripts, or stylesheets declaratively.
+
+
+
+
+-------------------------------------------------------------------
+

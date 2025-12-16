@@ -1,0 +1,39 @@
+console.log(a);
+var a = 10;
+//undefined
+//Because var a is hoisted but not assigned until that line runs.
+
+--------------------------------------------------------------
+console.log(b);
+let b = 20;
+
+//ReferenceError: Cannot access 'b' before initialization
+//let variables are hoisted but blocked in the Temporal Dead Zone until initialized.
+
+------------------------------------------------------------------
+console.log("1");
+setTimeout(() => console.log("2"), 0);
+console.log("3");
+
+//1
+//3
+//2
+
+//setTimeout is asynchronous — it runs after the current call stack finishes.
+
+------------------------------------------------------------------
+
+console.log("A");
+setTimeout(() => console.log("B"), 0);
+Promise.resolve().then(() => console.log("C"));
+console.log("D");
+
+//A
+//D
+//C
+//B
+
+//Promises (microtasks) run before setTimeout (macrotasks).
+
+--------------------------------------------------------------------
+
