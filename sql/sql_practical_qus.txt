@@ -1,0 +1,44 @@
+
+1.// crate table //
+
+create table teacher(
+name varchar(100),
+age int,
+salary int,
+department varchar(100)
+);
+
+
+2.//alter add table //
+
+alter table teacher add column degree varchar(100);
+
+
+3. //alter column name //
+
+alter table teacher change department dept varchar(100);
+
+department-> old colums name
+
+dept ->new col\name
+
+
+4.// change datatype //
+
+alter table teacher change age  age varchar(100);
+
+
+5.// table drop table//
+
+1.drop table teacher;
+
+
+6.
+
+
+
+
+
+
+
+
