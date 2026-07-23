@@ -1172,3 +1172,9 @@ Preload fonts, scripts, or stylesheets declaratively.
 
 -------------------------------------------------------------------
 
+why using StrictMode?
+
+"React StrictMode is a development-only feature that helps detect bugs, identifies side effects, checks effect cleanup, warns about deprecated APIs, and encourages React best practices."
+
+-----------------------------------------------------------------------
+  

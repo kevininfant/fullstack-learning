@@ -1,0 +1,175 @@
+1. What is AWS?
+
+Amazon Web Services (AWS) is a cloud platform by Amazon that provides services like computing, storage, databases, and networking over the internet.
+
+
+2. What are the benefits of using AWS?  
+- Scalability: AWS allows you to scale your resources up or down based on demand.
+- Cost-Effective: Pay only for what you use with no upfront costs.
+- Reliability: AWS has a global network of data centers that provide high availability and redundancy.
+- Security: AWS offers robust security features to protect your data and applications.
+- Flexibility: AWS supports a wide range of operating systems, programming languages, and frameworks.
+
+
+3.What is EC2?
+Amazon EC2 is a virtual server in AWS used to run applications.
+
+
+
+5. What is S3?
+
+Amazon S3 is a storage service used to store files, images, videos, and backups.
+
+6. What is RDS?
+Amazon RDS is a managed database service that makes it easy to set up, operate, and scale a relational database in the cloud.
+
+7. What is Lambda?
+AWS Lambda is a serverless compute service that allows you to run code without provisioning or managing servers. You can execute your code in response to events, such as changes to data in an S3 bucket or an HTTP request.
+
+8. What is CloudFormation?
+
+AWS CloudFormation is a service that helps you model and set up your Amazon Web Services resources. You can create templates that describe the resources you want, and CloudFormation will take care of provisioning and configuring those resources for you. This allows you to manage your infrastructure as code, making it easier to automate and replicate your environments.
+
+9. What is VPC?
+Amazon VPC (Virtual Private Cloud) is a service that allows you to create a private network within the AWS cloud. You can define your own IP address range, create subnets, and configure route tables and network gateways. This gives you control over your virtual networking environment, including the ability to isolate resources and secure communication between them.
+
+10. What is CloudWatch?
+Amazon CloudWatch is a monitoring and observability service that provides data and actionable insights for AWS resources and applications. It allows you to collect and track metrics, collect and monitor log files, set alarms, and automatically react to changes in your AWS resources. CloudWatch helps you gain visibility into your applications and infrastructure, enabling you to troubleshoot issues, optimize performance, and ensure the health of your resources.
+
+11. What is IAM?
+AWS Identity and Access Management (IAM) is a service that helps you securely control access to AWS resources. With IAM, you can create and manage AWS users and groups, and use permissions to allow or deny their access to AWS resources. This allows you to implement fine-grained access control and ensure that only authorized users can access your resources.
+
+12. What is Auto Scaling?
+AWS Auto Scaling is a service that helps you automatically adjust the number of Amazon EC2 instances in your application based on demand. You can set up scaling policies that define when to add or remove instances based on metrics such as CPU utilization or network traffic. Auto Scaling ensures that you have the right amount of resources to handle your application's workload, improving performance and reducing costs.
+
+13. What is CloudFront?
+Amazon CloudFront is a content delivery network (CDN) service that securely delivers data, videos, applications, and APIs to customers globally with low latency and high transfer speeds. CloudFront integrates with other AWS services to provide a seamless experience for distributing content to end-users. It uses a global network of edge locations to cache content closer to users, improving the performance of your applications and reducing the load on your origin servers.
+
+14. What is AWS Lambda?
+AWS Lambda is a serverless compute service that allows you to run code without provisioning or managing servers. You can execute your code in response to events, such as changes to data in an S3 bucket or an HTTP request. Lambda automatically scales your application by running code in response to each trigger, and you only pay for the compute time you consume. This makes it a cost-effective solution for running applications and services without the need for infrastructure management.
+
+15. what is EBS?
+Amazon Elastic Block Store (EBS) is a block storage service that provides persistent storage for Amazon EC2 instances. EBS volumes are highly available and can be attached to any EC2 instance in the same availability zone. They are designed for use as primary storage for data that requires frequent updates, such as databases or file systems. EBS volumes can be easily scaled up or down and provide features like snapshots for backup and recovery.
+
+
+16 What is Route53?
+Amazon Route 53 is a scalable and highly available Domain Name System (DNS) web service. It is designed to route end-user requests to applications hosted on AWS or on-premises. Route 53 provides features such as domain registration, DNS routing, and health checking to ensure that your applications are accessible and perform well. It allows you to manage your domain names and route traffic based on various routing policies, such as latency-based routing or weighted routing, to optimize the performance of your applications.
+
+17.what is memory optimize instance?
+Memory-optimized instances are a type of Amazon EC2 instance that is designed to deliver fast performance for workloads that require a large amount of memory. These instances are ideal for applications such as high-performance databases, in-memory caches, and real-time big data analytics. Memory-optimized instances provide a high ratio of memory to CPU, allowing them to handle large datasets and memory-intensive applications efficiently. They come in various sizes to accommodate different workload requirements.
+Example:
+- R5: Memory-optimized instances that provide a balance of compute, memory, and networking resources for a wide range of applications.
+- X1: Memory-optimized instances that offer the highest memory capacity for in-memory databases and
+- X1e: Memory-optimized instances that provide even more memory than X1 instances for the most demanding workloads.
+
+18.compute optimize instance?
+Compute-optimized instances are a type of Amazon EC2 instance that is designed to deliver high performance for compute-intensive workloads. These instances are ideal for applications such as high-performance web servers, batch processing, machine learning inference, and scientific modeling. Compute-optimized instances provide a high ratio of CPU to memory, allowing them to handle workloads that require significant computational power efficiently. They come in various sizes to accommodate different workload requirements.
+Example:
+- C5: Compute-optimized instances that provide a balance of compute, memory, and networking
+resources for a wide range of applications.
+- C5n: Compute-optimized instances that offer enhanced networking capabilities for high-performance computing workloads
+- C6g: Compute-optimized instances that are powered by AWS Graviton2 processors, providing a cost-effective option for compute-intensive workloads.
+
+
+19.accelerated computing instance?
+Accelerated computing instances are a type of Amazon EC2 instance that is designed to deliver high performance for workloads that require hardware acceleration. These instances are ideal for applications such as machine learning training, graphics rendering, and high-performance computing. Accelerated computing instances provide access to specialized hardware, such as GPUs (Graphics Processing Units) or FPGAs (Field-Programmable Gate Arrays), which can significantly speed up the processing of certain workloads. They come in various sizes to accommodate different workload requirements.
+Example:
+- P3: Accelerated computing instances that provide access to NVIDIA Tesla V100 GPUs for machine
+learning training and high-performance computing workloads.
+- G4: Accelerated computing instances that provide access to NVIDIA T4 GPUs for graphics rendering
+and machine learning inference workloads.
+- F1: Accelerated computing instances that provide access to Xilinx FPGAs for custom
+hardware acceleration of workloads such as genomics, financial modeling, and real-time video processing.
+20.storage optimize instance?
+Storage-optimized instances are a type of Amazon EC2 instance that is designed to deliver high performance for workloads that require high storage throughput and low latency. These instances are ideal for applications such as NoSQL databases, data warehousing, and distributed file systems. Storage-optimized instances provide access to high-performance storage options, such as NVMe SSDs (Non-Volatile Memory Express Solid State Drives), which can significantly improve the performance of storage-intensive workloads. They come in various sizes to accommodate different workload requirements.
+Example:
+- I3: Storage-optimized instances that provide access to NVMe SSDs for high storage
+throughput and low latency workloads.
+- D2: Storage-optimized instances that provide access to high-capacity HDDs (Hard
+Disk Drives) for workloads that require high storage capacity.
+- H1: Storage-optimized instances that provide access to high-capacity HDDs for workloads
+that require high storage capacity and high throughput, such as data warehousing and log processing.
+
+
+21.What is SSH in EC2?
+SSH (Secure Shell) is used to securely connect to your Amazon EC2 instance from your local machine.
+
+🔹 Prerequisites
+
+Before connecting, make sure:
+
+EC2 instance is running
+You have the .pem key file
+Security Group allows:
+Port 22 (SSH)
+Source: your IP (or 0.0.0.0/0 for testing)
+
+
+22.what is s3?
+Amazon S3 (Simple Storage Service) is a scalable object storage service that allows you to store and retrieve data from anywhere on the web. It provides a simple web interface to store and retrieve any amount of data at any time. S3 is designed for durability, availability, and scalability, making it ideal for a wide range of use cases such as backup and restore, archiving, big data analytics, and content distribution. You can organize your data into buckets and manage access permissions to control who can access your data. S3 also offers features like versioning, lifecycle policies, and cross-region replication to help you manage your data effectively.
+Example:
+- Storing and retrieving files for websites and applications
+- Backup and restore of data
+- Archiving data for long-term storage
+- Big data analytics and processing
+- Content distribution and media hosting
+
+23.what is bucket?
+A bucket is a logical container in Amazon S3 that is used to store objects (files). Each bucket has a unique name and can contain an unlimited number of objects. Buckets are used to organize and manage your data in S3. You can set permissions on buckets to control who can access the objects within them, and you can also configure lifecycle policies to automatically manage the storage of objects over time. Buckets are created in specific AWS regions, and the data stored in them is replicated across multiple availability zones for durability and availability.
+Example:
+- A bucket named "my-website-assets" to store images, CSS, and JavaScript
+files for a website.
+- A bucket named "my-backups" to store backup files for a database.
+- A bucket named "my-analytics-data" to store large datasets for big data analytics.
+24.what is object in s3?
+An object in Amazon S3 is a fundamental entity that represents a file stored in a bucket. Each object consists of the data itself, metadata (key-value pairs that describe the object), and a unique identifier called the key. The key is used to retrieve the object from the bucket. Objects can be of any type, such as images, videos, documents, or backups. When you upload an object to S3, it is stored in a bucket and can be accessed using its key. You can also set permissions on objects to control who can access them and manage their lifecycle using policies.
+Example:
+- An object with the key "images/photo.jpg" that contains a photo file stored in the
+"my-website-assets" bucket.
+- An object with the key "backups/database_backup.sql" that contains a database backup file
+stored in the "my-backups" bucket.
+- An object with the key "analytics/data.csv" that contains a dataset for big data analytics
+stored in the "my-analytics-data" bucket.
+
+25.what is intelligent tiering?    
+Intelligent Tiering is a storage class in Amazon S3 that automatically moves data between two access tiers: frequent access and infrequent access. This allows you to optimize costs by storing data in the most cost-effective tier based on its access patterns. When you upload an object to S3, it is initially stored in the frequent access tier. If the object is not accessed for a certain period of time, it is automatically moved to the infrequent access tier, which has lower storage costs but higher retrieval costs. If the object is accessed again, it is moved back to the frequent access tier. This helps you save money on storage costs while ensuring that your data is available when you need it.
+Example:
+- You have a dataset that is accessed frequently for the first month after it is uploaded, but
+after that, it is accessed infrequently. By using Intelligent Tiering, you can automatically move the dataset to the infrequent access tier after the first month, saving on storage costs while still ensuring that it is available when needed.
+- You have a backup file that is accessed infrequently but needs to be retained for a long period of time. By using Intelligent Tiering, you can automatically move the backup file to the infrequent access tier, reducing storage costs while still ensuring that it is available for retrieval when needed.
+
+25.what is glaciers?
+Amazon S3 Glacier is a secure, durable, and low-cost storage service for data archiving and long-term backup. It is designed for data that is infrequently accessed and requires long-term retention. S3 Glacier provides three retrieval options: expedited, standard, and bulk, allowing you to choose the retrieval time that best suits your needs. Expedited retrievals typically take 1-5 minutes, standard retrievals take 3-5 hours, and bulk retrievals can take 5-12 hours. S3 Glacier is ideal for use cases such as compliance archiving, digital preservation, and disaster recovery.
+Example:
+- You have a large dataset that needs to be retained for regulatory compliance but is accessed infrequently. By using S3 Glacier, you can store the dataset at a low cost while still ensuring that it is available for retrieval when needed.
+- You have a backup of critical data that needs to be retained for long-term disaster recovery.
+By using S3 Glacier, you can store the backup at a low cost while still ensuring that it is available for retrieval in the event of a disaster.
+
+
+26.what is standard?
+The Standard storage class in Amazon S3 is the default storage class for objects stored in S3. It is designed for general-purpose storage of frequently accessed data. The Standard storage class provides high durability, availability, and performance for a wide range of use cases, such as websites, applications, and content distribution. Objects stored in the Standard storage class are replicated across multiple availability zones to ensure durability and availability. This storage class is ideal for data that is accessed frequently and requires low latency access.
+Example:
+- You have a website that serves images and videos to users. By using the Standard storage class
+for your S3 bucket, you can ensure that your content is delivered with low latency and high performance to your users.
+- You have an application that processes data in real-time and requires low latency access to the data. By using the Standard storage class for your S3 bucket, you can ensure that your application has fast access to the data it needs to operate efficiently.
+- You have a content distribution network (CDN) that serves static assets to users around the
+world. By using the Standard storage class for your S3 bucket, you can ensure that your assets are delivered with high performance and low latency to users globally.
+
+27.bucket versioning?
+Bucket versioning in Amazon S3 is a feature that allows you to keep multiple versions of an object in the same bucket. When versioning is enabled on a bucket, every time you upload a new version of an object, the previous version is retained and assigned a unique version ID. This allows you to retrieve, restore, or permanently delete specific versions of an object as needed. Versioning provides protection against accidental deletion or overwriting of objects, as you can always access previous versions if necessary. It also enables features like lifecycle policies and cross-region replication for managing your data effectively. 
+Example
+- You have a document that is frequently updated. By enabling bucket versioning, you can keep track of all changes made to the document and restore previous versions if needed.
+- You have a backup file that is critical for your business. By enabling bucket versioning,
+you can ensure that you have multiple versions of the backup file, providing an additional layer of protection against accidental deletion or corruption.
+- You have a dataset that is used for analytics and is updated regularly. By enabling bucket version
+ing, you can maintain a history of changes to the dataset and analyze trends over time by comparing different versions.
+28.what is lifecycle policy?
+A lifecycle policy in Amazon S3 is a set of rules that automate the management of objects in a bucket over their lifecycle. You can define rules to transition objects to different storage classes, archive them to S3 Glacier, or permanently delete them after a specified period of time. Lifecycle policies help you optimize storage costs by automatically moving data to more cost-effective storage options as it ages or becomes less frequently accessed. You can create lifecycle policies based on object age, creation date, or other criteria, allowing you to manage your data efficiently and reduce costs.
+Example:
+- You have a dataset that is accessed frequently for the first month after it is uploaded, but
+after that, it is accessed infrequently. By creating a lifecycle policy, you can automatically transition the dataset to the infrequent access storage class after the first month, saving on storage costs while still ensuring that it is available when needed.
+- You have a backup file that needs to be retained for long-term storage but is accessed inf
+requently. By creating a lifecycle policy, you can automatically archive the backup file to S3 Glacier after a certain period of time, reducing storage costs while still ensuring that it is available for retrieval when needed.
+- You have a log file that is generated daily and is only needed for a short period of time. By creating a lifecycle policy, you can automatically delete the log file after a certain number of days, helping to manage storage costs and keep your bucket organized.
+ 
+ 
