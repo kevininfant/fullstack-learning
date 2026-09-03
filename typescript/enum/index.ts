@@ -1,15 +1,15 @@
 // An enum is used to define a set of named constant values.
 // It helps make code more readable and less error-prone.
 
-// enum Direction {
-//   Up,
-//   Down,
-//   Left,
-//   Right
-// }
+enum Direction {
+  Up,
+  Down,
+  Left,
+  Right
+}
 
-// let move: Direction = Direction.Up;
-// console.log(move); // 0
+let move: Direction = Direction.Up;
+console.log(move); // 0
 
 
 // enum Status {

@@ -1,0 +1,165 @@
+//1.Declare Variables: Create three variables using var, let, and const. Assign a string, a number, and a boolean to them, then log their values and types using typeof.
+//  var Name = "Kevin";
+//  let age = 28;
+//  const isEmployed = true;
+//  console.log('Nmae:',Name, 'Type:',typeof Name);
+//  console.log('Age:',age, 'Type:',typeof age);
+//  console.log('isEmployed:',isEmployed, 'Type:',typeof isEmployed);
+
+//2.Swap Values: Swap the values of two variables (a = 5, b = 10) without using a third variable.
+// let a = 5;
+// let b = 10;
+// [a, b] = [b, a];
+// console.log('a:', a, 'b:', b);
+
+//3.Template Literals: Create a function that takes firstName and lastName and returns "Hello, <firstName> <lastName>!" using template literals.
+// function greet(firstName, lastName){
+//     return `Hello, ${firstName} ${lastName}`;
+// }
+// console.log(greet("Kevin","infant"));
+
+// 4.Type Coercion: Predict and explain the output of console.log("5" + 3) and console.log("5" - 3).
+// console.log("10" + 2); // "102"
+// console.log("10" - 2); // 8
+// console.log("10" * 2); // 20
+// console.log("10" / 2); // 5
+
+// 5.Check Even/Odd: Write a function that takes a number and returns "Even" if it's even and "Odd" if it's odd using the ternary operator.
+// function check(value){
+//     console.log(value%2)
+// return value%2 === 0 ? "even":"odd";
+// }
+
+// console.log("ans",check(2));
+
+// 6.Null vs. Undefined: Demonstrate the difference between null and undefined in JavaScript using code examples.
+// let test;
+// let hello=null;
+// console.log(test);
+// console.log(hello);
+
+// 7.Strict Equality: Compare 5 == "5" vs 5 === "5" and explain the output.
+// console.log(5 == "5"); // true
+// console.log(5 === "5"); // false
+
+// 8.Basic Math Operator: Write a snippet to calculate the area and perimeter of a rectangle given its length = 8 and width = 5.
+// length = 8;
+// width = 5;
+// area = length * width;
+// perimeter = 2 * (length + width);
+// console.log("Area:", area, "Perimeter:", perimeter);
+// 9.Logical Operators: Write an expression using && and || that evaluates whether a person is eligible to drive (must be at least 18 years old AND have a valid license).
+// function eligibleDrive (age,Haslicense){
+//     console.log(age)
+//     if(age >=18 || Haslicense){
+// return "this person eligibleDrive";
+//     }
+//     else{
+//         return "this person notEligibleDrive";
+//     }
+// }
+
+// console.log(eligibleDrive(27,false));
+
+// 10.Falsy Values: List all 6 primary falsy values in JavaScript and write a code block testing if an empty string "" is falsy.
+// const testValue = "";
+// if (!testValue) {
+//   console.log("An empty string is falsy!");
+// }
+
+// ----------------------------------------------------------------------------------------------------------
+// 11.Grade Calculator: Write a function that takes a score (0–100) and returns a letter grade (A, B, C, D, F) using if/else if/else.
+
+// function gradeCalculator(score) {
+//     if (score>=90 && score <=100){
+//         return "A";
+//     }
+//     else if(score>=80 && score<=89){
+//         return "B";
+//     }
+//     else if(score>=70 && score<=79){
+//          return "C";
+//     }
+//     else if(score>= 60 && score<=69){
+//          return "D";
+//     }
+//     else if(score>100){
+//         return "its not valid"
+//     }
+//     else{
+//         return "Fail"
+//     }
+
+// }
+
+// console.log(gradeCalculator(101));
+
+// ---------------------------------------------------------------------
+
+// 12.Switch Statement: Convert a number (1–7) into the corresponding day of the week using a switch statement (1 = Monday, 7 = Sunday).
+// function getDay(day){
+// switch (day){
+// case 1 :
+// console.log("Monday"); 
+// break;
+//  case 2:
+//  console.log("Tuesday"); 
+//  break;
+//  case 3:
+//  console.log("wednesday"); 
+//  break;
+//  case 4:
+//  console.log("thursday");
+//  break;
+//  case 5:
+//  console.log("friday"); 
+//  break;
+//  case 6:
+//  console.log("saturday");
+//  break;
+//  case 7:
+//  console.log("sunday"); 
+//  break;
+//  default :
+//  console.log("Invalide date"); 
+//  break;
+
+// }
+// }
+
+// getDay(2);
+
+
+//13. FizzBuzz: Print numbers from 1 to 15. Print "Fizz" for multiples of 3, "Buzz" for multiples of 5, and "FizzBuzz" for multiples of both.
+
+// for (i = 1 ;i<=15; i++){
+// if(i%3=== 0 && i%5 === 0){
+//     console.log( "FizzBuzz");
+//     }
+//    else if(i%3=== 0){
+//      console.log( "Fizz");
+//     }
+//     else if (i%5 === 0){
+//         console.log( "Buzz");
+//     }
+
+// }
+
+// 14.Sum of Range: Calculate the sum of all numbers from 1 to 100 using a while loop.
+
+// let i =1;
+//  let sum = 0;
+// while (i <= 100) {
+//     sum += i;
+//     i++;
+// }
+// console.log("Sum of numbers from 1 to 100:", sum);
+
+// 15.Reverse String (Loop): Reverse a string using a standard for loop (do not use .reverse() or .split()).\
+// function reverseString(str) {
+//       let reversedString = "";
+// for(let i = str.length -1; i>=0; i--){
+//     reversedString += str[i];   
+// }
+// }
+// console.log(reverseString("hi I am kevin")); // Output: "olleH"

@@ -1,0 +1,292 @@
+1.What is TypeScript?
+“TypeScript is a superset of JavaScript that adds static type checking. It helps us catch type-related errors during development before runtime.”
+2.Why TypeScript?
+“It gives better type safety, code readability, IDE support, and maintainability, especially for large applications.”
+3.JavaScript vs TypeScript?
+“JavaScript is dynamically typed. TypeScript adds static type checking on top of JavaScript and is converted to JavaScript for execution.”
+4.What is static typing?
+“It means the types are checked during development or compilation, before the code runs.”
+--------------------------------------------------------------------------------------------------
+5.strong-typing
+Strong typing means the language enforces data types and prevents us from using incompatible types without proper conversion.
+example :
+let age: number = 25;
+
+age = "twenty"; // ❌ Error
+-----------------------------------------------------------------------------------------------------
+6.Types
+“Types help TypeScript identify what kind of data we're working with and catch incorrect assignments during development.”
+example :
+// 1. String
+let name: string = "Vignesh";
+
+// 2. Number
+let age: number = 28;
+
+// 3. Boolean
+let isActive: boolean = true;
+
+// 4. Array
+let skills: string[] = ["JavaScript", "Node.js", "TypeScript"];
+
+// 5. Object
+let employee: {
+    name: string;
+    age: number;
+} = {
+    name: "Vignesh",
+    age: 28
+};
+
+// 6. Tuple
+let user: [string, number] = ["Vignesh", 28];
+
+// 7. Union
+let id: string | number = 101;
+id = "EMP101";
+
+// 8. Any
+let data: any = "Hello";
+data = 100;
+data = true;
+
+// 9. Unknown
+let value: unknown = "Hello";
+
+if (typeof value === "string") {
+    console.log(value.toUpperCase());
+}
+
+// 10. Enum
+enum Status {
+    Pending,
+    Completed
+}
+
+let status: Status = Status.Pending;
+
+// 11. Void
+function printMessage(): void {
+    console.log("Hello");
+}
+
+// 12. Never
+function throwError(): never {
+    throw new Error("Something went wrong");
+}
+
+--------------------------------------------------------------------------------------------
+7.inferred-typing
+Inferred typing means TypeScript automatically determines the type from the value, so we don't need to explicitly write the type.
+example:
+
+let name = "Vignesh";
+let age = 28;
+let isActive = true;
+
+name     → string
+age      → number
+isActive → boolean
+
+--------------------------------------------------------------------------------------------
+8.Explicit vs inferred
+“Type inference means TypeScript automatically identifies the type of a variable based on the value assigned to it, so we don't always need to explicitly specify the type.”
+ example:
+ Explicit typing:
+
+let name: string = "Vignesh";
+
+Inferred typing:
+
+let name = "Vignesh";
+
+In both cases, TypeScript knows name is a string.
+
+----------------------------------------------------------------------------------------
+9.array
+An array in TypeScript is used to store multiple values. We can specify the type of elements the array should contain, such as string[], number[], or Employee[], which provides type safety.”
+example:
+let skills: string[] = ["JavaScript", "Node.js", "TypeScript"];
+
+skills.push("React"); // ✅
+
+skills.push(100);     // ❌ Error
+
+----------------------------------------------------------------------------------------
+10.duck typing
+“Duck typing means TypeScript checks an object's structure. If the object has the required properties and methods with compatible types, TypeScript accepts it regardless of its actual type or class name.”
+example:
+interface User {
+    name: string;
+    age: number;
+}
+
+const employee = {
+    name: "Vignesh",
+    age: 28,
+    salary: 50000
+};
+
+function printUser(user: User) {
+    console.log(user.name);
+}
+
+printUser(employee); // ✅ Works
+
+-----------------------------------------------------------
+11.enum
+Enum is used to define a fixed set of named constant values. It makes the code more readable and helps restrict values to predefined options.
+
+exmaple
+enum Role {
+    Admin = "ADMIN",
+    Manager = "MANAGER",
+    Employee = "EMPLOYEE"
+}
+
+function checkRole(role: Role) {
+    if (role === Role.Admin) {
+        console.log("Admin user");
+    }
+}
+
+checkRole(Role.Admin);
+
+-----------------------------------------------------------------------------------------------------
+12.“An optional parameter is a parameter that is not mandatory when calling a function. In TypeScript, we use ? after the parameter name to make it optional.
+
+example :
+function greet(name: string, age?: number) {}
+One important rule: required parameters normally should come before optional parameters.
+function test(age?: number, name: string) {} // ❌
+
+unction test(name: string, age?: number) {} // ✅
+
+---------------------------------------------------------------------------------
+13.“What is the difference between string and String in TypeScript?”
+“string is the primitive string type, while String represents the JavaScript String wrapper object. In TypeScript, we normally use lowercase string for variables, parameters, and return types.”
+
+string   // ✅
+number   // ✅
+boolean  // ✅
+
+String   // ❌ avoid for normal typing
+Number   // ❌
+Boolean  // ❌
+
+-------------------------------------------------------------
+14.Default Parameter in TypeScript
+“A default parameter is a function parameter that has a predefined value. If the caller doesn't provide that argument, the default value is automatically used.”
+example 
+function concatStrings(
+    str1: string,
+    str2: string,
+    str3: string = "hi"
+): string {
+    return str1 + str2 + str3;
+}
+concatStrings("Hello", " World");
+-----------------------------------------------------------------------------------------------------
+15.Interface in TypeScript
+“An interface in TypeScript is used to define the structure or contract of an object. It specifies what properties and methods an object should have and their types.”
+example
+function greetUser(user) {
+    console.log("Hello ".concat(user.name).concat(user.middleName, ", you are ").concat(user.age, " years old."));
+}
+var user = { name: "Alice", age: 30, middleName: "John" };
+greetUser(user); // Output: Hello Alice, you are 30 years old.  
+function LoggreetUser(user) {
+    console.log("Hello ".concat(user.name, " ").concat(user.lastName, ", you are ").concat(user.age, " years old."));
+}
+var user1 = { name: "Alice", lastName: "Smith", age: 30, };
+LoggreetUser(user1); // Output: Hello Alice, you are 30 years old.
+
+-----------------------------------------------------------------------------------
+16.What is a class in TypeScript?
+A class in TypeScript is a blueprint for creating objects. It contains properties and methods and supports object-oriented concepts like encapsulation, inheritance, abstraction, and polymorphism.
+example:
+class BankAccount {
+    public name: string;
+    private balance: number;
+
+    constructor(name: string, balance: number) {
+        this.name = name;
+        this.balance = balance;
+    }
+
+    getBalance(): number {
+        return this.balance;
+    }
+}
+
+const account = new BankAccount("Vignesh", 10000);
+
+console.log(account.name);         // ✅
+console.log(account.getBalance()); // ✅
+console.log(account.balance);      // ❌ private
+
+--------------------------------------------------------------
+17.Inheridance
+Inheritance is an OOP concept where a child class inherits properties and methods from a parent class. In TypeScript, we use the extends keyword for inheritance. It helps with code reuse and reduces duplication.
+
+
+class person {
+    name: string;
+    age: number;
+    lastName: string;
+    middleName: string;
+    
+
+    constructor(name: string, age: number, lastName: string, middleName: string) {
+        this.name = name;
+        this.age = age;
+        this.lastName = lastName;
+        this.middleName = middleName;
+        
+    }
+
+    greetUser() {
+        console.log(`Hello ${this.name}${this.middleName}, you are ${this.age} years old.`);
+    }
+
+    LoggreetUser() {
+        return`Hello ${this.name} ${this.lastName}, you are ${this.age} years old.`;
+    }
+    getAge() {
+        return this.age;
+    }
+    
+}
+
+class User extends person {
+    constructor(name: string, age: number, lastName: string, middleName: string) {
+        super(name, age, lastName, middleName);
+    }
+}
+class Admin extends person {
+    role: string;
+    constructor(name: string, age: number, lastName: string, middleName: string,role:string) {
+        super(name, age, lastName, middleName);
+        this.role=role;
+    }
+    greetUser() {
+       console.log(`Hello ${this.name}${this.middleName}, you are ${this.age} years old.Role : ${this.role}`);
+    }
+    manageUsers() {
+        return `managing users with role ${this.role}`;
+    }
+}
+
+let user1 = new User("kevin",20,"john","rio");
+let admin1 = new Admin("rio",25,"john","kevin","admin");
+
+
+console.log(user1.LoggreetUser());
+console.log(user1.getAge());
+console.log(admin1.getAge());
+console.log(admin1.manageUsers());
+
+--------------------------------------------------------------------------------------------------------------
+18.What is closure?
+A closure is when an inner function remembers and can access variables from its outer lexical scope even after the outer function has finished execution.
+
