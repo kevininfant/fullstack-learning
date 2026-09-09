@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="eng">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home Page</title>
+    </head>
+    <style>
+        *{
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+font-family: Arial, sans-serif;
+        }
+        header{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+        }
+        .hero{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .hero h1{
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        .hero p{
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .btn-login{
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #333;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        nav a{
+            color: #ddd;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+        nav a:hover{
+            text-decoration: underline;
+            color: #fff;
+        }
+    </style>
+    <body>
+        <header>
+            <div class="logo">MyBrand</div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Services</a>
+            <a href="./login_practice.html">Login</a>
+        </nav>
+        </header>
+        <div class="hero">
+            <h1>Welcome to MyBrand</h1>
+            <p>Your one-stop solution for all your needs.</p>
+            <a href="#" class="btn-login">Get Started</a>
+        </div>
+    </body>
+</html>

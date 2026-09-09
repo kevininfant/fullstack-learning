@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<Html lang="eng">
+<head>
+    <meta charset="UTF-8"/>
+    <title >
+MySite - Login
+    </title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="login-container">
+        <form class="login-card" id="login-form">
+            <h2>Account Login</h2>
+            <p id="error-msg" class="error-text">Please fill in all required fields.</p>
+            <div class="feild">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email">
+        
+            </div>
+            <div class="feild">
+                <label for="password">Password</label>
+                <div class="password-wrapper">
+                <input type="password" name="password" id="password">
+                <button type="button" id="toggle-password" class="toggle-btn">Show</button>
+                </div>
+            </div>
+<button type="submit" class="login-btn">Login</button>
+<p class="footer-text">
+                Need to go back? <a href="index.html">Return to Home</a>
+            </p>
+        </form>
+
+    </div>
+<script>
+    let logindata = document.getElementById("login-form");
+    let email = document.getElementById("email");
+    let pwd = document.getElementById("password");
+   const togglePasswordBtn = document.getElementById('toggle-password');
+    const errorMsg = document.getElementById('error-msg');
+togglePasswordBtn.addEventListener('click', function() {
+            // Check current input type
+            const currentType = pwd.getAttribute('type');
+
+            if (currentType === 'password') {
+                pwd.setAttribute('type', 'text');
+                togglePasswordBtn.textContent = 'Hide';
+            } else {
+                pwd.setAttribute('type', 'password');
+                togglePasswordBtn.textContent = 'Show';
+            }
+        });
+    logindata.addEventListener("submit", function(event) {
+        event.preventDefault();
+        if(email.value.trim() === "" || pwd.value.trim() === ""){
+            console.log("inside the way if");
+            errorMsg.style.display ="block";
+            errorMsg.textContent = 'Please fill in both email and password.';
+        }
+        else{
+            console.log("inside the way else");
+            errorMsg.style.display = 'none';
+                alert('Success! Form submitted correctly.');
+        }
+    
+   });
+
+</script>
+</body>
+
+</Html>
