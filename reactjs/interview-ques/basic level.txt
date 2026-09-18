@@ -711,7 +711,7 @@ function Counter() {
 }
 
 export default Counter;
-
+ ---------------------------------------------------------------------
 
 2.Fetch and display data from an API.
 
@@ -951,7 +951,7 @@ function DebouncedSearch() {
 
   return (
     <div>
-      <h2>Debounced Search</h2>
+      <h2>   Search</h2>
       <input
         type="text"
         value={query}
@@ -1033,7 +1033,15 @@ console.log(arr.splice(1, 2)); // [2, 3] → arr becomes [1, 4]
 let str = "Infosys";
 console.log(str.split("").reverse().join("")); // "sysofni"
 
+method 1
+var value = "hi hello";
+var rev = "";
 
+for (var i = value.length - 1; i >= 0; i--) {
+  rev += value[i];
+}
+
+console.log(rev);
 -----------------------------------------------------------------------
 
 7.Difference between some() and every()?
@@ -1078,15 +1086,15 @@ currentValue → the current element being processed.
 
 
 -------------------------------------------------------------
-
 11.What is hoisting in JavaScript?
 
-Variables and functions are moved to the top of their scope during compilation.
+Hoisting is JavaScript’s behavior of moving variable and function declarations to the top of their scope before execution.
 
-1.var → hoisted and initialized with undefined
+var is hoisted but initialized with undefined.
 
-2.let & const → hoisted but not initialized (TDZ – Temporal Dead Zone)
+let and const are hoisted but kept in Temporal Dead Zone (TDZ).
 
+Functions are fully hoisted.
 
 -------------------------------------------------------------------
 
@@ -1178,3 +1186,39 @@ why using StrictMode?
 
 -----------------------------------------------------------------------
   
+What is PropTypes in React?
+
+PropTypes is a type-checking mechanism used in React to validate the data types of props passed to a component. It helps developers identify incorrect prop values during development.
+
+------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

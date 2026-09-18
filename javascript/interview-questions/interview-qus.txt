@@ -308,3 +308,6 @@ Math.ceil() rounds a number up to the nearest integer.
 console.log(Math.ceil(4.1));  // 5
 console.log(Math.ceil(7.9));  // 8
 console.log(Math.ceil(-2.1)); // -2
+-----------------------------------------------------------------------------
+
+bind(),call(),apply()
