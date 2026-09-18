@@ -131,6 +131,18 @@ const designData = {
     {cat:'DELIVER',title:'Testing strategy',desc:'Unit: MDX parsing, slug generation. Integration: comment submission. E2E: full read+comment flow. Lighthouse for SEO score.'},
     {cat:'PROTECT',title:'Deployment',desc:'Vercel (native Next.js support). PlanetScale MySQL for comments. Cloudinary for images. Edge runtime for API routes.'},
   ]},
+  13: { scenario:'Full-Stack Job Board — React frontend, Node.js/Express REST API, MySQL database. Users post jobs, apply, and track applications in real time.', sections:[
+    {cat:'UNDERSTAND',title:'Problem & workflow',desc:'Users: job seekers and employers. Key journeys: Register→Post Job→Apply→Track Status→Hire. Rules: only employer can close job, applicant can withdraw before review.'},
+    {cat:'STRUCTURE',title:'Full-stack architecture',desc:'React 18 + React Query frontend. Node.js + Express REST API. MySQL 8 with mysql2/promise. JWT auth. Zod validation on both client and server.'},
+    {cat:'PROTECT',title:'Security & reliability',desc:'bcrypt for passwords. JWT with refresh tokens. Parameterized queries (no raw SQL). Helmet.js + CORS. Rate limiting on auth routes. Input sanitization with Zod.'},
+    {cat:'DELIVER',title:'Implementation plan',desc:'Phase 1: Auth (register/login JWT). Phase 2: Job CRUD API + React listing. Phase 3: Apply flow + MySQL transactions. Phase 4: Dashboard + application tracking.'},
+    {cat:'THINK FORWARD',title:'Automation opportunities',desc:'Email notifications on application status change, AI job-match scoring, resume parser, auto-expire old listings, analytics dashboard for employers.'},
+    {cat:'STAY CONCRETE',title:'Technical decisions',desc:'mysql2/promise for async MySQL. React Query for server state. React Hook Form + Zod for forms. JWT (access 15m + refresh 7d). Multer for resume upload to S3.'},
+    {cat:'STRUCTURE',title:'MySQL schema',desc:'users(id,name,email,password_hash,role). jobs(id,employer_id,title,description,location,status,created_at). applications(id,job_id,user_id,resume_url,status,applied_at).'},
+    {cat:'UNDERSTAND',title:'API design',desc:'POST /auth/register, POST /auth/login. GET/POST /jobs, PATCH /jobs/:id. POST /jobs/:id/apply, GET /applications (employer view), PATCH /applications/:id/status.'},
+    {cat:'DELIVER',title:'Testing strategy',desc:'Unit: JWT middleware, bcrypt compare, Zod schemas. Integration: full apply flow with MySQL test DB. E2E: register→post job→apply→status update. Load test: concurrent applications.'},
+    {cat:'PROTECT',title:'Deployment',desc:'React on Vercel. Node API on Railway or EC2. MySQL on PlanetScale or AWS RDS. S3 for resumes. GitHub Actions CI/CD. PM2 for Node process management.'},
+  ]},
   10: { scenario:'Real-time Chat Application — Users send messages, create groups, share files, see online status.', sections:[
     {cat:'UNDERSTAND',title:'Problem & workflow',desc:'Users: individuals and group members. Journeys: Login→Find User→Start Chat→Send Message→Share File. Rules: messages encrypted, files size-limited.'},
     {cat:'STRUCTURE',title:'Architecture & data',desc:'React + Node + MongoDB + Redis. Entities: User, Conversation, Message, Attachment. WebSocket for real-time. Redis pub/sub for scaling.'},

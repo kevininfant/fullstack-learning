@@ -5,7 +5,7 @@ export default function DaySelector({ day, setDay }) {
     <div style={s.bar}>
       <span style={s.label}>Practice Day:</span>
       <div style={s.days}>
-        {Array.from({ length: 12 }, (_, i) => i + 1).map(d => (
+        {Array.from({ length: 13 }, (_, i) => i + 1).map(d => (
           <button
             key={d}
             onClick={() => setDay(d)}
