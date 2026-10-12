@@ -1,0 +1,151 @@
+{
+  "references": [
+    {
+      "title": "Dart: Null safety",
+      "url": "https://dart.dev/null-safety/understanding-null-safety"
+    },
+    {
+      "title": "Dart: Async and await",
+      "url": "https://dart.dev/libraries/async/async-await"
+    },
+    { "title": "Dart: Classes", "url": "https://dart.dev/language/classes" },
+    {
+      "title": "Dart: Error handling",
+      "url": "https://dart.dev/language/error-handling"
+    }
+  ],
+  "questions": [
+    {
+      "id": "nullable-types",
+      "title": "What does the question mark in String? mean?",
+      "topic": "Null safety",
+      "difficulty": "Beginner",
+      "answer": "String? allows either a string or null. String excludes null under sound null safety. Narrow the nullable value with a check or use a suitable fallback before performing an operation that requires a non-null string."
+    },
+    {
+      "id": "null-operators",
+      "title": "How do the null-aware operators help with optional values?",
+      "topic": "Null safety",
+      "difficulty": "Beginner",
+      "answer": "The ?. operator accesses a member only when the receiver is non-null, and ?? supplies a fallback when its left side is null. Prefer explicit null-aware behavior when absence is expected; the ! operator asserts a value is non-null and can fail at runtime.",
+      "code": "String? name;\nfinal displayName = name?.trim() ?? 'Guest';"
+    },
+    {
+      "id": "late-initialization",
+      "title": "What risk comes with declaring a variable late?",
+      "topic": "Null safety",
+      "difficulty": "Intermediate",
+      "answer": "late lets initialization occur after declaration while keeping a non-nullable type. Reading it before initialization causes a runtime error. Use it when delayed initialization is a real invariant, rather than to bypass a design that legitimately needs an optional value."
+    },
+    {
+      "id": "final-versus-const",
+      "title": "How do final and const differ?",
+      "topic": "Variables",
+      "difficulty": "Beginner",
+      "answer": "A final variable is assigned once, and its value may be calculated at runtime. const requires a compile-time constant. A final reference to a mutable list does not stop the list's contents from changing; a const list is immutable."
+    },
+    {
+      "id": "named-required-parameters",
+      "title": "Why use required named parameters in an API?",
+      "topic": "Functions",
+      "difficulty": "Beginner",
+      "answer": "Named parameters make call sites clearer, especially when values have the same type. required makes the caller supply a value. Nullability is separate: a required nullable parameter must be supplied, but its value may still be null."
+    },
+    {
+      "id": "future-versus-stream",
+      "title": "When would you use a Future instead of a Stream?",
+      "topic": "Async",
+      "difficulty": "Intermediate",
+      "answer": "A Future completes once with a value or an error. A Stream can deliver a sequence of events over time. Use a Future for one loaded record and a Stream for ongoing updates, with appropriate subscription cancellation when the consumer no longer needs them."
+    },
+    {
+      "id": "await-error-handling",
+      "title": "How do you handle an error from an awaited Future?",
+      "topic": "Async",
+      "difficulty": "Beginner",
+      "answer": "Wrap the awaited operation in try/catch. Use finally for cleanup that must happen regardless of success or failure. Rethrow when a failure is still the caller's responsibility instead of silently substituting a successful-looking value."
+    },
+    {
+      "id": "future-wait",
+      "title": "What does Future.wait provide for independent async work?",
+      "topic": "Async",
+      "difficulty": "Intermediate",
+      "answer": "Future.wait combines a collection of futures into a future for their results, preserving input order in the result list. The supplied operations may already be running. It does not automatically cancel the others when one fails; design cancellation and resource cleanup separately."
+    },
+    {
+      "id": "immutable-class-design",
+      "title": "What does an immutable Dart model need beyond final fields?",
+      "topic": "Classes",
+      "difficulty": "Intermediate",
+      "answer": "Final fields prevent rebinding those fields, but referenced collections can still be mutable. Make defensive copies or expose unmodifiable collections when the model owns mutable input. Keep constructors responsible for establishing valid values."
+    },
+    {
+      "id": "exception-scope",
+      "title": "Why avoid catching every exception and returning a default?",
+      "topic": "Error handling",
+      "difficulty": "Intermediate",
+      "answer": "A broad fallback can hide broken assumptions and make failed operations appear successful. Catch failures you can meaningfully recover from, preserve useful context, and let other failures propagate to an appropriate boundary. Do not expose private diagnostic details to end users."
+    }
+  ],
+  "practices": [
+    {
+      "id": "word-frequency-map",
+      "title": "Count words with a typed Map",
+      "topic": "Collections",
+      "difficulty": "Beginner",
+      "prompt": "Implement wordCounts(String text) returning Map<String, int>. Ignore surrounding whitespace, split on one or more whitespace characters, and compare words case-insensitively. Treat punctuation as part of a word. 'Dart dart code' should produce dart:2 and code:1.",
+      "hints": [
+        "Handle an empty trimmed string before splitting.",
+        "Map.update supports an ifAbsent callback."
+      ],
+      "checks": [
+        "Repeated words are counted without case differences.",
+        "Tabs and repeated spaces separate words.",
+        "Empty or whitespace-only input produces an empty map."
+      ],
+      "starterCode": "Map<String, int> wordCounts(String text) {\n  return {};\n}",
+      "solution": "Normalize once, handle the empty case, and update an explicitly typed map for each token. The exercise deliberately avoids language-specific punctuation tokenization.",
+      "solutionCode": "Map<String, int> wordCounts(String text) {\n  final normalized = text.trim().toLowerCase();\n  final counts = <String, int>{};\n  if (normalized.isEmpty) return counts;\n  for (final word in normalized.split(RegExp(r'\\s+'))) {\n    counts.update(word, (count) => count + 1, ifAbsent: () => 1);\n  }\n  return counts;\n}"
+    },
+    {
+      "id": "validated-cart-line",
+      "title": "Model a validated cart line",
+      "topic": "Classes",
+      "difficulty": "Intermediate",
+      "prompt": "Create CartLine with final name, unitPriceCents, and quantity fields. Reject blank names, negative prices, and quantities below 1. Trim the stored name and expose totalCents as a getter. Use integer cents rather than floating-point amounts.",
+      "hints": [
+        "Initialize the trimmed name in the constructor initializer list.",
+        "Validate constructor inputs before the object can be used."
+      ],
+      "checks": [
+        "A 250-cent item with quantity 3 totals 750.",
+        "Names are trimmed.",
+        "A blank name or invalid quantity throws.",
+        "Fields cannot be reassigned."
+      ],
+      "starterCode": "class CartLine {\n  // Add final fields, validation, and a getter.\n}",
+      "solution": "Keep model invariants inside the constructor. The getter derives a total rather than storing a second value that could become inconsistent.",
+      "solutionCode": "class CartLine {\n  final String name;\n  final int unitPriceCents;\n  final int quantity;\n  CartLine({required String name, required this.unitPriceCents, required this.quantity}) : name = name.trim() {\n    if (this.name.isEmpty) throw ArgumentError('Name is required');\n    if (unitPriceCents < 0) throw ArgumentError('Price must be nonnegative');\n    if (quantity < 1) throw ArgumentError('Quantity must be positive');\n  }\n  int get totalCents => unitPriceCents * quantity;\n}"
+    },
+    {
+      "id": "combine-async-loaders",
+      "title": "Combine independent async loaders",
+      "topic": "Async",
+      "difficulty": "Intermediate",
+      "prompt": "Implement sumFetched(List<Future<int> Function()> loaders). Start all supplied loaders, await their values, and return the sum. An empty input returns 0. Propagate errors, including a loader that throws synchronously, rather than returning a fake successful total.",
+      "hints": [
+        "Future.sync turns a synchronous throw into a failed Future.",
+        "Future.wait preserves the input ordering, then fold can calculate the sum."
+      ],
+      "checks": [
+        "Loaders returning 2 and 5 produce 7.",
+        "An empty input returns 0.",
+        "A rejected loader rejects the combined result.",
+        "A synchronous throw is represented as a failed Future."
+      ],
+      "starterCode": "Future<int> sumFetched(List<Future<int> Function()> loaders) async {\n  return 0;\n}",
+      "solution": "Wrap each invocation with Future.sync and await all results before folding them. This propagates failure without claiming that the remaining work was canceled.",
+      "solutionCode": "Future<int> sumFetched(List<Future<int> Function()> loaders) async {\n  final values = await Future.wait(\n    loaders.map((load) => Future<int>.sync(load)),\n  );\n  return values.fold<int>(0, (sum, value) => sum + value);\n}"
+    }
+  ]
+}

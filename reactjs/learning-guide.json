@@ -1,0 +1,154 @@
+{
+  "references": [
+    {
+      "title": "React: Choosing state structure",
+      "url": "https://react.dev/learn/choosing-the-state-structure"
+    },
+    {
+      "title": "React: Synchronizing with Effects",
+      "url": "https://react.dev/learn/synchronizing-with-effects"
+    },
+    {
+      "title": "React: Rendering lists",
+      "url": "https://react.dev/learn/rendering-lists"
+    },
+    {
+      "title": "React: Custom Hooks",
+      "url": "https://react.dev/learn/reusing-logic-with-custom-hooks"
+    }
+  ],
+  "questions": [
+    {
+      "id": "derived-state",
+      "title": "Why avoid storing a filtered list as separate state?",
+      "topic": "State design",
+      "difficulty": "Beginner",
+      "answer": "When a filtered list can be calculated from existing items and a search query, compute it during rendering. Storing it separately creates another value that must stay synchronized. Memoization can help expensive calculations, but it is not required to make derived data correct."
+    },
+    {
+      "id": "functional-state-updates",
+      "title": "When should a state setter receive an updater function?",
+      "topic": "State design",
+      "difficulty": "Beginner",
+      "answer": "Use an updater when the next value depends on the previous value, particularly when multiple updates are queued together. React passes the queued state to each updater. Keep updater functions pure; do not trigger requests or change unrelated external data inside them.",
+      "code": "setCount(previous => previous + 1);\nsetCount(previous => previous + 1);"
+    },
+    {
+      "id": "stable-list-identity",
+      "title": "Why can index keys break an editable list?",
+      "topic": "Rendering",
+      "difficulty": "Intermediate",
+      "answer": "Keys associate rendered siblings with their identity across updates. An index describes a position, so inserting or reordering rows can associate existing local state with the wrong item. Use a stable ID from the data; do not generate a fresh random key during rendering."
+    },
+    {
+      "id": "effect-purpose",
+      "title": "When is an Effect actually needed?",
+      "topic": "Effects",
+      "difficulty": "Intermediate",
+      "answer": "Use an Effect to synchronize with an external system, such as a subscription or browser API. Deriving a display value from props usually belongs in rendering. Work caused by a particular user action often belongs in that action's event handler."
+    },
+    {
+      "id": "effect-cleanup",
+      "title": "What should an Effect cleanup undo?",
+      "topic": "Effects",
+      "difficulty": "Intermediate",
+      "answer": "Cleanup should undo the synchronization established by that Effect: unsubscribe, remove a listener, clear a timer, or make an obsolete request result irrelevant. React runs cleanup before the Effect is set up again for changed dependencies and when the component unmounts."
+    },
+    {
+      "id": "strict-mode-effects",
+      "title": "Why can development Strict Mode expose an Effect running twice?",
+      "topic": "Effects",
+      "difficulty": "Intermediate",
+      "answer": "Development Strict Mode performs an extra setup-and-cleanup cycle to reveal missing cleanup and unsafe assumptions. It is not a reason to suppress the second setup with a ref. Make setup and cleanup work together so remounting remains correct."
+    },
+    {
+      "id": "state-snapshot",
+      "title": "Why does a handler see the state from its render?",
+      "topic": "State design",
+      "difficulty": "Intermediate",
+      "answer": "Rendering creates a snapshot of props, state, and event handlers. Scheduling a state update does not rewrite the values already captured by that handler. Use an updater for dependent state changes, and reason carefully about values captured by timers and async callbacks."
+    },
+    {
+      "id": "effect-dependencies",
+      "title": "What belongs in an Effect dependency list?",
+      "topic": "Effects",
+      "difficulty": "Advanced",
+      "answer": "Include the reactive values the Effect reads, such as props, state, and functions defined in the component. Do not omit dependencies just to prevent reruns. Restructure the synchronization or move genuinely nonreactive values outside the component when that matches the intended behavior."
+    },
+    {
+      "id": "custom-hook-isolation",
+      "title": "Do two calls to the same custom Hook share state?",
+      "topic": "Hooks",
+      "difficulty": "Intermediate",
+      "answer": "Ordinary state inside a custom Hook is independent for each call. The Hook shares logic, not a single state instance. Shared state needs an explicit common owner, context, or external store. Call Hooks at the top level so React can preserve their ordering."
+    },
+    {
+      "id": "state-normalization",
+      "title": "Why store a selected item ID rather than a copied item?",
+      "topic": "State design",
+      "difficulty": "Intermediate",
+      "answer": "Keeping only the selected ID lets you derive the current item from the authoritative collection. A copied object can become stale when that collection changes. Handle the case where the selected ID no longer exists, such as after an item is deleted."
+    }
+  ],
+  "practices": [
+    {
+      "id": "searchable-course-list",
+      "title": "Build a searchable course list",
+      "topic": "State design",
+      "difficulty": "Beginner",
+      "prompt": "Create SearchableCourses({courses}) where each course has id and title. Add a labeled, controlled search field, case-insensitive title filtering, stable list keys, and an empty state. Derive the filtered list without an Effect.",
+      "hints": [
+        "The query is state; the filtered array is derived data.",
+        "Use the course ID as the key."
+      ],
+      "checks": [
+        "Typing filters titles regardless of case.",
+        "Changing the courses prop updates the results immediately.",
+        "No results produces an explicit empty state.",
+        "The input has an accessible label."
+      ],
+      "starterCode": "import { useState } from 'react';\nexport default function SearchableCourses({ courses }) {\n  // Add query state and a filtered list.\n}",
+      "solution": "Keep the query in state and calculate matching courses during rendering. This avoids synchronization between two pieces of state.",
+      "solutionCode": "import { useState, useId } from 'react';\nexport default function SearchableCourses({ courses }) {\n  const [query, setQuery] = useState('');\n  const inputId = useId();\n  const matches = courses.filter(course => course.title.toLowerCase().includes(query.trim().toLowerCase()));\n  return <section>\n    <label htmlFor={inputId}>Search courses</label>\n    <input id={inputId} value={query} onChange={event => setQuery(event.target.value)} />\n    {matches.length ? <ul>{matches.map(course => <li key={course.id}>{course.title}</li>)}</ul> : <p>No matching courses.</p>}\n  </section>;\n}"
+    },
+    {
+      "id": "immutable-task-toggle",
+      "title": "Toggle tasks without mutating state",
+      "topic": "State design",
+      "difficulty": "Intermediate",
+      "prompt": "Create TaskList({initialTasks}) for tasks with id, title, and done. Each labeled checkbox must toggle only its task. Preserve the input objects and derive the completed count from current task state. Treat initialTasks as initial data, not a synchronized prop.",
+      "hints": [
+        "Use a functional setter with map.",
+        "Return a new object for the matched task."
+      ],
+      "checks": [
+        "Only the selected checkbox changes.",
+        "The completed count updates correctly.",
+        "The initialTasks array and its objects remain unchanged."
+      ],
+      "starterCode": "import { useState } from 'react';\nexport default function TaskList({ initialTasks }) {\n  // Store tasks and implement a toggle handler.\n}",
+      "solution": "Map over the latest state and replace only the selected task. Derive the completion count so it cannot become inconsistent with the list.",
+      "solutionCode": "import { useState } from 'react';\nexport default function TaskList({ initialTasks }) {\n  const [tasks, setTasks] = useState(initialTasks);\n  function toggle(id) {\n    setTasks(current => current.map(task => task.id === id ? { ...task, done: !task.done } : task));\n  }\n  const completed = tasks.filter(task => task.done).length;\n  return <section>\n    <p>{completed} of {tasks.length} completed</p>\n    {tasks.map(task => <label key={task.id}>\n      <input type=\"checkbox\" checked={task.done} onChange={() => toggle(task.id)} />{task.title}\n    </label>)}\n  </section>;\n}"
+    },
+    {
+      "id": "debounced-value-hook",
+      "title": "Write a debounced-value Hook",
+      "topic": "Hooks",
+      "difficulty": "Intermediate",
+      "prompt": "Implement useDebouncedValue(value, delay) for a client-rendered React component. Return the initial value immediately. Subsequent changes should become visible only after a quiet interval. Cancel pending timers on value or delay changes and unmount.",
+      "hints": [
+        "Initialize state from the incoming value.",
+        "The Effect needs both value and delay as dependencies."
+      ],
+      "checks": [
+        "The first render returns the provided value.",
+        "Rapid changes yield only the latest delayed value.",
+        "Changing delay clears the old timer.",
+        "Unmounting clears pending work."
+      ],
+      "starterCode": "import { useEffect, useState } from 'react';\nexport function useDebouncedValue(value, delay) {\n  // Add state, an Effect, and cleanup.\n}",
+      "solution": "An Effect owns one timer and its cleanup cancels that timer. This also behaves correctly under the extra development setup-and-cleanup cycle.",
+      "solutionCode": "import { useEffect, useState } from 'react';\nexport function useDebouncedValue(value, delay) {\n  const [debounced, setDebounced] = useState(value);\n  useEffect(() => {\n    const timer = setTimeout(() => setDebounced(value), delay);\n    return () => clearTimeout(timer);\n  }, [value, delay]);\n  return debounced;\n}"
+    }
+  ]
+}

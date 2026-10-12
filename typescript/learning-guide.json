@@ -1,0 +1,154 @@
+{
+  "references": [
+    {
+      "title": "TypeScript: Narrowing",
+      "url": "https://www.typescriptlang.org/docs/handbook/2/narrowing.html"
+    },
+    {
+      "title": "TypeScript: Generics",
+      "url": "https://www.typescriptlang.org/docs/handbook/2/generics.html"
+    },
+    {
+      "title": "TypeScript: keyof",
+      "url": "https://www.typescriptlang.org/docs/handbook/2/keyof-types.html"
+    },
+    {
+      "title": "TypeScript: Utility types",
+      "url": "https://www.typescriptlang.org/docs/handbook/utility-types.html"
+    }
+  ],
+  "questions": [
+    {
+      "id": "unknown-boundaries",
+      "title": "Why prefer unknown over any at an input boundary?",
+      "topic": "Type safety",
+      "difficulty": "Beginner",
+      "answer": "unknown requires you to narrow a value before using its properties. any bypasses those checks and can spread unchecked assumptions through the code. Use unknown for untrusted decoded input, then validate the shape before treating it as application data."
+    },
+    {
+      "id": "runtime-validation",
+      "title": "Does a TypeScript assertion validate an API response?",
+      "topic": "Type safety",
+      "difficulty": "Intermediate",
+      "answer": "No. An assertion changes what the compiler assumes; it does not inspect the runtime value. JSON can still contain missing fields or unexpected values. Validate external data with explicit checks or a runtime schema before returning a typed domain object."
+    },
+    {
+      "id": "generic-relationships",
+      "title": "What problem do generics solve beyond using unknown?",
+      "topic": "Generics",
+      "difficulty": "Intermediate",
+      "answer": "Generics preserve relationships between inputs and outputs while allowing different concrete types. A function returning the first array element can retain the element type instead of returning unknown. Include undefined in the result when an empty array is possible.",
+      "code": "function first<T>(items: readonly T[]): T | undefined {\n  return items[0];\n}"
+    },
+    {
+      "id": "keyof-properties",
+      "title": "How can keyof make a property accessor safer?",
+      "topic": "Generics",
+      "difficulty": "Intermediate",
+      "answer": "keyof produces a type of valid keys for another type. Constrain a key parameter to keyof T and return T[K], so the requested property and the return type stay connected. This rejects a nonexistent key when the input type is known."
+    },
+    {
+      "id": "discriminated-unions",
+      "title": "Why use a discriminated union for request state?",
+      "topic": "Unions",
+      "difficulty": "Intermediate",
+      "answer": "A shared literal field, such as status, lets TypeScript narrow a union to a specific state. Model loading without data, success with data, and failure with an error. This is clearer than optional fields that permit inconsistent combinations."
+    },
+    {
+      "id": "exhaustive-never",
+      "title": "How does never support exhaustive handling?",
+      "topic": "Unions",
+      "difficulty": "Advanced",
+      "answer": "After every union member has been handled, the remaining value narrows to never. Passing that remainder to a function accepting never makes a missing case a type error when the union later expands. Keep a runtime throw in the fallback for unexpected input."
+    },
+    {
+      "id": "partial-update",
+      "title": "Does Partial make nested fields optional too?",
+      "topic": "Utility types",
+      "difficulty": "Intermediate",
+      "answer": "Partial changes the immediate properties of a type to optional properties. It does not recursively transform nested objects. Define a deliberate nested update shape when needed, and remember that a permitted optional property does not automatically define merge or deletion semantics."
+    },
+    {
+      "id": "pick-versus-omit",
+      "title": "When should you use Pick or Omit for an API type?",
+      "topic": "Utility types",
+      "difficulty": "Beginner",
+      "answer": "Pick selects named properties; Omit excludes named properties. They help express narrower contracts without repeating field types. For a public response, an explicit allowlist with Pick can avoid accidentally adding future private fields to that response type."
+    },
+    {
+      "id": "readonly-limits",
+      "title": "Does readonly freeze an object at runtime?",
+      "topic": "Type safety",
+      "difficulty": "Intermediate",
+      "answer": "No. readonly restricts assignments through the relevant TypeScript type. It does not call Object.freeze or guarantee deep immutability. A readonly array also prevents changing the array through that reference, while its contained objects may still be mutable."
+    },
+    {
+      "id": "null-checking",
+      "title": "Why narrow a possibly missing value instead of using a non-null assertion?",
+      "topic": "Type safety",
+      "difficulty": "Beginner",
+      "answer": "A non-null assertion suppresses a compiler concern without adding a runtime check. A guard can handle the missing case intentionally and establish safety for subsequent statements. Use assertions only when the invariant is established elsewhere and remains reliable."
+    }
+  ],
+  "practices": [
+    {
+      "id": "typed-property-accessor",
+      "title": "Write a type-safe property accessor",
+      "topic": "Generics",
+      "difficulty": "Beginner",
+      "prompt": "Implement getProperty so getProperty({name:'Ada', score:9}, 'score') is inferred as number. Passing a key that is absent from the object must fail type checking. Do not use any or an unchecked assertion.",
+      "hints": [
+        "Use one generic for the object and another for the key.",
+        "The return type can be an indexed access type."
+      ],
+      "checks": [
+        "A numeric property produces a number result.",
+        "A string property produces a string result.",
+        "A nonexistent key is rejected by the compiler."
+      ],
+      "starterCode": "// Add generic parameters and parameter types.\n// function getProperty(object, key) { ... }",
+      "solution": "Constrain K to the keys of T, then return the corresponding indexed property type. The implementation does not need a cast because the type relationship is explicit.",
+      "solutionCode": "function getProperty<T, K extends keyof T>(object: T, key: K): T[K] {\n  return object[key];\n}\nconst score = getProperty({ name: 'Ada', score: 9 }, 'score');\n// getProperty({ name: 'Ada' }, 'missing'); // Compile-time error."
+    },
+    {
+      "id": "exhaustive-request-state",
+      "title": "Render every request-state variant",
+      "topic": "Unions",
+      "difficulty": "Intermediate",
+      "prompt": "Define RequestState as idle, loading, success with a string array, or error with a message. Write describeState(state) with exhaustive handling. If a new state is added, the existing switch should fail type checking until it handles that state.",
+      "hints": [
+        "Give every variant a literal status property.",
+        "Pass the default branch's state to an assertNever helper."
+      ],
+      "checks": [
+        "Success can access data without assertions.",
+        "Error can access message without assertions.",
+        "Idle and loading do not require fake data.",
+        "Adding a variant exposes the unhandled branch at compile time."
+      ],
+      "starterCode": "type RequestState = { status: 'idle' };\n// Add the remaining states and describeState.",
+      "solution": "Use a discriminant to connect each state with its permitted payload. A never-typed fallback checks that the switch covers the whole union.",
+      "solutionCode": "type RequestState =\n  | { status: 'idle' }\n  | { status: 'loading' }\n  | { status: 'success'; data: string[] }\n  | { status: 'error'; message: string };\nfunction assertNever(value: never): never { throw new Error('Unexpected state'); }\nfunction describeState(state: RequestState): string {\n  switch (state.status) {\n    case 'idle': return 'Ready';\n    case 'loading': return 'Loading';\n    case 'success': return `${state.data.length} results`;\n    case 'error': return state.message;\n    default: return assertNever(state);\n  }\n}"
+    },
+    {
+      "id": "validate-user-input",
+      "title": "Validate an unknown user payload",
+      "topic": "Type safety",
+      "difficulty": "Intermediate",
+      "prompt": "Implement parseUser(value: unknown) returning {id: number, name: string}. Accept only positive safe-integer IDs and nonempty trimmed names. Reject null, arrays, missing fields, and wrong field types. Extra fields may be ignored.",
+      "hints": [
+        "Check the object itself before reading properties.",
+        "Use an in check and typeof guards to narrow individual properties."
+      ],
+      "checks": [
+        "A valid payload returns a normalized copy.",
+        "Whitespace-only names are rejected.",
+        "Null, arrays, and fractional IDs are rejected.",
+        "The result omits unexpected input fields."
+      ],
+      "starterCode": "type User = { id: number; name: string };\nfunction parseUser(value: unknown): User {\n  throw new Error('Not implemented');\n}",
+      "solution": "Validate runtime data rather than asserting a type. Return a fresh allowlisted object so extra input properties do not become part of the domain value.",
+      "solutionCode": "type User = { id: number; name: string };\nfunction parseUser(value: unknown): User {\n  if (typeof value !== 'object' || value === null || Array.isArray(value)) throw new TypeError('Invalid user');\n  if (!('id' in value) || typeof value.id !== 'number' || !Number.isSafeInteger(value.id) || value.id <= 0) throw new TypeError('Invalid id');\n  if (!('name' in value) || typeof value.name !== 'string' || !value.name.trim()) throw new TypeError('Invalid name');\n  return { id: value.id, name: value.name.trim() };\n}"
+    }
+  ]
+}

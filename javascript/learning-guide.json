@@ -1,0 +1,156 @@
+{
+  "references": [
+    {
+      "title": "MDN: Closures",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Closures"
+    },
+    {
+      "title": "MDN: Promises",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises"
+    },
+    {
+      "title": "MDN: Map",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map"
+    },
+    {
+      "title": "MDN: Fetch",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch"
+    }
+  ],
+  "questions": [
+    {
+      "id": "closure-state",
+      "title": "How can a closure keep independent private state?",
+      "topic": "Functions",
+      "difficulty": "Intermediate",
+      "answer": "An inner function retains access to the lexical environment in which it was created. Calling a factory twice creates two environments, so the returned functions can maintain independent counters without placing those counters in global variables.",
+      "code": "function makeCounter() {\n  let count = 0;\n  return () => ++count;\n}\nconst first = makeCounter();\nconst second = makeCounter();\nconsole.log(first(), first(), second()); // 1 2 1"
+    },
+    {
+      "id": "promise-error-flow",
+      "title": "How does an error move through a promise chain?",
+      "topic": "Async",
+      "difficulty": "Intermediate",
+      "answer": "Throwing inside a then handler rejects the promise it returns. A later rejection handler can handle that failure. Returning a value from catch normally recovers the chain; throw again when the caller must still observe a failure."
+    },
+    {
+      "id": "promise-combinators",
+      "title": "When would you choose Promise.allSettled over Promise.all?",
+      "topic": "Async",
+      "difficulty": "Intermediate",
+      "answer": "Promise.all rejects when an input rejects, which suits work whose combined result requires every input. allSettled waits for every outcome and returns each success or failure. Neither combinator automatically cancels work that has already started."
+    },
+    {
+      "id": "async-foreach",
+      "title": "Why does awaiting forEach not wait for async callbacks?",
+      "topic": "Async",
+      "difficulty": "Intermediate",
+      "answer": "forEach ignores callback return values and returns undefined. Use a for-of loop with await for sequential work, or map tasks to promises and await Promise.all for concurrent work. For large workloads, also consider a concurrency limit."
+    },
+    {
+      "id": "fetch-http-errors",
+      "title": "Why can fetch resolve for an HTTP 404 response?",
+      "topic": "APIs",
+      "difficulty": "Beginner",
+      "answer": "Receiving an HTTP response is not itself a network failure. fetch can resolve even when the status is an application error. Check response.ok or the status before consuming the success result, and handle failures from reading or parsing the body too."
+    },
+    {
+      "id": "request-cancellation",
+      "title": "How can AbortController help with obsolete requests?",
+      "topic": "APIs",
+      "difficulty": "Intermediate",
+      "answer": "Pass a controller's signal to fetch and abort the controller when its result is no longer needed. Handle cancellation separately from genuine errors. Cancellation does not guarantee that a server has stopped processing a request it already received."
+    },
+    {
+      "id": "map-object-keys",
+      "title": "When is Map more useful than a plain object?",
+      "topic": "Collections",
+      "difficulty": "Beginner",
+      "answer": "Map supports keys of any value type, direct iteration, and a size property. It avoids inherited object-property names being confused with entries. Plain objects remain a natural choice for records with known named fields or JSON-shaped data."
+    },
+    {
+      "id": "immutable-array-update",
+      "title": "How do you update one array item without mutating the original?",
+      "topic": "Collections",
+      "difficulty": "Beginner",
+      "answer": "Use map to create a new array, returning a new object for the matching item and the existing objects for unaffected items. This creates new references only where needed. Nested objects need their own copies if their contents also change.",
+      "code": "const updated = users.map(user =>\n  user.id === targetId ? { ...user, active: true } : user\n);"
+    },
+    {
+      "id": "debounce-versus-throttle",
+      "title": "How do debounce and throttle differ?",
+      "topic": "Functions",
+      "difficulty": "Intermediate",
+      "answer": "Debounce waits for a quiet interval before calling a function, which suits search suggestions. Throttle limits how frequently calls happen during continuous activity, which can suit scroll processing. Decide explicitly whether the first call, last call, or both should run."
+    },
+    {
+      "id": "floating-promises",
+      "title": "What is a floating promise and why is it risky?",
+      "topic": "Async",
+      "difficulty": "Advanced",
+      "answer": "A promise is floating when its eventual result or failure is not connected to the caller's control flow. Return or await dependent work, and intentionally handle fire-and-forget failures. Otherwise a caller may continue too early and a rejection may go unobserved."
+    }
+  ],
+  "practices": [
+    {
+      "id": "group-orders-by-customer",
+      "title": "Group order totals by customer",
+      "topic": "Collections",
+      "difficulty": "Beginner",
+      "prompt": "Implement totalsByCustomer(orders) using a Map. Input orders have customerId and a finite, nonnegative total. Sum repeated customers without changing the input. For [{customerId:'a',total:12},{customerId:'b',total:5},{customerId:'a',total:8}], return a Map containing a:20 and b:5. Reject invalid totals.",
+      "hints": [
+        "Map.get can return undefined for a new key.",
+        "Validate with Number.isFinite before adding a total."
+      ],
+      "checks": [
+        "Repeated customer IDs are summed.",
+        "An empty input returns an empty Map.",
+        "Negative, NaN, and infinite totals are rejected.",
+        "The input objects are unchanged."
+      ],
+      "starterCode": "function totalsByCustomer(orders) {\n  // Return a Map.\n}",
+      "solution": "Accumulate totals into a fresh Map. Validate each amount before using it, and use zero for customers not yet present. For production money calculations, use integer minor units or an appropriate decimal representation.",
+      "solutionCode": "function totalsByCustomer(orders) {\n  const totals = new Map();\n  for (const { customerId, total } of orders) {\n    if (!Number.isFinite(total) || total < 0) throw new TypeError('Invalid total');\n    totals.set(customerId, (totals.get(customerId) ?? 0) + total);\n  }\n  return totals;\n}"
+    },
+    {
+      "id": "debounced-search-handler",
+      "title": "Implement a cancellable debounce",
+      "topic": "Functions",
+      "difficulty": "Intermediate",
+      "prompt": "Implement debounce(fn, delay). Repeated calls should invoke fn once, using the latest arguments and the original calling context, after delay milliseconds of quiet. Add cancel() to prevent a pending call. Assume delay is a nonnegative number.",
+      "hints": [
+        "Clear the previous timeout on every call.",
+        "A normal wrapper function can capture its calling context for an arrow callback."
+      ],
+      "checks": [
+        "Three quick calls produce only the last invocation.",
+        "The latest arguments and this value reach fn.",
+        "cancel prevents the pending invocation.",
+        "A later call still works after cancel."
+      ],
+      "starterCode": "function debounce(fn, delay) {\n  // Return a callable function with a cancel method.\n}",
+      "solution": "Keep one timer in a closure, clear it whenever another call arrives, and capture this inside the wrapper. Expose cancel without sharing timers between separate debounce instances.",
+      "solutionCode": "function debounce(fn, delay) {\n  let timer;\n  function debounced(...args) {\n    clearTimeout(timer);\n    timer = setTimeout(() => fn.apply(this, args), delay);\n  }\n  debounced.cancel = () => { clearTimeout(timer); };\n  return debounced;\n}"
+    },
+    {
+      "id": "fetch-json-safely",
+      "title": "Load JSON with explicit HTTP errors",
+      "topic": "APIs",
+      "difficulty": "Intermediate",
+      "prompt": "Implement getJson(url, {signal} = {}). It must forward an optional abort signal, reject non-success HTTP statuses with the status in the message, and return parsed JSON for successful responses. Do not swallow network, abort, or JSON parsing errors.",
+      "hints": [
+        "Check response.ok before response.json().",
+        "An async function can return the parsing promise directly."
+      ],
+      "checks": [
+        "A successful response returns the parsed value.",
+        "An HTTP 404 rejects with a message containing 404.",
+        "The signal reaches fetch.",
+        "Invalid JSON and network failures still reject."
+      ],
+      "starterCode": "async function getJson(url, { signal } = {}) {\n  // Fetch and validate the response.\n}",
+      "solution": "Separate HTTP status handling from network and decoding errors. Let the caller decide how to display or recover from each failure.",
+      "solutionCode": "async function getJson(url, { signal } = {}) {\n  const response = await fetch(url, { signal });\n  if (!response.ok) throw new Error(`HTTP ${response.status}`);\n  return response.json();\n}"
+    }
+  ]
+}

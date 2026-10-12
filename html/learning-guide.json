@@ -1,0 +1,152 @@
+{
+  "references": [
+    {
+      "title": "MDN: Accessible HTML",
+      "url": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Accessibility/HTML"
+    },
+    {
+      "title": "MDN: Button behavior",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/button"
+    },
+    {
+      "title": "MDN: Constraint validation",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Guides/Constraint_validation"
+    },
+    {
+      "title": "MDN: Responsive images",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Guides/Responsive_images"
+    }
+  ],
+  "questions": [
+    {
+      "id": "semantic-landmarks",
+      "title": "How do semantic landmarks improve a page?",
+      "topic": "Accessibility",
+      "difficulty": "Beginner",
+      "answer": "Elements such as main, nav, and header communicate the purpose of regions to browsers and assistive technology. Use one visible main region for the page's primary content. A div remains useful when a container has no more specific semantic purpose."
+    },
+    {
+      "id": "links-versus-buttons",
+      "title": "When should you use a link instead of a button?",
+      "topic": "Accessibility",
+      "difficulty": "Beginner",
+      "answer": "Use an anchor with an href for navigation to a location. Use a button for an action, such as saving changes or opening a dialog. Native elements provide keyboard behavior that a clickable div would require you to implement."
+    },
+    {
+      "id": "button-types",
+      "title": "Why should a form button have an explicit type?",
+      "topic": "Forms",
+      "difficulty": "Beginner",
+      "answer": "A button associated with a form defaults to submitting when its type is omitted or invalid. Set type to button for unrelated actions and submit for the submission control. This prevents a password-visibility toggle from accidentally sending the form.",
+      "code": "<button type=\"button\">Show password</button>\n<button type=\"submit\">Create account</button>"
+    },
+    {
+      "id": "labels-and-placeholders",
+      "title": "Why is a placeholder not a replacement for a label?",
+      "topic": "Forms",
+      "difficulty": "Beginner",
+      "answer": "A placeholder disappears as the user types and may be difficult to read. A visible label keeps the field's purpose available. Connect a label's for attribute to the input's unique id; use a placeholder only for an optional example."
+    },
+    {
+      "id": "validation-boundaries",
+      "title": "What does native form validation protect against?",
+      "topic": "Forms",
+      "difficulty": "Intermediate",
+      "answer": "Attributes such as required, type, min, and pattern help users submit values in the expected format. They improve feedback but are bypassable. Validate again on the server and enforce business rules there; an email input does not prove ownership of an address."
+    },
+    {
+      "id": "disabled-readonly",
+      "title": "How do disabled and readonly form fields differ?",
+      "topic": "Forms",
+      "difficulty": "Intermediate",
+      "answer": "A disabled control is generally not focusable and is omitted from form submission. A supported readonly input cannot be edited, but remains focusable and is submitted. Use the state that matches whether the field should be unavailable or simply uneditable."
+    },
+    {
+      "id": "image-alternatives",
+      "title": "How should you choose image alternative text?",
+      "topic": "Accessibility",
+      "difficulty": "Beginner",
+      "answer": "Describe the image's purpose in its context, rather than listing every visual detail. Use an empty alt attribute for a purely decorative image. If an image is the only content of a link, its alternative text should communicate the link's destination or action."
+    },
+    {
+      "id": "responsive-image-selection",
+      "title": "What do srcset and sizes do?",
+      "topic": "Images",
+      "difficulty": "Intermediate",
+      "answer": "A width-based srcset offers image candidates; sizes describes the image's expected layout width at relevant breakpoints. The browser chooses a candidate using that information and display conditions. Picture can switch image sources for art direction or format selection."
+    },
+    {
+      "id": "accessible-table-headers",
+      "title": "How do captions and header scopes help a data table?",
+      "topic": "Tables",
+      "difficulty": "Intermediate",
+      "answer": "A caption names the table. Header cells identify what data means, and scope can explicitly associate simple row or column headers with cells. Use table markup for tabular relationships, rather than for positioning unrelated page content."
+    },
+    {
+      "id": "native-first",
+      "title": "When should you add ARIA to a native control?",
+      "topic": "Accessibility",
+      "difficulty": "Advanced",
+      "answer": "Start with a native element whose semantics and behavior match the task. Add ARIA only for information the element does not already express, such as an expanded state for a disclosure button. ARIA does not create keyboard interaction or fix invalid element behavior."
+    }
+  ],
+  "practices": [
+    {
+      "id": "accessible-signup-form",
+      "title": "Build an accessible signup form",
+      "topic": "Forms",
+      "difficulty": "Beginner",
+      "prompt": "Create a signup form with name and email fields, a required terms checkbox, and a submit button. Provide visible labels and meaningful autocomplete values. Use native validation. The markup is the exercise; /signup is a placeholder endpoint, not a working registration service.",
+      "hints": [
+        "Every label needs a matching, unique input id.",
+        "A submitted field needs a name attribute, not just an id."
+      ],
+      "checks": [
+        "Clicking each label focuses or toggles its control.",
+        "An empty name, invalid email, or unchecked terms prevents native submission.",
+        "The name, email, and terms controls have submission names."
+      ],
+      "starterCode": "<form action=\"/signup\" method=\"post\">\n  <!-- Add labeled controls here. -->\n</form>",
+      "solution": "Associate labels explicitly, give inputs submission names, and use required on all three fields. Native checks help the user; a real endpoint must also validate incoming data.",
+      "solutionCode": "<form action=\"/signup\" method=\"post\">\n  <label for=\"signup-name\">Name</label>\n  <input id=\"signup-name\" name=\"name\" autocomplete=\"name\" required>\n  <label for=\"signup-email\">Email</label>\n  <input id=\"signup-email\" name=\"email\" type=\"email\" autocomplete=\"email\" required>\n  <input id=\"signup-terms\" name=\"terms\" type=\"checkbox\" value=\"accepted\" required>\n  <label for=\"signup-terms\">I accept the terms</label>\n  <button type=\"submit\">Create account</button>\n</form>"
+    },
+    {
+      "id": "semantic-course-table",
+      "title": "Create a semantic course table",
+      "topic": "Tables",
+      "difficulty": "Intermediate",
+      "prompt": "Represent two courses, their lesson counts, and their status in a table. Include a caption, column headers, and course-name row headers. The relationships must remain clear without styling.",
+      "hints": [
+        "Use thead and tbody to group rows.",
+        "A course name can be a th with scope set to row."
+      ],
+      "checks": [
+        "The caption describes the dataset.",
+        "All three columns have scoped header cells.",
+        "Each data row includes a course-name row header."
+      ],
+      "starterCode": "<table>\n  <!-- Add caption, headers, and two course rows. -->\n</table>",
+      "solution": "Separate structure from presentation. Column scopes describe each column while row scopes identify the course associated with each set of values.",
+      "solutionCode": "<table>\n  <caption>Learning track progress</caption>\n  <thead><tr><th scope=\"col\">Course</th><th scope=\"col\">Lessons</th><th scope=\"col\">Status</th></tr></thead>\n  <tbody>\n    <tr><th scope=\"row\">HTML</th><td>12</td><td>Completed</td></tr>\n    <tr><th scope=\"row\">CSS</th><td>15</td><td>In progress</td></tr>\n  </tbody>\n</table>"
+    },
+    {
+      "id": "responsive-image-markup",
+      "title": "Choose responsive image candidates",
+      "topic": "Images",
+      "difficulty": "Intermediate",
+      "prompt": "Write markup for a course image that occupies the viewport below 700px and a 600px column otherwise. Offer 480px, 960px, and 1440px-wide candidates. Assume those image files exist; define the image's aspect ratio to reserve space.",
+      "hints": [
+        "Use width descriptors in srcset.",
+        "The sizes expression describes the layout slot, not the source file width."
+      ],
+      "checks": [
+        "All candidates include matching width descriptors.",
+        "The sizes expression switches at 700px.",
+        "The fallback image has descriptive alt text, width, and height."
+      ],
+      "starterCode": "<img src=\"course-960.jpg\" alt=\"\">",
+      "solution": "Provide a fallback source, an accurate slot-size description, and intrinsic dimensions with the intended 3:2 aspect ratio. The browser may choose different candidates depending on pixel density and other conditions.",
+      "solutionCode": "<img\n  src=\"course-960.jpg\"\n  srcset=\"course-480.jpg 480w, course-960.jpg 960w, course-1440.jpg 1440w\"\n  sizes=\"(max-width: 699px) 100vw, 600px\"\n  width=\"960\" height=\"640\"\n  alt=\"A code editor showing an HTML course exercise\"\n>"
+    }
+  ]
+}

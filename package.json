@@ -1,0 +1,9 @@
+{
+  "name": "fulstack-learning",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix learning-site run dev",
+    "build": "npm --prefix learning-site run build",
+    "test": "npm --prefix learning-site test"
+  }
+}

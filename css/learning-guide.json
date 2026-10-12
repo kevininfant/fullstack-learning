@@ -1,0 +1,153 @@
+{
+  "references": [
+    {
+      "title": "MDN: The CSS cascade",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascade/Introduction"
+    },
+    {
+      "title": "MDN: Stacking contexts",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Positioned_layout/Stacking_context"
+    },
+    {
+      "title": "MDN: Flexbox",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Flexible_box_layout/Basic_concepts"
+    },
+    {
+      "title": "MDN: Grid layout",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Grid_layout/Basic_concepts"
+    }
+  ],
+  "questions": [
+    {
+      "id": "cascade-order",
+      "title": "Does the most specific selector always win?",
+      "topic": "Cascade",
+      "difficulty": "Intermediate",
+      "answer": "No. The cascade considers factors such as origin, importance, and cascade layers before specificity. Source order breaks otherwise tied declarations. Diagnose the winning rule in browser developer tools instead of increasing selector specificity without understanding the conflict."
+    },
+    {
+      "id": "box-sizing",
+      "title": "Why is border-box useful for sizing?",
+      "topic": "Layout",
+      "difficulty": "Beginner",
+      "answer": "With border-box, an element's declared width and height include its padding and border. Margins remain outside. This makes a padded input easier to fit into a fixed-width container without manually subtracting its internal spacing.",
+      "code": "*, *::before, *::after { box-sizing: border-box; }"
+    },
+    {
+      "id": "flex-min-width",
+      "title": "Why can a flex item overflow despite flex-shrink?",
+      "topic": "Flexbox",
+      "difficulty": "Intermediate",
+      "answer": "A flex item can have an automatic minimum size based on its content. A long filename may therefore resist shrinking. Setting min-width to zero on the appropriate flex child permits it to shrink; then choose wrapping, clipping, or scrolling for its content."
+    },
+    {
+      "id": "grid-minmax",
+      "title": "Why use minmax(0, 1fr) in a grid?",
+      "topic": "Grid",
+      "difficulty": "Intermediate",
+      "answer": "A plain flexible track can retain an automatic content-based minimum. minmax(0, 1fr) explicitly allows the track to shrink below that minimum. The child still needs a deliberate overflow or wrapping policy for long content."
+    },
+    {
+      "id": "stacking-context",
+      "title": "Why might a very large z-index not bring a popup forward?",
+      "topic": "Positioning",
+      "difficulty": "Advanced",
+      "answer": "A descendant participates within its own stacking context. Its z-index cannot outrank an ancestor's sibling context just by becoming larger. Inspect ancestor properties such as transforms, opacity, isolation, and positioned z-index values to find the context boundary."
+    },
+    {
+      "id": "sticky-scrolling",
+      "title": "What should you inspect when sticky positioning does not work?",
+      "topic": "Positioning",
+      "difficulty": "Intermediate",
+      "answer": "Check the inset, such as top, the scroll container created by ancestor overflow, and the available space inside the containing block. A sticky item cannot move beyond its containing block, and a container that is too short can leave no useful sticking distance."
+    },
+    {
+      "id": "focus-visible",
+      "title": "How do hover and focus-visible differ?",
+      "topic": "Accessibility",
+      "difficulty": "Beginner",
+      "answer": "Hover reflects pointer interaction; it is not a keyboard-focus indicator. focus-visible lets you style focus when the browser determines that an indicator is needed. Keep a clear focus outline so keyboard users can identify the active control."
+    },
+    {
+      "id": "responsive-breakpoints",
+      "title": "How should you choose responsive breakpoints?",
+      "topic": "Responsive design",
+      "difficulty": "Beginner",
+      "answer": "Start with a layout that fits narrow screens and add breakpoints where the content becomes uncomfortable, rather than targeting a particular phone model. Check long labels, zoom, and intermediate widths as well as your largest and smallest screenshots."
+    },
+    {
+      "id": "custom-property-fallback",
+      "title": "What does a CSS custom-property fallback do?",
+      "topic": "Cascade",
+      "difficulty": "Intermediate",
+      "answer": "A fallback in var() supplies a value when the custom property is missing or invalid as a custom property. It does not generally rescue a defined value that becomes invalid for the destination property. Keep design tokens compatible with how they are used.",
+      "code": ".button { background: var(--action-color, #17735b); }"
+    },
+    {
+      "id": "motion-accessibility",
+      "title": "How can you respect reduced-motion preferences?",
+      "topic": "Accessibility",
+      "difficulty": "Intermediate",
+      "answer": "Use prefers-reduced-motion to remove or simplify nonessential motion. Preserve necessary state changes and feedback, using an immediate change when appropriate. Test that disabling an animation does not leave content hidden or a control stuck in a loading state."
+    }
+  ],
+  "practices": [
+    {
+      "id": "responsive-course-grid",
+      "title": "Build a responsive course grid",
+      "topic": "Grid",
+      "difficulty": "Beginner",
+      "prompt": "Style a .courses container with any number of .course items. Fit as many columns as practical, use a 240px preferred minimum, and prevent page overflow on a 320px screen. Keep 16px gaps.",
+      "hints": [
+        "Combine auto-fit with minmax.",
+        "A minimum expressed as min(100%, 240px) can fit a narrow container."
+      ],
+      "checks": [
+        "The grid uses one column when space is limited.",
+        "Additional columns appear as the container grows.",
+        "A long course title wraps without widening the page."
+      ],
+      "starterCode": ".courses { }\n.course { }",
+      "solution": "Let the grid calculate column count and explicitly constrain the minimum to the available space. Allow individual cards to shrink and long words to wrap.",
+      "solutionCode": ".courses {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));\n  gap: 16px;\n}\n.course { min-width: 0; overflow-wrap: anywhere; }"
+    },
+    {
+      "id": "flex-filename-overflow",
+      "title": "Fix a shrinking filename toolbar",
+      "topic": "Flexbox",
+      "difficulty": "Intermediate",
+      "prompt": "A .file-row contains a .filename and a fixed .download button. A very long filename pushes the button offscreen. Make the filename truncate with an ellipsis while the button remains visible.",
+      "hints": [
+        "The text flex child must be allowed to shrink below its intrinsic minimum.",
+        "Ellipsis also requires a single line and hidden overflow."
+      ],
+      "checks": [
+        "The download button never shrinks.",
+        "A long filename displays an ellipsis.",
+        "The row fits a 240px-wide container."
+      ],
+      "starterCode": ".file-row { display: flex; gap: 12px; }\n.filename { flex: 1; }\n.download { }",
+      "solution": "Set min-width on the flex child, rather than only on the parent. Reserve the command's space with flex-shrink set to zero.",
+      "solutionCode": ".file-row { display: flex; align-items: center; gap: 12px; }\n.filename {\n  flex: 1; min-width: 0;\n  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\n}\n.download { flex-shrink: 0; }"
+    },
+    {
+      "id": "accessible-button-states",
+      "title": "Style an accessible action button",
+      "topic": "Accessibility",
+      "difficulty": "Intermediate",
+      "prompt": "Give .action distinct default, hover, keyboard-focus, and disabled states. Keep the keyboard-focus ring visible and remove nonessential transitions when reduced motion is requested.",
+      "hints": [
+        "Use focus-visible for the focus ring.",
+        "Exclude disabled buttons from hover styling."
+      ],
+      "checks": [
+        "Tab navigation produces a visible focus ring.",
+        "The disabled state remains distinguishable.",
+        "The reduced-motion rule disables the transition."
+      ],
+      "starterCode": ".action { }",
+      "solution": "Provide separate interaction feedback and preserve a strong focus boundary. A media query adjusts motion without removing the visual states.",
+      "solutionCode": ".action { background: #17735b; color: white; border: 1px solid #105c48; padding: 12px 16px; transition: background 120ms; }\n.action:hover:not(:disabled) { background: #105c48; }\n.action:focus-visible { outline: 3px solid #2259aa; outline-offset: 3px; }\n.action:disabled { background: #e5e9e6; color: #59625b; border-color: #a8b2ab; cursor: not-allowed; }\n@media (prefers-reduced-motion: reduce) { .action { transition: none; } }"
+    }
+  ]
+}

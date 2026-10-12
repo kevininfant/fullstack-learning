@@ -1,0 +1,150 @@
+{
+  "references": [
+    {
+      "title": "Node.js: Event-loop blocking",
+      "url": "https://nodejs.org/learn/asynchronous-work/dont-block-the-event-loop"
+    },
+    {
+      "title": "Node.js: Streams",
+      "url": "https://nodejs.org/api/stream.html"
+    },
+    { "title": "Node.js: HTTP", "url": "https://nodejs.org/api/http.html" },
+    {
+      "title": "Node.js: Environment variables",
+      "url": "https://nodejs.org/api/environment_variables.html"
+    }
+  ],
+  "questions": [
+    {
+      "id": "event-loop-cpu",
+      "title": "Why can CPU-heavy JavaScript delay unrelated requests?",
+      "topic": "Performance",
+      "difficulty": "Intermediate",
+      "answer": "JavaScript callbacks run on the event-loop thread. A long calculation prevents that thread from handling other callbacks while it runs. Use bounded work and appropriate worker threads or another processing service for heavy CPU tasks; marking a function async does not offload its calculation."
+    },
+    {
+      "id": "async-versus-parallel",
+      "title": "Does asynchronous I/O mean every JavaScript callback runs in parallel?",
+      "topic": "Performance",
+      "difficulty": "Beginner",
+      "answer": "No. I/O can be in progress while the event loop performs other work, but callbacks on a particular JavaScript thread still execute one at a time. The operating system and, for some APIs, the worker pool handle underlying work."
+    },
+    {
+      "id": "stream-memory",
+      "title": "Why stream a large file rather than read it all first?",
+      "topic": "Streams",
+      "difficulty": "Beginner",
+      "answer": "A stream can move data in chunks instead of holding the entire file in memory. It can reduce peak memory use and start transferring sooner. Handle errors and backpressure so slow consumers do not cause unbounded buffering."
+    },
+    {
+      "id": "stream-backpressure",
+      "title": "What does backpressure mean for a writable stream?",
+      "topic": "Streams",
+      "difficulty": "Intermediate",
+      "answer": "A consumer may accept data more slowly than a producer generates it. A false return from write signals that the producer should pause until drain. Prefer pipeline for common stream chains because it coordinates flow and error propagation."
+    },
+    {
+      "id": "pipeline-errors",
+      "title": "Why prefer pipeline to manually connecting several streams?",
+      "topic": "Streams",
+      "difficulty": "Intermediate",
+      "answer": "pipeline connects stream stages while handling backpressure and propagating failures. The promise-based version can be awaited inside try/catch. For file outputs, remember that a failed transfer may leave a partial file that your application must clean up or replace atomically."
+    },
+    {
+      "id": "env-value-types",
+      "title": "Why should configuration from process.env be parsed?",
+      "topic": "Configuration",
+      "difficulty": "Beginner",
+      "answer": "Environment values are strings when present. Validate and convert numeric settings, boolean flags, and allowed modes deliberately. For example, the string false is truthy in JavaScript, so Boolean(process.env.FEATURE_ENABLED) does not implement a true-or-false configuration parser."
+    },
+    {
+      "id": "http-status-contracts",
+      "title": "How should an API distinguish validation failures from server failures?",
+      "topic": "APIs",
+      "difficulty": "Beginner",
+      "answer": "Use an appropriate 4xx status for a request the client must change and a 5xx status for an unexpected server-side failure. Return a consistent public error shape. Keep stack traces and private implementation details in server-side diagnostics rather than the response."
+    },
+    {
+      "id": "http-body-limits",
+      "title": "Why enforce a request-body size limit?",
+      "topic": "APIs",
+      "difficulty": "Intermediate",
+      "answer": "An unbounded incoming body can consume memory and time before application validation happens. Enforce limits at the proxy and application layers, account for streamed bytes, and reject oversized bodies. Do not assume Content-Length is present or trustworthy."
+    },
+    {
+      "id": "graceful-shutdown",
+      "title": "What does graceful shutdown mean for an HTTP service?",
+      "topic": "Operations",
+      "difficulty": "Intermediate",
+      "answer": "Stop accepting new work, allow in-flight work a bounded time to finish, and close resources such as database pools. Track active connections when necessary and keep a deadline for shutdown. Exact server-close behavior depends on the Node.js version and connection types."
+    },
+    {
+      "id": "async-error-boundaries",
+      "title": "Why should rejected async work be handled at a request boundary?",
+      "topic": "APIs",
+      "difficulty": "Advanced",
+      "answer": "A rejected operation must become a controlled response or an intentional background-job failure. Attach handling through await with try/catch or your framework's supported error path. Avoid sending a second response after headers have already been written."
+    }
+  ],
+  "practices": [
+    {
+      "id": "validated-pagination",
+      "title": "Validate API pagination parameters",
+      "topic": "APIs",
+      "difficulty": "Beginner",
+      "prompt": "Implement parsePagination(params) for URLSearchParams. Default page to 1 and limit to 20. Accept only decimal integers, with page from 1 through 1000000 and limit from 1 through 100. Return page, limit, and offset; reject empty strings, fractions, signs, and out-of-range values.",
+      "hints": [
+        "Distinguish an absent parameter from an empty one.",
+        "Validate the entire string before converting it."
+      ],
+      "checks": [
+        "Missing values produce {page:1, limit:20, offset:0}.",
+        "page=3&limit=10 produces offset 20.",
+        "page=2x, limit=0, and limit=101 are rejected."
+      ],
+      "starterCode": "function parsePagination(params) {\n  // Return validated pagination values.\n}",
+      "solution": "Use a reusable bounded-integer parser so partial numeric strings are not accepted. Derive offset after validation.",
+      "solutionCode": "function parsePagination(params) {\n  function read(key, fallback, max) {\n    const raw = params.get(key);\n    if (raw === null) return fallback;\n    if (!/^[0-9]+$/.test(raw)) throw new TypeError(`Invalid ${key}`);\n    const value = Number(raw);\n    if (!Number.isSafeInteger(value) || value < 1 || value > max) throw new RangeError(`Invalid ${key}`);\n    return value;\n  }\n  const page = read('page', 1, 1000000);\n  const limit = read('limit', 20, 100);\n  return { page, limit, offset: (page - 1) * limit };\n}"
+    },
+    {
+      "id": "stream-file-copy",
+      "title": "Copy a file with stream backpressure",
+      "topic": "Streams",
+      "difficulty": "Intermediate",
+      "prompt": "Implement copyFileStream(source, destination) with Node.js streams and promise-based pipeline. Reject when the destination already exists, propagate failures, and avoid buffering the whole file. A failed copy may leave a partial newly created destination; document that behavior.",
+      "hints": [
+        "Use node:stream/promises for the awaited pipeline.",
+        "The write-stream flag wx prevents overwriting an existing file."
+      ],
+      "checks": [
+        "The output bytes match the input.",
+        "An existing destination is not overwritten.",
+        "A missing source rejects.",
+        "The implementation does not call readFile."
+      ],
+      "starterCode": "import { createReadStream, createWriteStream } from 'node:fs';\nimport { pipeline } from 'node:stream/promises';\nexport async function copyFileStream(source, destination) {\n  // Connect the streams.\n}",
+      "solution": "Await pipeline to propagate stream failures and coordinate flow. The exclusive-create flag prevents replacement. A production workflow that requires an atomic result should write to a controlled temporary file and rename after success.",
+      "solutionCode": "import { createReadStream, createWriteStream } from 'node:fs';\nimport { pipeline } from 'node:stream/promises';\nexport async function copyFileStream(source, destination) {\n  await pipeline(\n    createReadStream(source),\n    createWriteStream(destination, { flags: 'wx' })\n  );\n}\n// Failure can leave a partial destination created by this call."
+    },
+    {
+      "id": "native-health-endpoint",
+      "title": "Create a minimal JSON health endpoint",
+      "topic": "APIs",
+      "difficulty": "Intermediate",
+      "prompt": "Use node:http to serve GET /health with JSON {status:'ok'}. Other paths return 404 JSON; non-GET requests to /health return 405 with Allow: GET. Listen on loopback port 8123. Treat this as a liveness example, not a database-readiness check.",
+      "hints": [
+        "Parse req.url with URL and a fixed local base.",
+        "Set content-type consistently for every branch."
+      ],
+      "checks": [
+        "GET /health returns 200 and JSON content type.",
+        "POST /health returns 405 and an Allow header.",
+        "GET /missing returns 404.",
+        "The server binds to 127.0.0.1."
+      ],
+      "starterCode": "import { createServer } from 'node:http';\n// Add request routing and listen on loopback.",
+      "solution": "Choose the status before writing the response and end each request exactly once. Restrict the example to loopback so it can be tested locally.",
+      "solutionCode": "import { createServer } from 'node:http';\nconst server = createServer((req, res) => {\n  const path = new URL(req.url, 'http://localhost').pathname;\n  res.setHeader('Content-Type', 'application/json; charset=utf-8');\n  if (path !== '/health') { res.writeHead(404); res.end(JSON.stringify({ error: 'Not found' })); return; }\n  if (req.method !== 'GET') { res.writeHead(405, { Allow: 'GET' }); res.end(JSON.stringify({ error: 'Method not allowed' })); return; }\n  res.writeHead(200); res.end(JSON.stringify({ status: 'ok' }));\n});\nserver.listen(8123, '127.0.0.1');"
+    }
+  ]
+}

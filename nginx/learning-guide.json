@@ -1,0 +1,154 @@
+{
+  "references": [
+    {
+      "title": "Nginx: Core HTTP module",
+      "url": "https://nginx.org/en/docs/http/ngx_http_core_module.html"
+    },
+    {
+      "title": "Nginx: Proxy module",
+      "url": "https://nginx.org/en/docs/http/ngx_http_proxy_module.html"
+    },
+    {
+      "title": "Nginx: Request rate limiting",
+      "url": "https://nginx.org/en/docs/http/ngx_http_limit_req_module.html"
+    },
+    {
+      "title": "Nginx: TLS configuration",
+      "url": "https://nginx.org/en/docs/http/ngx_http_ssl_module.html"
+    }
+  ],
+  "questions": [
+    {
+      "id": "reverse-proxy-purpose",
+      "title": "What does a reverse proxy add in front of an app?",
+      "topic": "Proxying",
+      "difficulty": "Beginner",
+      "answer": "A reverse proxy accepts client requests and forwards selected traffic to an upstream application. It can also serve static files, terminate TLS, and enforce gateway policies. The backend still needs correct application authentication, authorization, and error handling."
+    },
+    {
+      "id": "proxy-pass-uri",
+      "title": "How does a URI in proxy_pass affect the upstream path?",
+      "topic": "Proxying",
+      "difficulty": "Intermediate",
+      "answer": "For a normal prefix location, a proxy_pass with a URI replaces the matched location prefix with that URI. Without a URI, the request URI is generally preserved. For location /api/, an upstream ending in / strips that prefix; rewrites and regex locations need separate care."
+    },
+    {
+      "id": "location-selection",
+      "title": "How do exact, prefix, and regex locations interact?",
+      "topic": "Routing",
+      "difficulty": "Advanced",
+      "answer": "An exact match can end the search. Otherwise Nginx selects the longest matching prefix and may check regex locations in order. A selected prefix marked ^~ skips regex evaluation. Prefer simple, explicit locations and test representative paths rather than assuming file order controls every match."
+    },
+    {
+      "id": "spa-fallback-boundary",
+      "title": "Why should an SPA fallback not handle API failures?",
+      "topic": "Static hosting",
+      "difficulty": "Intermediate",
+      "answer": "An SPA route may need index.html so the client router can load. An API request should instead reach the backend and retain its HTTP status and content type. A broad fallback returning HTML for a missing API path can hide routing errors and cause JSON parsing failures."
+    },
+    {
+      "id": "asset-not-found",
+      "title": "Why return 404 for a missing JavaScript asset?",
+      "topic": "Static hosting",
+      "difficulty": "Beginner",
+      "answer": "A missing asset is not a client-side page route. Returning index.html under a script filename produces a misleading successful response and often a MIME or parse error. Use an asset location that checks for the actual file and returns 404 if it is absent."
+    },
+    {
+      "id": "forwarded-header-trust",
+      "title": "Why must an app treat forwarded headers as a trust boundary?",
+      "topic": "Proxying",
+      "difficulty": "Advanced",
+      "answer": "Clients can supply header values before a proxy forwards or appends them. Configure the app to trust only the known proxy chain and ensure direct backend access cannot bypass that boundary. Do not identify a client by blindly accepting the first forwarded address."
+    },
+    {
+      "id": "timeout-meaning",
+      "title": "Is proxy_read_timeout a deadline for the whole response?",
+      "topic": "Operations",
+      "difficulty": "Intermediate",
+      "answer": "It limits the interval between successive reads from the upstream, rather than the total time needed to deliver the response. Connection establishment and sending have separate timeout controls. Set application-level deadlines when you need a maximum total operation time."
+    },
+    {
+      "id": "body-limit-layers",
+      "title": "Why set request-body limits in both Nginx and the app?",
+      "topic": "Operations",
+      "difficulty": "Intermediate",
+      "answer": "A proxy limit can reject oversized traffic before it reaches application processing. The application also needs limits because it may receive traffic through another route or process different decoded formats. Keep the limits consistent with legitimate uploads and return an intentional error response."
+    },
+    {
+      "id": "rate-limit-burst",
+      "title": "What do burst and nodelay change in a rate limit?",
+      "topic": "Operations",
+      "difficulty": "Intermediate",
+      "answer": "The request-limit module uses a leaky-bucket model. burst permits a bounded excess over the configured rate, while nodelay processes permitted excess requests immediately rather than spacing them out. Requests beyond the permitted capacity are rejected; this is not a fixed-window counter."
+    },
+    {
+      "id": "tls-reload-check",
+      "title": "What should be checked before reloading a TLS configuration?",
+      "topic": "TLS",
+      "difficulty": "Intermediate",
+      "answer": "Check the configuration with nginx -t, confirm certificate and private-key paths and access, and verify the intended hostname and upstream behavior. Reload after the configuration test succeeds. A successful syntax check does not prove certificate trust or end-to-end application health."
+    }
+  ],
+  "practices": [
+    {
+      "id": "prefix-stripping-proxy",
+      "title": "Proxy an API while stripping its prefix",
+      "topic": "Proxying",
+      "difficulty": "Beginner",
+      "prompt": "Write a server block on port 8080 so /api/users reaches http://127.0.0.1:3000/users. Forward Host and the original scheme. Assume the upstream runs locally. The block belongs inside an existing http context; this exercise does not modify the host's Nginx configuration.",
+      "hints": [
+        "A URI of / in proxy_pass replaces the /api/ location prefix.",
+        "Use an exact redirect for /api if you want a canonical trailing slash."
+      ],
+      "checks": [
+        "/api/users forwards as /users.",
+        "The Host and X-Forwarded-Proto headers are set.",
+        "/api redirects to /api/ without changing the request method.",
+        "The proxy block is valid in the stated context."
+      ],
+      "starterCode": "server {\n  listen 8080;\n  location /api/ {\n    # Add the upstream and headers.\n  }\n}",
+      "solution": "Use the upstream URI / to replace the matched prefix, and a 308 redirect for the bare prefix. If forwarding client-address chains, configure backend proxy trust deliberately; this example forwards the direct peer address.",
+      "solutionCode": "server {\n  listen 8080;\n  server_name localhost;\n  location = /api { return 308 /api/; }\n  location /api/ {\n    proxy_pass http://127.0.0.1:3000/;\n    proxy_set_header Host $host;\n    proxy_set_header X-Forwarded-Proto $scheme;\n    proxy_set_header X-Forwarded-For $remote_addr;\n  }\n}"
+    },
+    {
+      "id": "spa-api-static-routing",
+      "title": "Separate SPA, asset, and API routing",
+      "topic": "Static hosting",
+      "difficulty": "Intermediate",
+      "prompt": "Serve an SPA from /var/www/learning on port 8080. Client routes such as /courses/react should fall back to index.html. /assets/missing.js must return 404. Requests under /api/ should reach port 3000 with the /api/ prefix preserved. Assume the document root exists and the backend is running.",
+      "hints": [
+        "Give /assets/ and /api/ dedicated prefix locations.",
+        "A proxy_pass without a URI preserves the prefix in this case."
+      ],
+      "checks": [
+        "A client-side page route loads index.html.",
+        "A missing asset returns 404 rather than HTML.",
+        "/api/users reaches the upstream as /api/users.",
+        "API failures do not enter the SPA fallback."
+      ],
+      "starterCode": "server {\n  listen 8080;\n  root /var/www/learning;\n  # Add three routing locations.\n}",
+      "solution": "Keep the fallback only in the general page location. Dedicated asset and API locations take precedence as longer prefixes.",
+      "solutionCode": "server {\n  listen 8080;\n  server_name localhost;\n  root /var/www/learning;\n  index index.html;\n  location /assets/ { try_files $uri =404; }\n  location /api/ {\n    proxy_pass http://127.0.0.1:3000;\n    proxy_set_header Host $host;\n    proxy_set_header X-Forwarded-Proto $scheme;\n  }\n  location / { try_files $uri $uri/ /index.html; }\n}"
+    },
+    {
+      "id": "login-rate-limit",
+      "title": "Configure a bounded login request rate",
+      "topic": "Operations",
+      "difficulty": "Intermediate",
+      "prompt": "Write an http-context configuration snippet limiting requests to exactly /login by direct client IP, at 5 requests per minute with a burst of 2 and no delay for permitted burst requests. Rejections must use 429. Proxy permitted requests to local port 3000. Assume Nginx receives clients directly; trusted real-IP handling is a separate requirement behind a load balancer.",
+      "hints": [
+        "Declare the shared-memory zone outside the server block in the http context.",
+        "Use limit_req_status to choose the rejection status."
+      ],
+      "checks": [
+        "The key is the binary direct client address.",
+        "The zone rate is 5r/m.",
+        "The location uses burst=2 and nodelay.",
+        "Excess requests are rejected with 429."
+      ],
+      "starterCode": "# Inside http { ... }\n# Declare a rate-limit zone and a server location.",
+      "solution": "Define the rate-tracking zone once and apply it only to the selected endpoint. This limits request rate, not failed-password attempts or distributed attacks; the app needs its own authentication abuse controls.",
+      "solutionCode": "# Place both directives inside the existing http context.\nlimit_req_zone $binary_remote_addr zone=login_limit:10m rate=5r/m;\nserver {\n  listen 8080;\n  server_name localhost;\n  location = /login {\n    limit_req zone=login_limit burst=2 nodelay;\n    limit_req_status 429;\n    proxy_pass http://127.0.0.1:3000;\n  }\n}"
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "references": [
+    {
+      "title": "AWS: IAM best practices",
+      "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html"
+    },
+    {
+      "title": "AWS: S3 security",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/security-best-practices.html"
+    },
+    {
+      "title": "AWS: EC2 security groups",
+      "url": "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-security-groups.html"
+    },
+    {
+      "title": "AWS: Lambda best practices",
+      "url": "https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html"
+    }
+  ],
+  "questions": [
+    {
+      "id": "roles-over-static-keys",
+      "title": "Why prefer IAM roles to embedded access keys?",
+      "topic": "IAM",
+      "difficulty": "Beginner",
+      "answer": "An IAM role can provide temporary credentials to an authorized workload or person. This avoids embedding long-lived keys in source code or deployment files. The role still needs a narrowly scoped permission policy and an appropriate trust policy."
+    },
+    {
+      "id": "trust-versus-permission",
+      "title": "How do a role's trust and permission policies differ?",
+      "topic": "IAM",
+      "difficulty": "Intermediate",
+      "answer": "A trust policy identifies who may assume a role. Permission policies define what the resulting role session may do. Granting an action in a permission policy does not by itself authorize an unrelated principal to assume the role."
+    },
+    {
+      "id": "least-privilege",
+      "title": "What does least privilege look like for an S3 reader?",
+      "topic": "IAM",
+      "difficulty": "Beginner",
+      "answer": "Grant only the needed read actions and scope object access to the relevant bucket or prefix. ListBucket uses a bucket resource; GetObject uses object resources. Add listing only if the application actually needs it, and test denied operations as well as successful reads."
+    },
+    {
+      "id": "explicit-deny",
+      "title": "Why can an allowed IAM action still be denied?",
+      "topic": "IAM",
+      "difficulty": "Intermediate",
+      "answer": "Authorization considers applicable policy layers, not just one attached allow. An explicit deny can override an allow, and boundaries or organization controls can restrict effective permissions. Inspect the whole authorization context instead of widening the application's policy indiscriminately."
+    },
+    {
+      "id": "private-bucket-delivery",
+      "title": "How can files be delivered without making an S3 bucket public?",
+      "topic": "S3",
+      "difficulty": "Intermediate",
+      "answer": "Keep the bucket private and choose a controlled delivery mechanism, such as authenticated application access, time-limited presigned URLs, or CloudFront with origin access control. A presigned URL grants access to its holder for its effective validity period, so treat it as a bearer capability."
+    },
+    {
+      "id": "s3-access-layers",
+      "title": "Does enabling S3 Block Public Access replace permission design?",
+      "topic": "S3",
+      "difficulty": "Intermediate",
+      "answer": "No. Block Public Access helps prevent public exposure, but private access still depends on identity and resource policies and other applicable controls. Retain scoped permissions, protect credentials, and review who can change bucket policies or access settings."
+    },
+    {
+      "id": "security-group-reference",
+      "title": "Why reference an application security group in a database rule?",
+      "topic": "Networking",
+      "difficulty": "Intermediate",
+      "answer": "A source security-group reference expresses that only eligible resources associated with that group may reach the permitted database port. It is more appropriate than opening the database to the internet. Group references do not create routes or copy the referenced group's rules."
+    },
+    {
+      "id": "stateful-groups",
+      "title": "What does stateful mean for an EC2 security group?",
+      "topic": "Networking",
+      "difficulty": "Beginner",
+      "answer": "Connection tracking lets response traffic for an allowed connection pass without a separate matching rule for that response. This does not mean every new outbound or inbound connection is allowed. Rules, routes, and other network controls still affect connectivity."
+    },
+    {
+      "id": "lambda-reuse",
+      "title": "What can safely benefit from Lambda execution-environment reuse?",
+      "topic": "Lambda",
+      "difficulty": "Intermediate",
+      "answer": "Reusable clients and connections can often be initialized outside the handler to reduce repeated setup. Reuse is an optimization, not a guarantee. Do not retain request-specific secrets or mutable user state that could leak into a later invocation."
+    },
+    {
+      "id": "lambda-idempotency",
+      "title": "Why should a Lambda event handler be idempotent?",
+      "topic": "Lambda",
+      "difficulty": "Advanced",
+      "answer": "Delivery and retry behavior depends on the invocation source, and some workflows can deliver an event more than once. Make repeated processing of the same logical event harmless. For side effects, coordinate durable event identity and state changes; an in-memory set does not survive separate environments or restarts."
+    }
+  ],
+  "practices": [
+    {
+      "id": "prefix-reader-policy",
+      "title": "Design an S3 prefix-only reader policy",
+      "topic": "IAM",
+      "difficulty": "Intermediate",
+      "prompt": "Write an IAM policy for an example bucket named learning-demo-assets. Permit reading objects under lessons/ and listing only requests whose prefix begins lessons/. Do not grant uploads, deletion, or unrelated bucket access. This is a local policy-design exercise; no resources need to be created.",
+      "hints": [
+        "GetObject uses an object ARN with the prefix.",
+        "ListBucket uses the bucket ARN with an s3:prefix condition."
+      ],
+      "checks": [
+        "GetObject is limited to lessons/*.",
+        "ListBucket uses the bucket ARN rather than an object ARN.",
+        "Listing requires the allowed prefix.",
+        "There is no wildcard action, PutObject, or DeleteObject grant."
+      ],
+      "starterCode": "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": []\n}",
+      "solution": "Separate object reads from bucket listing because their resource types differ. This policy grants only the stated access; effective permissions still depend on other applicable policies. For an SDK listing call, explicitly set Prefix to lessons/ or a deeper prefix.",
+      "solutionCode": "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": \"s3:GetObject\",\n      \"Resource\": \"arn:aws:s3:::learning-demo-assets/lessons/*\"\n    },\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": \"s3:ListBucket\",\n      \"Resource\": \"arn:aws:s3:::learning-demo-assets\",\n      \"Condition\": { \"StringLike\": { \"s3:prefix\": \"lessons/*\" } }\n    }\n  ]\n}"
+    },
+    {
+      "id": "three-tier-access-plan",
+      "title": "Plan network access for a three-tier app",
+      "topic": "Networking",
+      "difficulty": "Intermediate",
+      "prompt": "Design an ingress plan for a public HTTPS load balancer, a private app listening on port 3000, and a private PostgreSQL database on port 5432. The internet must not reach the app or database directly. Produce an architecture outline, not a deployable template.",
+      "hints": [
+        "Give each tier its own security group.",
+        "Use security-group references for traffic between tiers."
+      ],
+      "checks": [
+        "Only the load balancer accepts internet HTTPS traffic.",
+        "The app accepts port 3000 only from the load balancer group.",
+        "The database accepts port 5432 only from the app group.",
+        "App and database placement does not expose public endpoints."
+      ],
+      "starterCode": "Internet -> ? -> application -> database\nLoad balancer ingress: ?\nApplication ingress: ?\nDatabase ingress: ?",
+      "solution": "Use a public entry point and private downstream tiers. The ingress outline is only one part of the design: also define routes, appropriate egress, TLS termination, health checks, and application authentication. Network access does not replace authorization.",
+      "solutionCode": "Architecture outline (not deployment configuration):\nInternet -- HTTPS/443 --> public load balancer\nload-balancer-sg -- TCP/3000 --> private app with app-sg\napp-sg -- TCP/5432 --> private database with database-sg\n\nload-balancer-sg ingress: TCP/443 from intended public clients\napp-sg ingress: TCP/3000 from load-balancer-sg only\ndatabase-sg ingress: TCP/5432 from app-sg only\nApp/database: no public endpoint; appropriate private-subnet routes\nRestrict egress to the dependencies actually required."
+    },
+    {
+      "id": "pure-lambda-total",
+      "title": "Write a deterministic Lambda calculation handler",
+      "topic": "Lambda",
+      "difficulty": "Beginner",
+      "prompt": "For a direct Node.js Lambda invocation, implement handler(event) receiving {amounts:[integer cents]}. Return {totalCents:number}. Reject missing arrays, negative or unsafe values, and totals exceeding the safe-integer range. An empty array totals 0. Do not persist data or perform external side effects.",
+      "hints": [
+        "Validate each amount and the running sum with Number.isSafeInteger.",
+        "A pure calculation is naturally repeatable for the same input."
+      ],
+      "checks": [
+        "[120,80] returns totalCents 200.",
+        "An empty array returns 0.",
+        "Negative amounts, strings, and unsafe totals reject.",
+        "Repeated invocations do not share mutable request state."
+      ],
+      "starterCode": "export async function handler(event) {\n  // Validate amounts and return a total.\n}",
+      "solution": "Keep all request-specific state inside the handler and validate numeric boundaries. This direct-invocation return value is not an API Gateway proxy response; an HTTP integration needs its own response contract.",
+      "solutionCode": "export async function handler(event) {\n  if (!Array.isArray(event?.amounts)) throw new TypeError('amounts must be an array');\n  let totalCents = 0;\n  for (const amount of event.amounts) {\n    if (!Number.isSafeInteger(amount) || amount < 0) throw new TypeError('Invalid amount');\n    totalCents += amount;\n    if (!Number.isSafeInteger(totalCents)) throw new RangeError('Total is too large');\n  }\n  return { totalCents };\n}"
+    }
+  ]
+}
