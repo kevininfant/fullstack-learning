@@ -91,3 +91,7 @@ console.log(spsrmvres("Infant jenifer"));
 // console.log(lrgfind([23,54,65,16,74,98,78,87,55,55,99,99]));
 
 
+
+
+
+// hi i need some summary, next week i m going to review meeting like my overall my expericence based what is the contibution of in this office and howmany project im working here and what im currently working here  need to summarize ,i wiil share the my project details and experience if u find out  imp points and help to make summarize  first im joined to working in  flutter application for employee portel like , then after im working in tech browers after flutter aplication is hote that time already i Know the react and node js so im working in novaclearning nodejs pug concept after agin working in refresh application hthis is early one update after im working for the  
