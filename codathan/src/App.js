@@ -18,7 +18,7 @@ export default function App() {
       case 'R1 · Bug Fix': return <Round1BugFix day={day} />;
       case 'R2 · Refactor': return <Round2Refactor day={day} />;
       case 'R3 · Design': return <Round3Design day={day} />;
-      case 'R4 · Implement': return <Round4Implementation />;
+      case 'R4 · Implement': return <Round4Implementation day={day} />;
       default: return <Home setActive={setActive} />;
     }
   };
@@ -26,7 +26,7 @@ export default function App() {
   return (
     <div>
       <Navbar tabs={TABS} active={active} setActive={setActive} />
-      {active !== 'Home' && active !== 'R4 · Implement' && (
+      {active !== 'Home' && (
         <DaySelector day={day} setDay={setDay} />
       )}
       <main style={{ minHeight: '100vh' }}>{renderPage()}</main>

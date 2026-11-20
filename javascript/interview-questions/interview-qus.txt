@@ -1,3 +1,8 @@
+1.What is JavaScript?
+"JavaScript is a programming language used to make web applications interactive and dynamic. We can use JavaScript on the frontend to handle user actions and update the UI. We can also use it on the backend using Node.js to build APIs and handle server-side operations."
+
+-------------------------------------------------------------------------------------------------
+
 1. What are the different data types in JavaScript?
 Primitive types: String, Number, Boolean, Undefined, Null, Symbol, BigInt
 
@@ -14,6 +19,16 @@ let → Block-scoped, cannot be redeclared in same scope, can be updated.
 const → Block-scoped, cannot be redeclared or updated.
 
 --------------------------------------------------
+
+What is Type Coercion?
+Type coercion is when JavaScript automatically converts one data type to another when needed.
+
+
+
+5 == "5";  // true  (coerced)
+5 === "5"; // false (different types)
+
+-------------------------------------------------------------------------------
 
 3.What is hoisting in JavaScript?
 
@@ -69,10 +84,20 @@ Asynchronous: Allows non-blocking operations (using callbacks, promises, async/a
 ------------------------------------------------------------
 8.What is the Event Loop in JavaScript?
 
-“JavaScript is single-threaded, but it uses the Event Loop to handle asynchronous tasks efficiently.
- The Event Loop checks the call stack and processes microtasks 
-like Promises before macrotasks like setTimeout, ensuring non-blocking execution.”
+“JavaScript is single-threaded, so it executes one task at a time. The Event Loop helps JavaScript handle asynchronous tasks like Promises and setTimeout. It checks whether the Call Stack is empty and then moves waiting tasks to the stack. Promises are handled before setTimeout.”
 
+
+console.log("1");
+
+setTimeout(() => {
+  console.log("2");
+}, 0);
+
+Promise.resolve().then(() => {
+  console.log("3");
+});
+
+console.log("4");
 
 ------------------------------------------------------------------------
 
@@ -111,7 +136,7 @@ So calling it before definition causes an error.
 
 10. What are arrow functions and how are they different?
 
-Arrow functions (()=>{}) are a shorter way to write functions.
+Arrow functions (()=>{}) are a shorter way to write functions.It was introduced in ES6.
 Differences:
 
 Do not have their own this (inherit from parent).
@@ -147,7 +172,7 @@ Fulfilled
 Rejected
 
 
-----------------------------------------
+------------------------------------------------------------------------------
 12.What is async/await?
 
 async/await is syntactic sugar over Promises.
@@ -311,3 +336,97 @@ console.log(Math.ceil(-2.1)); // -2
 -----------------------------------------------------------------------------
 
 bind(),call(),apply()
+
+call  → Call now → arguments separately
+apply → Apply now → arguments as array
+bind  → Bind now → call later
+
+------------------------------------------------------------------------------
+
+Difference between global, function, and block scope.
+
+Global scope means a variable can be accessed from anywhere in the program.
+Function scope means a variable can be accessed only inside the function where it is declared.
+Block scope means a variable can be accessed only inside the block {} where it is declared.
+
+--------------------------------------------------------------------------------------------------
+2. Arrow Function vs Normal Function
+
+“The main difference between a normal function and an arrow function is how they handle this. A normal function has its own this, based on how the function is called. An arrow function does not have its own this; it inherits this from its surrounding scope. Arrow functions also have shorter syntax and cannot be used as constructors.”
+
+
+----------------------------------------
+1. What is a Callback Function?
+
+“A callback function is a function passed as an argument to another function, which is executed later.”
+
+function greet(name, callback) {
+  console.log("Hello " + name);
+  callback();
+}
+
+function message() {
+  console.log("Welcome!");
+}
+
+greet("Kevin", message);
+
+-----------------------------------------------------
+
+2. What is a Higher-Order Function?
+
+“A higher-order function is a function that takes another function as an argument or returns a function.”
+
+--------------------------------------------------
+3.What is a Pure Function?
+
+“A pure function always returns the same output for the same input and does not cause side effects or modify external data.”,
+
+--------------------------------------------------------
+4.. What is an IIFE?
+“IIFE stands for Immediately Invoked Function Expression. It is a function that is created and executed immediately.”
+
+-------------------------------------------------------------
+
+5.Execution Context & Call Stack 
+
+Execution Context is an environment where JavaScript executes code.
+
+Whenever JavaScript runs your code, it creates an execution context to manage variables, functions and execution.
+
+There are two important types:
+
+
+Global Execution Context (GEC): The default environment where code outside any function runs.
+
+Function Execution Context (FEC): A new context created every time a function is invoked.
+
+Execution happens in two phases:
+
+Creation Phase: JavaScript sets up memory. var variables are initialized with undefined (hoisting), function declarations are stored completely, and let/const enter the Temporal Dead Zone.
+
+Execution Phase: Code is executed line by line, and actual values are assigned to variables.
+
+The Call Stack is a LIFO (Last In, First Out) data structure that JavaScript uses to keep track of function execution. When a function is called, its context is pushed onto the stack, and when it finishes running, it is popped off the stack."
+
+call stack 
+--------------------
+
+function first() {
+    second();
+    console.log("First");
+}
+
+function second() {
+    third();
+    console.log("Second");
+}
+
+    console.log("Third");
+}
+
+first();
+
+
+----------------------------------------------------------------------------------
+

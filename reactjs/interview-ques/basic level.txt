@@ -90,7 +90,7 @@ Keys in react are unique identifiers for list items.
 They help React know which items changed, added, or removed when re-rendering.
 Without proper keys, React may re-use DOM elements incorrectly → leading to bugs or unexpected behavior.
 const users = ["Kevin", "John", "Sophia"];
-
+ 
 {users.map((user, index) => <li key={index}>{user}</li>)}
 
 ----------------------------------------------------------------------------------

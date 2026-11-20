@@ -147,3 +147,59 @@ Primary Key → unique identifier for a table row
 
 Foreign Key → links a column in one table to primary key in another table
 
+----------------------------------------------------------------------------
+
+
+16. What is a database?
+A database is a place where we store organized information.
+
+Example: A banking application.
+
+--------------------------------------------------------------------
+
+17.6. DISTINCT – Remove duplicates
+Suppose multiple employees belong to the same department.
+
+SELECT DISTINCT department
+FROM employees;
+
+----------------------------------------------------------------
+18.LIMIT – Restrict records
+
+Fetch only the first two employees:
+SELECT *
+FROM employees
+LIMIT 2;
+
+
+Fetch the top three highest-paid employees:
+
+SELECT *
+FROM employees
+ORDER BY salary DESC
+LIMIT 3;
+-----------------------------------------------------------------
+
+19.1. What are aggregate functions?
+Aggregate functions perform calculations on multiple rows and return a single result.
+
+---------------------------------------------------------------
+20. COUNT() – Count records
+SELECT COUNT(*) FROM employees;
+
+----------------------------------------------------------
+21.SUM() – Calculate total
+SELECT SUM(salary) FROM employees;
+--------------------------------------------------
+22.AVG() – Calculate average
+SELECT AVG(salary) FROM employees;
+--------------------------------------------------------------------------
+23.MIN() – Lowest value
+SELECT MIN(salary) FROM employees;
+-------------------------------------------------------------------
+24.MAX() – Highest value
+SELECT MAX(salary) FROM employees;
+--------------------------------------------------------------------
+25.GROUP BY – Department-wise calculations
+
+

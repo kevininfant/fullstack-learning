@@ -1,29 +1,39 @@
-1.What is Node.js? Why use it?
-👉 Node.js is a runtime environment built on Chrome’s V8 engine. It allows running JavaScript on the server. It’s fast,
- event-driven, non-blocking → good for real-time apps (chat, streaming, APIs).
-----------------------------------------------------------------------------------------------------
+1.What is Node.js? Why do we use it?
 
+Node.js allows us to run JavaScript on the server side. We use Node.js to build backend applications, create APIs, connect databases, and handle multiple user requests. It is fast and useful for real-time applications.
+
+Remember: JavaScript + Backend = Node.js.
+----------------------------------------------------------------------------------------------------
+2.What is the difference between JavaScript and Node.js?
+"Node.js is not a programming language. It is a runtime environment that allows us to run JavaScript on the server side."
+-------------------------------------------------------------------------------------------------------------------------
  2.Difference between synchronous and asynchronous programming in Node.js?
-👉 Sync → tasks execute one by one, blocking.
-👉 Async → tasks run in parallel (non-blocking I/O), callback executes once done.
+ 
+"Synchronous programming executes tasks one by one. Each task waits for the previous task to finish. Asynchronous programming allows Node.js to continue other tasks without waiting for a long-running operation to finish. It helps improve application performance."
 
 ------------------------------------------------------------------------------------------------------
 3. What are Callbacks, Promises, and async/await?
 
-Callback → function passed into another function (can cause "callback hell").
+1. Callback: A callback is a function passed as an argument to another function. It is executed after a particular task is completed.
 
-Promise → cleaner way, represents future value (.then/.catch).
+2. Promise: A Promise is used to handle asynchronous operations. It represents a result that may be successful or failed in the future.
 
-async/await → syntactic sugar over promises, makes async code look synchronous.
+3. Async/await: Async/await is a simpler way to handle Promises. It makes asynchronous code easier to read, write, and understand.
 
 -----------------------------------------------------------------------------------------------------------------
 4. What is Middleware in Express.js?
-👉 Middleware are functions that run before reaching the final route handler. Example: logging, authentication, error handling.
+
+Middleware is a function that runs before the request reaches the final route. It is used to check requests, verify user authentication, log request details, and handle errors.
+
+Simple example: When a user logs in, middleware checks whether the user is authenticated before allowing access to a protected API.
 
 ------------------------------------------------------------------------------------------------------------------
 
 5. What is Buffer in Node.js?
-👉 Temporary memory to store binary data while reading/writing streams.
+
+A Buffer is used to temporarily store binary data in memory while working with files, images, videos, or network data. It helps Node.js handle data that is not in text format.
+
+Simple example: When we read an image file in Node.js, Buffer stores its data temporarily in memory.
 
 ----------------------------------------------------------------------------------------
 
@@ -37,7 +47,9 @@ async/await → syntactic sugar over promises, makes async code look synchronous
 
 7. Error Handling in Express?
 
-js
+"Error handling in Express.js is used to catch application errors and send proper error messages and status codes to the client."
+
+Important: Express error-handling middleware has four parameters: err, req, res, next. It should be registered after the routes.
 Copy code
 app.use((err, req, res, next) => {
   res.status(500).json({ error: err.message });
@@ -52,7 +64,14 @@ app.use((err, req, res, next) => {
 ---------------------------------------------------------------------------------
 
 9.What is JWT? How is it used in Node.js?
-👉 JSON Web Token → stateless authentication. Token is signed and sent to client, verified on each request.
+JWT (JSON Web Token) is used for user authentication. After a user successfully logs in, the server generates a token and sends it to the client. The client sends this token with future requests, and the server verifies it to allow access to protected APIs.
+
+Simple real-time example
+1. User enters email and password to log in.
+2. Server verifies the login details.
+3. Server generates a JWT token and sends it to the client.
+4. Client sends the token when accessing protected APIs.
+5. Server verifies the token and allows access.
 
 ---------------------------------------------------------------------------------
 10.Session-based vs Token-based Auth?
@@ -77,14 +96,15 @@ Supports MySQL, PostgreSQL, SQLite, MSSQL.
 -------------------------------------------------------------------------------------------------------------
 
 13.Why use Sequelize instead of raw SQL?
-✅ Cleaner syntax (JS instead of SQL)
-✅ Prevents SQL injection
-✅ Easy migrations, associations
-✅ Cross-database support
+
+Sequelize is an ORM (Object Relational Mapper) that allows us to interact with databases using JavaScript instead of writing SQL queries manually. It makes database operations easier, supports relationships between tables, helps manage database changes, and reduces SQL injection risks when used correctly.
 
 --------------------------------------------------------------------------
 
 14.What are associations in Sequelize?
+
+Associations in Sequelize are used to define relationships between database tables. There are three main types: One-to-One, One-to-Many, and Many-to-Many. They help us connect related tables and retrieve data easily.
+
 👉 Relationships between models.
 
 One-to-One
@@ -109,6 +129,8 @@ Course.belongsToMany(Student, { through: "StudentCourses" });
 
 15.How do you connect Node.js to MySQL using Sequelize?
 
+"We can connect Node.js to MySQL using Sequelize. First, we install Sequelize and the MySQL driver. Then we configure the database name, username, password, host, and dialect. Finally, we use authenticate() to check whether the database connection is successful."
+
 const { Sequelize } = require('sequelize');
 const sequelize = new Sequelize('testdb', 'root', 'password', {
   host: 'localhost',
@@ -122,6 +144,7 @@ const sequelize = new Sequelize('testdb', 'root', 'password', {
 define() → quick model definition (commonly used).
 
 init() → advanced (used with class Model extends Sequelize.Model).
+"define() is used to create models directly with simple syntax, whereas init() is used to define models inside classes that extend Sequelize Model. Both are used to create models in Sequelize."
 
 
 ----------------------------------------------------------
@@ -138,7 +161,93 @@ findAll → returns all matches (array).
 
 ------------------------------------------------------------------------
 
+17. What is a Sequelize Model?
+
+A Sequelize Model represents a database table. It defines the table columns, data types, and rules. We use models to perform database operations like creating, reading, updating, and deleting records.
+
+--------------------------------------------------------------------
+18.What is the difference between update() and save()?
+
+"update() is used to update database records directly based on conditions, whereas save() is used to save changes made to an existing model instance."
+
+---------------------------------------------------------------------
+19.What is Express.js? Why do we use it?
+Express.js is a lightweight web framework for Node.js. It helps us create APIs, handle HTTP requests, manage routes, and build backend applications easily.
+---------------------------------------------------------------
+20.What is the difference between req.params, req.query, and req.body?
+
+req.params gets values from the URL path, req.query gets values from the URL query string, and req.body gets data sent in the request body.
+
+--------------------------------------------------------------------------------
+21.How do you encrypt passwords using bcrypt?
+Bcrypt is a library used to securely hash user passwords before storing them in the database. It helps protect passwords even if the database is exposed.
+
+----------------------------------------------------------------
+22.What is CORS?
+CORS stands for Cross-Origin Resource Sharing. It allows or restricts requests from one website or frontend application to another server.
+---------------------------------------------------------------------------
+23. What are HTTP Status Codes?
+Simple English definition:
+
+HTTP status codes are numbers sent by the server to tell the client whether an API request was successful, failed, or needs further action.
+Common HTTP Status Codes
+Status Code	Meaning	Example
+200	OK – Request successful	Get user details
+201	Created – New data created	Create a new user
+204	No Content – Successful, no response body	Delete a user
+400	Bad Request – Invalid request data	Missing required fields
+401	Unauthorized – Authentication required or invalid	Invalid login token
+403	Forbidden – Access denied	User has no permission
+404	Not Found – Resource not found	User ID does not exist
+500	Internal Server Error	Unexpected server error
 
 
-node js  code 
+----------------------------------------------------------------------------------
 
+What is the difference between cluster and worker_threads?
+
+Both are used to improve Node.js performance by doing work using multiple CPU cores.
+- Cluster: Creates multiple Node.js processes. Each process can handle incoming requests.
+- Worker Threads: Creates multiple threads inside one Node.js process. They are useful for CPU-intensive tasks.
+
+----------------------------------------------------------------------------------
+What is the purpose of Streams in Node.js?
+"Streams are used to process large amounts of data in smaller chunks. They reduce memory usage and improve performance."
+
+const fs = require('fs');
+
+const readStream = fs.createReadStream('video.mp4');
+
+readStream.on('data', (chunk) => {
+    console.log('Reading a chunk');
+});
+
+
+-----------------------------------------------------------------------------------------
+
+What is Redis, and why do we use it?
+
+Redis is an in-memory data store that stores data in RAM, so we can access it very quickly. It is commonly used for caching, session management, and frequently accessed data.
+
+await redis.set('username', 'Kevin');
+
+const name = await redis.get('username');
+
+console.log(name);
+
+--------------------------------------------------------------------------------
+What is Rate Limiting?
+
+Rate limiting controls how many requests a user can send to an API within a specific time.
+
+It helps protect our application from too many requests and abuse.
+const rateLimit = require('express-rate-limit');
+
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 100
+});
+
+app.use(limiter);
+
+----------------------------------------------------------------------------------
