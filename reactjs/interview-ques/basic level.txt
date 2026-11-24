@@ -1148,21 +1148,68 @@ greetKevin();
 
 
 --------------------------------------------------------------------
-what is transpiler?
-is it possible jsx with out react?
-what is a frahgment?
-what is spread oparator?
-declarative vs imparative?
-props drilling?
-avoid props drilling?
-how many way to avoid in props drilling?
-contionap rendaring?
-direrans between function and class?
-routing & react router?
-what is the role of switch component?
-what is the role of routes and route?
-constractor and super()?
+1. What is a transpiler?
 
+A transpiler changes code from one form to another. For example, Babel changes JSX like <h1>Hello</h1> into JavaScript that a browser can run.
+
+2. Can we use JSX without React?
+
+Yes. JSX is a way to write HTML-like code. Other libraries like Preact can also use JSX when the build tool is set up for them.
+
+3. What is a Fragment?
+
+A Fragment groups multiple elements without adding an extra HTML element to the page. We can write it as <>...</>.
+
+4. What is the spread operator?
+
+Spread syntax (...) lets us copy or combine items in an array or properties in an object. For example, [...items, "React"] creates a new array with the existing items and adds "React" at the end. The copy is shallow, so nested objects are still shared.
+
+5. What is the difference between declarative and imperative?
+
+Declarative means saying what you want. In React, I say, “Show the login button when the user is logged out.”
+Imperative means giving the steps for how to do it. I find the button and tell the browser to show or hide it.
+
+6. What is prop drilling?
+
+Prop drilling means passing a prop through several components just to reach the component that needs it. For example, App passes user to Layout, and Layout passes it to Profile, where it is used.
+
+7. How can you avoid prop drilling?
+
+I can use React Context for shared data. For example, Profile can use useContext to read the logged-in user directly, so Layout doesn’t have to pass the prop.
+
+8. How many ways are there to avoid prop drilling?
+
+There’s no fixed number. Four common ways are:
+
+1. Local state — Keep the state in the component that needs it.
+2. Component composition — Pass a ready-to-render component through children.
+3. Context API — Let components read shared data like the theme or logged-in user.
+4. State store — Use a library like Redux Toolkit or Zustand to share state across the app.
+
+9. What is conditional rendering?
+
+Conditional rendering means showing different UI based on a condition. For example, isLoggedIn ? <Dashboard /> : <Login /> shows the dashboard if the user is logged in and the login page otherwise.
+
+10. What is the difference between function and class components?
+
+A function component is a JavaScript function that returns UI. It can use hooks like useState to manage state.
+A class component is a JavaScript class with a render() method. It manages state with this.state and this.setState().
+
+11. What are routing and React Router?
+
+Routing means showing the correct page for a URL. For example, /profile shows the profile page. React Router is a library that helps React apps do this and move between pages without reloading the whole page.
+
+12. What does <Switch> do?
+
+In React Router v5, <Switch> checks routes from top to bottom and shows the first one that matches. That’s why route order matters in v5.
+
+13. What do <Routes> and <Route> do?
+
+In React Router v6 and later, each <Route> defines a path and what to show for it. <Routes> picks the best match for the current URL. For example, /users/new wins over /users/:id when the URL is /users/new.
+
+14. What are constructor and super()?
+
+A constructor runs when an object is created from a class. In a React class component, it can set the starting state. super() calls the parent class constructor. In React, I call super(props) before using this so I can read this.props inside the constructor.
 
 
 
